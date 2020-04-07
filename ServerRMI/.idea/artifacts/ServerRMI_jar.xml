@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="ServerRMI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ServerRMI_jar</output-path>
+    <root id="archive" name="ServerRMI.jar">
+      <element id="module-output" name="ServerRMI" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Contrato/out/artifacts/Contrato_jar/Contrato.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

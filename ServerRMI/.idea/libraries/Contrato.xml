@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Contrato">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../Contrato/out/artifacts/Contrato_jar/Contrato.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
