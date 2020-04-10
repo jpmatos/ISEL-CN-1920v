@@ -9,6 +9,7 @@ package primesservice; // package do proto
 // The greeting service definition.
 service PrimesService {
     rpc findPrimes (NumOfPrimes) returns (stream Prime);
+    rpc addNumbers (stream Number) returns (SumResult);
 }
 
 // input message
@@ -20,4 +21,12 @@ message NumOfPrimes {
 // output message
 message Prime {
     int32 prime = 1;
+}
+
+message SumResult {
+    int32 sumResult = 1;
+}
+
+message Number {
+    int32 number = 1;
 }

@@ -3,7 +3,7 @@ package clientapp;
 import io.grpc.stub.StreamObserver;
 import primesservice.Prime;
 
-public class ClientStreamObserver implements StreamObserver<Prime> {
+public class PrimesStreamObserver implements StreamObserver<Prime> {
     private boolean isCompleted=false;
     private boolean success=false;
 

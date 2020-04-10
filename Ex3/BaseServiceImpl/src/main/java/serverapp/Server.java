@@ -3,9 +3,8 @@ package serverapp;
 
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import primesservice.NumOfPrimes;
-import primesservice.Prime;
-import primesservice.PrimesServiceGrpc;
+import primesservice.*;
+import primesservice.Number;
 
 import java.util.Scanner;
 
@@ -31,8 +30,8 @@ public class Server extends PrimesServiceGrpc.PrimesServiceImplBase {
 
     @Override
     public void findPrimes(NumOfPrimes request, StreamObserver<Prime> responseObserver) {
-        System.out.println("FindPrimes called");
         int id = 1000 + (int)(Math.random() * 1000);
+        System.out.println(String.format("[%d] FindPrimes called.", id));
         int found = 0;
         for (int i = 0; found <= request.getNumOfPrimes(); i++) {
             int curr = request.getStartNum() + i;
@@ -43,12 +42,20 @@ public class Server extends PrimesServiceGrpc.PrimesServiceImplBase {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(String.format("[%d] Found prime: %d", id, curr));
+                System.out.println(String.format("[%d] Found prime: '%d'.", id, curr));
                 found++;
                 responseObserver.onNext(Prime.newBuilder().setPrime(curr).build());
             }
         }
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public StreamObserver<Number> addNumbers(StreamObserver<SumResult> responseObserver) {
+        int id = 1000 + (int)(Math.random() * 1000);
+        System.out.println(String.format("[%d] AddNumbers called.", id));
+        AddNumbersObserver sum = new AddNumbersObserver(responseObserver, id);
+        return sum;
     }
 
     private static boolean isPrime(int num) {
