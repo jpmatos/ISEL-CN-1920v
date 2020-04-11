@@ -10,6 +10,8 @@ package primesservice; // package do proto
 service PrimesService {
     rpc findPrimes (NumOfPrimes) returns (stream Prime);
     rpc addNumbers (stream Number) returns (SumResult);
+    rpc addNumbersCont (stream OperationRequest) returns (stream OperationReply);
+    rpc findPrimesInterval (PrimesInterval) returns (stream Prime);
 }
 
 // input message
@@ -29,4 +31,21 @@ message SumResult {
 
 message Number {
     int32 number = 1;
+}
+
+message OperationRequest {
+    int32 num1 = 1;
+    int32 num2 = 2;
+    string id = 3;
+}
+
+message OperationReply {
+    int32 res = 1;
+    string id = 2;
+}
+
+message PrimesInterval {
+    string id = 1;
+    int32 start = 2;
+    int32 end = 3;
 }

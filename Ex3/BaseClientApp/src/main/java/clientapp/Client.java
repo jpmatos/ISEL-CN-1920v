@@ -3,9 +3,8 @@ package clientapp;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-import primesservice.NumOfPrimes;
+import primesservice.*;
 import primesservice.Number;
-import primesservice.PrimesServiceGrpc;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -40,6 +39,9 @@ public class Client {
                         "Pick an operation:\n" +
                         "[1] - FindPrimes\n" +
                         "[2] - AddNumbers\n" +
+                        "[3] - AddNumbersCont\n" +
+                        "[4] - FindPrimesInterval\n" +
+                        "[5] - FindPrimesInterval 0-100\n" +
                         "[0] - Quit");
                 int oper = sc.nextInt();
 
@@ -50,6 +52,15 @@ public class Client {
                     case 2:
                         addNumbers();
                         break;
+                    case 3:
+                        addNumberCont();
+                        break;
+                    case 4:
+                        findPrimesInterval();
+                        break;
+                    case 5:
+                        findPrimes0to100();
+                        break;
                     case 0:
                         System.exit(0);
                     default:
@@ -59,6 +70,89 @@ public class Client {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private static void findPrimes0to100() throws InterruptedException {
+        System.out.print("ID:");
+        String id = sc.next();
+
+        ArrayList<PrimesStreamObserver> observers = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            PrimesInterval interval = PrimesInterval.newBuilder().setId(String.format("%s#%d", id, i)).setStart(25 * i).setEnd(25 * (i+1)).build();
+            PrimesStreamObserver replyStreamObserver = new PrimesStreamObserver();
+            observers.add(replyStreamObserver);
+            noBlockStub.findPrimesInterval(interval, replyStreamObserver);
+        }
+
+        for (PrimesStreamObserver observer : observers) {
+            while (!observer.isCompleted()) {
+                System.out.println("Waiting for all primes interval to finish...");
+                Thread.sleep(1000);
+            }
+        }
+        System.out.println("Finished!");
+    }
+
+    private static void findPrimesInterval() throws InterruptedException {
+        ArrayList<PrimesStreamObserver> observers = new ArrayList<>();
+        while (true) {
+            System.out.print("ID: (0 to finish)");
+            String id = sc.next();
+
+            if(id.equals("0"))
+                break;
+
+            System.out.println("Start:");
+            int start = sc.nextInt();
+
+            System.out.println("End: ");
+            int end = sc.nextInt();
+
+            PrimesInterval interval = PrimesInterval.newBuilder().setId(id).setStart(start).setEnd(end).build();
+            PrimesStreamObserver replyStreamObserver = new PrimesStreamObserver();
+            observers.add(replyStreamObserver);
+
+            noBlockStub.findPrimesInterval(interval, replyStreamObserver); //svc.findPrimes(id, start, numberOfPrimes, callbackStub);
+            sc.nextLine(); //clean buffer
+        }
+
+        for (PrimesStreamObserver observer : observers) {
+            while (!observer.isCompleted()) {
+                System.out.println("Waiting for primes interval to finish...");
+                Thread.sleep(1000);
+            }
+        }
+        System.out.println("Finished!");
+
+    }
+
+    private static void addNumberCont() throws InterruptedException {
+        SumContStreamObserver sumContStreamObserver = new SumContStreamObserver();
+        StreamObserver<OperationRequest> reqs = noBlockStub.addNumbersCont(sumContStreamObserver);
+        while (true)
+        {
+            System.out.println("Set ID: (0 to finish):");
+            String id = sc.next();
+
+            if(id.equals("0"))
+                break;
+
+            System.out.println("First number:");
+            int num1 = sc.nextInt();
+
+            System.out.println("Second number:");
+            int num2 = sc.nextInt();
+
+            OperationRequest req = OperationRequest.newBuilder().setId(id).setNum1(num1).setNum2(num2).build();
+            reqs.onNext(req);
+        }
+
+        reqs.onCompleted();
+        while (!sumContStreamObserver.isCompleted()) {
+            System.out.println("Waiting for additions to finish...");
+            Thread.sleep(1000);
+        }
+        System.out.println("Finished!");
     }
 
     private static void addNumbers() throws InterruptedException {
@@ -89,6 +183,7 @@ public class Client {
         while (true) {
 //                System.out.print("ID: ");
 //                String id = sc.nextLine();
+
             System.out.println("Start: (0 to finish)");
             int start = sc.nextInt();
 
@@ -112,6 +207,6 @@ public class Client {
                 Thread.sleep(1000);
             }
         }
-        System.out.println("Completed!");
+        System.out.println("Finished!");
     }
 }
