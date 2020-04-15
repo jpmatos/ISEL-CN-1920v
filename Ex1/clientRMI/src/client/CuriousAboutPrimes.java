@@ -6,10 +6,15 @@ import java.rmi.RemoteException;
 
 public class CuriousAboutPrimes implements ICallback {
     private boolean finished = false;
+    private String id;
+
+    public CuriousAboutPrimes(String id) {
+        this.id = id;
+    }
 
     @Override
-    public void nextPrime(int i) throws RemoteException {
-//        System.out.println("Numero primo encontrado pelo servidor: " + i);
+    public void nextPrime(int prime) throws RemoteException {
+        //System.out.println(String.format("[%s] Found prime: %d", id, prime));
     }
 
     @Override

@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="ServerRMI:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8a31eda-f720-41af-9d1f-c7e025205580" name="Default Changelist" comment="">
+    <list default="true" id="244c4cd6-761e-41f2-8708-f949cfa92087" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Contrato/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Contrato/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Contrato/src/contrato/IPrimesServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Contrato/src/contrato/IPrimesServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ServerRMI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ServerRMI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Worker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../clientRMI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../clientRMI/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../clientRMI/src/client/ClientRMI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../clientRMI/src/client/ClientRMI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../clientRMI/src/client/CuriousAboutPrimes.java" beforeDir="false" afterPath="$PROJECT_DIR$/../clientRMI/src/client/CuriousAboutPrimes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/BaseClientApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/BaseClientApp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/BaseServiceImpl/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/BaseServiceImpl/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/rpcContract/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/rpcContract/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -12,15 +28,21 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/server/Worker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/ServerRMI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="24" column="54" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="54" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="540">
+              <caret line="64" column="37" selection-start-line="64" selection-start-column="37" selection-end-line="64" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -35,12 +57,13 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/server/ServerRMI.java" />
+        <option value="$PROJECT_DIR$/src/server/Worker.java" />
       </list>
     </option>
   </component>
@@ -50,7 +73,10 @@
     <option name="width" value="1386" />
     <option name="height" value="857" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1RkRJB58AkNKMWxz2bO2ETDUV5C" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -82,16 +108,25 @@
       </pane>
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="serverrmi" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1586121307392" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Contract/out/artifacts/Contract_jar/Contract.jar!/" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551297195215" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Contrato" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.116161615" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -106,169 +141,223 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="ServerRMI" type="Application" factoryName="Application">
+    <configuration name="ServerRMI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="server.ServerRMI" />
       <module name="ServerRMI" />
       <option name="PROGRAM_PARAMETERS" value="localhost" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ServerRMI" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c8a31eda-f720-41af-9d1f-c7e025205580" name="Default Changelist" comment="" />
-      <created>1586110542306</created>
+      <changelist id="244c4cd6-761e-41f2-8708-f949cfa92087" name="Default Changelist" comment="" />
+      <created>1551295018498</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1586110542306</updated>
-      <workItem from="1586110544002" duration="8738000" />
-      <workItem from="1586375411393" duration="34000" />
+      <updated>1551295018498</updated>
+      <workItem from="1586992414326" duration="1488000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9583000" />
+    <option name="totallyTimeSpent" value="1488000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="-1" width="1606" height="874" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25288832" />
+      <window_info id="Image Layers" />
+      <window_info id="Designer" />
+      <window_info id="UI Designer" />
+      <window_info id="Capture Tool" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24967907" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="Designer" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32934928" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32934928" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="Messages" order="12" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Maven" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Database" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Database" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Maven" order="6" />
-      <window_info anchor="right" id="Capture Analysis" order="7" />
-      <window_info anchor="right" id="Palette&#9;" order="8" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+    </ignored-roots>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="233" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586982373984">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="362" y="285" key="#com.intellij.execution.impl.EditConfigurationsDialog/-2560.0.1463.806/0.0.1920.1050@0.0.1920.1050" timestamp="1585558957775" />
+    <state x="194" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1585674512963" />
+    <state x="233" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824/1920.0.1536.824@0.0.1536.824" timestamp="1586982373984" />
+    <state x="233" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1586215491305" />
+    <state x="291" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1026@0.0.1920.1026" timestamp="1585662606007" />
+    <state x="996" y="184" key="#com.intellij.ide.util.MemberChooser" timestamp="1586217041547">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="996" y="184" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1586217041547" />
+    <state x="1245" y="234" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1585481018409" />
+    <state x="1130" y="311" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1585593240877">
+      <screen x="0" y="0" width="1920" height="1026" />
+    </state>
+    <state x="1130" y="311" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1026@0.0.1920.1026" timestamp="1585593240877" />
+    <state x="1130" y="318" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1585501158185" />
+    <state x="823" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586219683308">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="823" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1586219683308" />
+    <state x="422" y="99" key="FileChooserDialogImpl" timestamp="1585577826019">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="633" y="153" key="FileChooserDialogImpl/-2560.0.1463.806/0.0.1920.1050@0.0.1920.1050" timestamp="1584901307793" />
+    <state x="422" y="99" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1585577826019" />
+    <state width="726" height="204" key="GridCell.Tab.0.bottom" timestamp="1586982408860">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="686" height="244" key="GridCell.Tab.0.bottom/-2560.0.1463.806/0.0.1920.1050@-2560.0.1463.806" timestamp="1585556599664" />
+    <state width="686" height="248" key="GridCell.Tab.0.bottom/-2560.0.1463.806/0.0.1920.1050@0.0.1920.1050" timestamp="1585565933539" />
+    <state width="1237" height="212" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1585578254539" />
+    <state width="726" height="204" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1536.824@0.0.1536.824" timestamp="1586982408860" />
+    <state width="725" height="205" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586335675488" />
+    <state width="1338" height="249" key="GridCell.Tab.0.bottom/0.0.1920.1026@0.0.1920.1026" timestamp="1585665044537" />
+    <state width="765" height="351" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1585508238265" />
+    <state width="726" height="204" key="GridCell.Tab.0.center" timestamp="1586982408859">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="686" height="244" key="GridCell.Tab.0.center/-2560.0.1463.806/0.0.1920.1050@-2560.0.1463.806" timestamp="1585556599664" />
+    <state width="686" height="248" key="GridCell.Tab.0.center/-2560.0.1463.806/0.0.1920.1050@0.0.1920.1050" timestamp="1585565933539" />
+    <state width="1237" height="212" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1585578254539" />
+    <state width="726" height="204" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1536.824@0.0.1536.824" timestamp="1586982408859" />
+    <state width="725" height="205" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586335675487" />
+    <state width="1338" height="249" key="GridCell.Tab.0.center/0.0.1920.1026@0.0.1920.1026" timestamp="1585665044537" />
+    <state width="765" height="351" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1585508238264" />
+    <state width="726" height="204" key="GridCell.Tab.0.left" timestamp="1586982408859">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="686" height="244" key="GridCell.Tab.0.left/-2560.0.1463.806/0.0.1920.1050@-2560.0.1463.806" timestamp="1585556599664" />
+    <state width="686" height="248" key="GridCell.Tab.0.left/-2560.0.1463.806/0.0.1920.1050@0.0.1920.1050" timestamp="1585565933539" />
+    <state width="1237" height="212" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1585578254539" />
+    <state width="726" height="204" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1536.824@0.0.1536.824" timestamp="1586982408859" />
+    <state width="725" height="205" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586335675487" />
+    <state width="1338" height="249" key="GridCell.Tab.0.left/0.0.1920.1026@0.0.1920.1026" timestamp="1585665044537" />
+    <state width="765" height="351" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1585508238264" />
+    <state width="726" height="204" key="GridCell.Tab.0.right" timestamp="1586982408859">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="686" height="244" key="GridCell.Tab.0.right/-2560.0.1463.806/0.0.1920.1050@-2560.0.1463.806" timestamp="1585556599664" />
+    <state width="686" height="248" key="GridCell.Tab.0.right/-2560.0.1463.806/0.0.1920.1050@0.0.1920.1050" timestamp="1585565933539" />
+    <state width="1237" height="212" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1585578254539" />
+    <state width="726" height="204" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1536.824@0.0.1536.824" timestamp="1586982408859" />
+    <state width="725" height="205" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586335675488" />
+    <state width="1338" height="249" key="GridCell.Tab.0.right/0.0.1920.1026@0.0.1920.1026" timestamp="1585665044537" />
+    <state width="765" height="351" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1585508238265" />
+    <state width="1338" height="187" key="GridCell.Tab.1.bottom" timestamp="1585665044523">
+      <screen x="0" y="0" width="1920" height="1026" />
+    </state>
+    <state width="686" height="248" key="GridCell.Tab.1.bottom/-2560.0.1463.806/0.0.1920.1050@-2560.0.1463.806" timestamp="1585556537899" />
+    <state width="686" height="248" key="GridCell.Tab.1.bottom/-2560.0.1463.806/0.0.1920.1050@0.0.1920.1050" timestamp="1585565933540" />
+    <state width="1237" height="212" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1585578066049" />
+    <state width="1338" height="187" key="GridCell.Tab.1.bottom/0.0.1920.1026@0.0.1920.1026" timestamp="1585665044523" />
+    <state width="765" height="351" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1585508238265" />
+    <state width="1338" height="187" key="GridCell.Tab.1.center" timestamp="1585665044523">
+      <screen x="0" y="0" width="1920" height="1026" />
+    </state>
+    <state width="686" height="248" key="GridCell.Tab.1.center/-2560.0.1463.806/0.0.1920.1050@-2560.0.1463.806" timestamp="1585556537899" />
+    <state width="686" height="248" key="GridCell.Tab.1.center/-2560.0.1463.806/0.0.1920.1050@0.0.1920.1050" timestamp="1585565933540" />
+    <state width="1237" height="212" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1585578066049" />
+    <state width="1338" height="187" key="GridCell.Tab.1.center/0.0.1920.1026@0.0.1920.1026" timestamp="1585665044523" />
+    <state width="765" height="351" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1585508238265" />
+    <state width="1338" height="187" key="GridCell.Tab.1.left" timestamp="1585665044522">
+      <screen x="0" y="0" width="1920" height="1026" />
+    </state>
+    <state width="686" height="248" key="GridCell.Tab.1.left/-2560.0.1463.806/0.0.1920.1050@-2560.0.1463.806" timestamp="1585556537899" />
+    <state width="686" height="248" key="GridCell.Tab.1.left/-2560.0.1463.806/0.0.1920.1050@0.0.1920.1050" timestamp="1585565933540" />
+    <state width="1237" height="212" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1585578066049" />
+    <state width="1338" height="187" key="GridCell.Tab.1.left/0.0.1920.1026@0.0.1920.1026" timestamp="1585665044522" />
+    <state width="765" height="351" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1585508238265" />
+    <state width="1338" height="187" key="GridCell.Tab.1.right" timestamp="1585665044523">
+      <screen x="0" y="0" width="1920" height="1026" />
+    </state>
+    <state width="686" height="248" key="GridCell.Tab.1.right/-2560.0.1463.806/0.0.1920.1050@-2560.0.1463.806" timestamp="1585556537899" />
+    <state width="686" height="248" key="GridCell.Tab.1.right/-2560.0.1463.806/0.0.1920.1050@0.0.1920.1050" timestamp="1585565933540" />
+    <state width="1237" height="212" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1585578066049" />
+    <state width="1338" height="187" key="GridCell.Tab.1.right/0.0.1920.1026@0.0.1920.1026" timestamp="1585665044523" />
+    <state width="765" height="351" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1585508238265" />
+    <state x="474" y="71" width="1182" height="847" key="SettingsEditor" timestamp="1586210692883">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="474" y="71" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1586210692883" />
+    <state x="592" y="88" width="1182" height="847" key="SettingsEditor/0.0.1920.1026@0.0.1920.1026" timestamp="1585663079635" />
+    <state x="880" y="106" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1585501170192" />
+    <state x="1055" y="233" width="672" height="678" key="search.everywhere.popup" timestamp="1584960674957">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="1055" y="233" width="672" height="678" key="search.everywhere.popup/-2560.0.1463.806/0.0.1920.1050@0.0.1920.1050" timestamp="1584960674957" />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/../Contract/out/artifacts/Contract_jar/Contract.jar!/contract/ICallback.class" />
     <entry file="file://$PROJECT_DIR$/src/server/ServerRMI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="24" column="54" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="540">
+          <caret line="64" column="37" selection-start-line="64" selection-start-column="37" selection-end-line="64" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>ServerRMI</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.6" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>11</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Contract</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.116161615" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
+    <entry file="file://$PROJECT_DIR$/src/server/Worker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

@@ -5,13 +5,11 @@ import contrato.ICallback;
 import java.rmi.RemoteException;
 
 public class Worker implements Runnable {
-    private String workerId;
     private int start;
     private int numberOfPrimes;
     private ICallback listener;
 
-    public Worker(String workerId, int start, int numberOfPrimes, ICallback listener) {
-        this.workerId = workerId;
+    public Worker(int start, int numberOfPrimes, ICallback listener) {
         this.start = start;
         this.numberOfPrimes = numberOfPrimes;
         this.listener = listener;
@@ -23,10 +21,10 @@ public class Worker implements Runnable {
         try {
             for (int i = start; numberOfPrimes != 0; i++, numberOfPrimes--) {
                 if (isPrime(i)) {
-                    printId("Número primo encontrado: " + i);
+                    Thread.sleep(1000);
+                    printId("Found prime: " + i);
                     listener.nextPrime(i);
                 }
-                Thread.sleep(1000);
             }
             listener.endOfWork();
             printId("Worker END");
@@ -37,7 +35,7 @@ public class Worker implements Runnable {
 
     private void printId(String msg) {
         long threadId = Thread.currentThread().getId();
-        System.out.println("[Thread:" + threadId + "][Worker:" + workerId + "] " + msg);
+        System.out.println("[Thread:" + threadId + "] " + msg);
     }
 
     private static boolean isPrime(int num) {

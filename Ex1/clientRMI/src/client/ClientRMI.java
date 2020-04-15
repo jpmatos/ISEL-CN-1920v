@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -34,37 +35,36 @@ public class ClientRMI {
             Properties props = System.getProperties();
             props.put("java.rmi.server.hostname", clientIp);
 
-            ICallback callback = new CuriousAboutPrimes();
-
-            ICallback callbackStub = (ICallback) UnicastRemoteObject.exportObject(callback, 0);
-            System.out.println("Callback registerd @ " + callbackStub);
-
-
+            ArrayList<ICallback> callbacks = new ArrayList<>();
             while (true) {
-                System.out.print("ID: ");
+                System.out.println("ID: (0 to finish)");
                 String id = sc.nextLine();
-                System.out.print("Start: ");
+
+                if(id.equals("0"))
+                    break;
+
+                System.out.println("Start: ");
                 int start = sc.nextInt();
-                System.out.print("Number of Primes: ");
+                System.out.println("Number of Primes: ");
                 int numberOfPrimes = sc.nextInt();
-                svc.findPrimes(id, start, numberOfPrimes, callbackStub);
+
+                ICallback callback = new CuriousAboutPrimes(id);
+                ICallback callbackStub = (ICallback) UnicastRemoteObject.exportObject(callback, 0);
+                System.out.println("Callback registerd @ " + callbackStub);
+                callbacks.add(callback);
+
+                svc.findPrimes(start, numberOfPrimes, callbackStub);
                 sc.nextLine(); //clean buffer
             }
 
-//            while (!callbackStub.isFinished()) {}
-//            System.exit(0);
-
-
-//            System.out.print("Start: ");
-//            int start = sc.nextInt();
-//            System.out.print("Number of Primes: ");
-//            int numberOfPrimes = sc.nextInt();
-//            svc.findPrimes("dummy", start, numberOfPrimes, callbackStub);
-//
-//            while(!callbackStub.isFinished()){}
-//
-//            System.exit(0);
-        } catch (RemoteException | NotBoundException e) {
+            for (ICallback cb : callbacks) {
+                while (!cb.isFinished()) {
+                    System.out.println("Waiting for all callbacks...");
+                    Thread.sleep(1000);
+                }
+            }
+            System.exit(0);
+        } catch (RemoteException | NotBoundException | InterruptedException e) {
             e.printStackTrace();
         }
 

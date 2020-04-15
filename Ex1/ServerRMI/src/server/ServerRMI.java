@@ -52,7 +52,7 @@ public class ServerRMI implements IPrimesServices {
     }
 
     @Override
-    public void findPrimes(String workerId, int start, int numberOfPrimes, ICallback listener) throws RemoteException {
+    public void findPrimes(int start, int numberOfPrimes, ICallback listener) throws RemoteException {
 //        try {
 //            while (true) {
 //                System.out.println(Thread.currentThread().getId());
@@ -62,7 +62,7 @@ public class ServerRMI implements IPrimesServices {
 //            ex.printStackTrace();
 //        }
 
-        Runnable worker = new Worker(workerId, start, numberOfPrimes, listener);
+        Runnable worker = new Worker(start, numberOfPrimes, listener);
         executor.execute(worker);
     }
 
