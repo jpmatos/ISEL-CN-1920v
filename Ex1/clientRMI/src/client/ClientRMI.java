@@ -14,20 +14,25 @@ import java.util.Scanner;
 import static contrato.IPrimesServices.SERVICE_NAME;
 
 public class ClientRMI {
-    private final static String SERVER_IP = "localhost";
-    private final static String CLIENT_IP = "localhost";
-    private final static int REGISTER_PORT = 7000;
+    private static String serverIP = "localhost";
+    private static String clientIp = "localhost";
+    private static int registerPort = 7000;
 
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         try {
+            System.out.println("Parameters order: clientIp serverIp registerPort");
+            if (args.length > 0) clientIp = args[0];
+            if (args.length > 1) serverIP = args[1];
+            if (args.length > 2) registerPort = Integer.parseInt(args[2]);
+
             // lookup RMI server in registry
-            Registry registry = LocateRegistry.getRegistry(SERVER_IP, REGISTER_PORT);
+            Registry registry = LocateRegistry.getRegistry(serverIP, registerPort);
             IPrimesServices svc = (IPrimesServices) registry.lookup(SERVICE_NAME);
 
             Properties props = System.getProperties();
-            props.put("java.rmi.server.hostname", CLIENT_IP);
+            props.put("java.rmi.server.hostname", clientIp);
 
             ICallback callback = new CuriousAboutPrimes();
 

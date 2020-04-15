@@ -11,27 +11,30 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class ServerRMI implements IPrimesServices {
-    private final static int REGISTER_PORT = 7000;
-    private final static int SVC_PORT = 7001;
+    private  static int registerPort = 7000;
+    private  static int svcPort = 7001;
 
     static ServerRMI svc = null;
     static ExecutorService executor = Executors.newFixedThreadPool(5);
 
     public static void main(String[] args) {
         try {
+            System.out.println("Parameters order: rmiHostname registerPort svcPort");
             Properties props = System.getProperties();
             props.put("java.rmi.server.hostname", args[0]);
+
+            if (args.length > 1) registerPort = Integer.parseInt(args[1]);
+            if (args.length > 2) svcPort = Integer.parseInt(args[2]);
 
             // create server object
             svc = new ServerRMI();
 
-            IPrimesServices stubSvc = (IPrimesServices) UnicastRemoteObject.exportObject(svc, SVC_PORT);
+            IPrimesServices stubSvc = (IPrimesServices) UnicastRemoteObject.exportObject(svc, svcPort);
 
             // create local registry
-            Registry registry = LocateRegistry.createRegistry(REGISTER_PORT);
+            Registry registry = LocateRegistry.createRegistry(registerPort);
 
             System.out.println("Server registerd @ " + stubSvc);
             registry.rebind(SERVICE_NAME, stubSvc);  // register skeleton on registry
