@@ -16,7 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private PrimesInterval() {
-    id_ = "";
     start_ = 0;
     end_ = 0;
   }
@@ -52,18 +51,12 @@ private static final long serialVersionUID = 0L;
             }
             break;
           }
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            id_ = s;
-            break;
-          }
-          case 16: {
+          case 8: {
 
             start_ = input.readInt32();
             break;
           }
-          case 24: {
+          case 16: {
 
             end_ = input.readInt32();
             break;
@@ -92,53 +85,19 @@ private static final long serialVersionUID = 0L;
             primesservice.PrimesInterval.class, primesservice.PrimesInterval.Builder.class);
   }
 
-  public static final int ID_FIELD_NUMBER = 1;
-  private volatile java.lang.Object id_;
-  /**
-   * <code>string id = 1;</code>
-   */
-  public java.lang.String getId() {
-    java.lang.Object ref = id_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      id_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string id = 1;</code>
-   */
-  public com.google.protobuf.ByteString
-      getIdBytes() {
-    java.lang.Object ref = id_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      id_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int START_FIELD_NUMBER = 2;
+  public static final int START_FIELD_NUMBER = 1;
   private int start_;
   /**
-   * <code>int32 start = 2;</code>
+   * <code>int32 start = 1;</code>
    */
   public int getStart() {
     return start_;
   }
 
-  public static final int END_FIELD_NUMBER = 3;
+  public static final int END_FIELD_NUMBER = 2;
   private int end_;
   /**
-   * <code>int32 end = 3;</code>
+   * <code>int32 end = 2;</code>
    */
   public int getEnd() {
     return end_;
@@ -156,14 +115,11 @@ private static final long serialVersionUID = 0L;
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getIdBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
-    }
     if (start_ != 0) {
-      output.writeInt32(2, start_);
+      output.writeInt32(1, start_);
     }
     if (end_ != 0) {
-      output.writeInt32(3, end_);
+      output.writeInt32(2, end_);
     }
     unknownFields.writeTo(output);
   }
@@ -173,16 +129,13 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getIdBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
-    }
     if (start_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, start_);
+        .computeInt32Size(1, start_);
     }
     if (end_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(3, end_);
+        .computeInt32Size(2, end_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -200,8 +153,6 @@ private static final long serialVersionUID = 0L;
     primesservice.PrimesInterval other = (primesservice.PrimesInterval) obj;
 
     boolean result = true;
-    result = result && getId()
-        .equals(other.getId());
     result = result && (getStart()
         == other.getStart());
     result = result && (getEnd()
@@ -217,8 +168,6 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + ID_FIELD_NUMBER;
-    hash = (53 * hash) + getId().hashCode();
     hash = (37 * hash) + START_FIELD_NUMBER;
     hash = (53 * hash) + getStart();
     hash = (37 * hash) + END_FIELD_NUMBER;
@@ -352,8 +301,6 @@ private static final long serialVersionUID = 0L;
     }
     public Builder clear() {
       super.clear();
-      id_ = "";
-
       start_ = 0;
 
       end_ = 0;
@@ -380,7 +327,6 @@ private static final long serialVersionUID = 0L;
 
     public primesservice.PrimesInterval buildPartial() {
       primesservice.PrimesInterval result = new primesservice.PrimesInterval(this);
-      result.id_ = id_;
       result.start_ = start_;
       result.end_ = end_;
       onBuilt();
@@ -424,10 +370,6 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(primesservice.PrimesInterval other) {
       if (other == primesservice.PrimesInterval.getDefaultInstance()) return this;
-      if (!other.getId().isEmpty()) {
-        id_ = other.id_;
-        onChanged();
-      }
       if (other.getStart() != 0) {
         setStart(other.getStart());
       }
@@ -461,84 +403,15 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object id_ = "";
-    /**
-     * <code>string id = 1;</code>
-     */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string id = 1;</code>
-     */
-    public Builder setId(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      id_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string id = 1;</code>
-     */
-    public Builder clearId() {
-      
-      id_ = getDefaultInstance().getId();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string id = 1;</code>
-     */
-    public Builder setIdBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      id_ = value;
-      onChanged();
-      return this;
-    }
-
     private int start_ ;
     /**
-     * <code>int32 start = 2;</code>
+     * <code>int32 start = 1;</code>
      */
     public int getStart() {
       return start_;
     }
     /**
-     * <code>int32 start = 2;</code>
+     * <code>int32 start = 1;</code>
      */
     public Builder setStart(int value) {
       
@@ -547,7 +420,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>int32 start = 2;</code>
+     * <code>int32 start = 1;</code>
      */
     public Builder clearStart() {
       
@@ -558,13 +431,13 @@ private static final long serialVersionUID = 0L;
 
     private int end_ ;
     /**
-     * <code>int32 end = 3;</code>
+     * <code>int32 end = 2;</code>
      */
     public int getEnd() {
       return end_;
     }
     /**
-     * <code>int32 end = 3;</code>
+     * <code>int32 end = 2;</code>
      */
     public Builder setEnd(int value) {
       
@@ -573,7 +446,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>int32 end = 3;</code>
+     * <code>int32 end = 2;</code>
      */
     public Builder clearEnd() {
       

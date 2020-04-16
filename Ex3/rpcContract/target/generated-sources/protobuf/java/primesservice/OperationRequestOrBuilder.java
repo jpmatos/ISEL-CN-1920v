@@ -16,14 +16,4 @@ public interface OperationRequestOrBuilder extends
    * <code>int32 num2 = 2;</code>
    */
   int getNum2();
-
-  /**
-   * <code>string id = 3;</code>
-   */
-  java.lang.String getId();
-  /**
-   * <code>string id = 3;</code>
-   */
-  com.google.protobuf.ByteString
-      getIdBytes();
 }

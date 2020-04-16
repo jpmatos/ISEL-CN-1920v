@@ -8,17 +8,24 @@
   <component name="ChangeListManager">
     <list default="true" id="244c4cd6-761e-41f2-8708-f949cfa92087" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../Contrato/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Contrato/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Contrato/src/contrato/IPrimesServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Contrato/src/contrato/IPrimesServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ServerRMI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ServerRMI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Worker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../clientRMI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../clientRMI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../clientRMI/src/client/ClientRMI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../clientRMI/src/client/ClientRMI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../clientRMI/src/client/CuriousAboutPrimes.java" beforeDir="false" afterPath="$PROJECT_DIR$/../clientRMI/src/client/CuriousAboutPrimes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Ex3/BaseClientApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/BaseClientApp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/BaseClientApp/src/main/java/clientapp/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/BaseClientApp/src/main/java/clientapp/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/BaseClientApp/src/main/java/clientapp/PrimesStreamObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/BaseClientApp/src/main/java/clientapp/PrimesStreamObserver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Ex3/BaseServiceImpl/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/BaseServiceImpl/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/BaseServiceImpl/src/main/java/serverapp/AddNumbersObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/BaseServiceImpl/src/main/java/serverapp/AddNumbersObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/BaseServiceImpl/src/main/java/serverapp/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/BaseServiceImpl/src/main/java/serverapp/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Ex3/rpcContract/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/rpcContract/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/rpcContract/src/main/proto/rpcService.proto" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/rpcContract/src/main/proto/rpcService.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/rpcContract/target/classes/rpcService.proto" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/rpcContract/target/classes/rpcService.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationReplyOrBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationReplyOrBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationRequestOrBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationRequestOrBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/PrimesInterval.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/PrimesInterval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/PrimesIntervalOrBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/PrimesIntervalOrBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/RpcService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/RpcService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,7 +39,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/server/Worker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
+            <state relative-caret-position="315">
               <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
             </state>
           </provider>
@@ -183,12 +190,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1551295018498</updated>
-      <workItem from="1586992414326" duration="1488000" />
+      <workItem from="1586992414326" duration="2886000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1488000" />
+    <option name="totallyTimeSpent" value="2886000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="-1" width="1606" height="874" extended-state="6" />
@@ -209,7 +216,7 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32934928" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32934928" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -354,7 +361,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/server/Worker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
+        <state relative-caret-position="315">
           <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
         </state>
       </provider>

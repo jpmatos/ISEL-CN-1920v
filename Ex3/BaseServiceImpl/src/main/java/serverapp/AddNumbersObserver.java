@@ -5,14 +5,12 @@ import primesservice.Number;
 import primesservice.SumResult;
 
 public class AddNumbersObserver implements StreamObserver<Number> {
-    StreamObserver<SumResult> responseObserver;
-    int id;
+    private StreamObserver<SumResult> responseObserver;
     int sum;
 
 
-    public AddNumbersObserver(StreamObserver<SumResult> responseObserver, int id) {
+    public AddNumbersObserver(StreamObserver<SumResult> responseObserver) {
         this.responseObserver = responseObserver;
-        this.id = id;
         this.sum = 0;
     }
 
@@ -24,7 +22,7 @@ public class AddNumbersObserver implements StreamObserver<Number> {
             e.printStackTrace();
         }
         sum += number.getNumber();
-        System.out.println(String.format("[%d] Added '%d'. Current sum '%d'.", id, number.getNumber(), sum));
+        System.out.println(String.format("Added '%d'. Current sum '%d'.", number.getNumber(), sum));
     }
 
     @Override
@@ -37,6 +35,6 @@ public class AddNumbersObserver implements StreamObserver<Number> {
         SumResult sumResult = SumResult.newBuilder().setSumResult(sum).build();
         responseObserver.onNext(sumResult);
         responseObserver.onCompleted();
-        System.out.println(String.format("[%d] Total sum '%d'.", id, sum));
+        System.out.println(String.format("Total sum '%d'.", sum));
     }
 }

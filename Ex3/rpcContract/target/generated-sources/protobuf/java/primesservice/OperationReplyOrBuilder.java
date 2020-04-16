@@ -11,14 +11,4 @@ public interface OperationReplyOrBuilder extends
    * <code>int32 res = 1;</code>
    */
   int getRes();
-
-  /**
-   * <code>string id = 2;</code>
-   */
-  java.lang.String getId();
-  /**
-   * <code>string id = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getIdBytes();
 }

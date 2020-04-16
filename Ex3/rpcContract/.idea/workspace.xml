@@ -3,17 +3,24 @@
   <component name="ChangeListManager">
     <list default="true" id="d8e54ea4-5883-4862-b64a-0d8c4fbc2446" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../../Ex1/Contrato/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex1/Contrato/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Ex1/Contrato/src/contrato/IPrimesServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex1/Contrato/src/contrato/IPrimesServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Ex1/ServerRMI/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex1/ServerRMI/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Ex1/ServerRMI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex1/ServerRMI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Ex1/ServerRMI/src/server/ServerRMI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex1/ServerRMI/src/server/ServerRMI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Ex1/ServerRMI/src/server/Worker.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex1/ServerRMI/src/server/Worker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Ex1/clientRMI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex1/clientRMI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Ex1/clientRMI/src/client/ClientRMI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex1/clientRMI/src/client/ClientRMI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Ex1/clientRMI/src/client/CuriousAboutPrimes.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Ex1/clientRMI/src/client/CuriousAboutPrimes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BaseClientApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BaseClientApp/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BaseClientApp/src/main/java/clientapp/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BaseClientApp/src/main/java/clientapp/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BaseClientApp/src/main/java/clientapp/PrimesStreamObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BaseClientApp/src/main/java/clientapp/PrimesStreamObserver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../BaseServiceImpl/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../BaseServiceImpl/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BaseServiceImpl/src/main/java/serverapp/AddNumbersObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BaseServiceImpl/src/main/java/serverapp/AddNumbersObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../BaseServiceImpl/src/main/java/serverapp/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/../BaseServiceImpl/src/main/java/serverapp/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/proto/rpcService.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/proto/rpcService.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/rpcService.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/rpcService.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/OperationReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/OperationReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/OperationReplyOrBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/OperationReplyOrBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/OperationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/OperationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/OperationRequestOrBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/OperationRequestOrBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/PrimesInterval.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/PrimesInterval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/PrimesIntervalOrBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/PrimesIntervalOrBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/RpcService.java" beforeDir="false" afterPath="$PROJECT_DIR$/target/generated-sources/protobuf/java/primesservice/RpcService.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,8 +43,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/proto/rpcService.proto">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="47" column="18" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
+            <state relative-caret-position="240">
+              <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -83,7 +90,9 @@
     <option name="width" value="1386" />
     <option name="height" value="857" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -160,7 +169,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8528000" />
+    <option name="totallyTimeSpent" value="9157000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="-1" width="1606" height="874" extended-state="6" />
@@ -175,7 +184,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32934928" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32934928" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -190,7 +199,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Theme Preview" order="4" />
-      <window_info active="true" anchor="right" id="Maven" order="5" visible="true" weight="0.32991013" />
+      <window_info anchor="right" id="Maven" order="5" visible="true" weight="0.32991013" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Database" order="8" />
@@ -209,8 +218,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/proto/rpcService.proto">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="47" column="18" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
+        <state relative-caret-position="240">
+          <caret line="37" column="19" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="19" />
         </state>
       </provider>
     </entry>

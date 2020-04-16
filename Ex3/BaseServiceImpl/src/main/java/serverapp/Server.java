@@ -30,10 +30,9 @@ public class Server extends PrimesServiceGrpc.PrimesServiceImplBase {
 
     @Override
     public void findPrimes(NumOfPrimes request, StreamObserver<Prime> responseObserver) {
-        int id = 1000 + (int)(Math.random() * 1000);
-        System.out.println(String.format("[%d] FindPrimes called.", id));
+        System.out.println("FindPrimes called.");
         int found = 0;
-        for (int i = 0; found <= request.getNumOfPrimes(); i++) {
+        for (int i = 0; found < request.getNumOfPrimes(); i++) {
             int curr = request.getStartNum() + i;
             if(isPrime(curr))
             {
@@ -42,7 +41,7 @@ public class Server extends PrimesServiceGrpc.PrimesServiceImplBase {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(String.format("[%d] Found prime: '%d'.", id, curr));
+                System.out.println(String.format("Found prime: '%d'.", curr));
                 found++;
                 responseObserver.onNext(Prime.newBuilder().setPrime(curr).build());
             }
@@ -52,23 +51,21 @@ public class Server extends PrimesServiceGrpc.PrimesServiceImplBase {
 
     @Override
     public StreamObserver<Number> addNumbers(StreamObserver<SumResult> responseObserver) {
-        int id = 1000 + (int)(Math.random() * 1000);
-        System.out.println(String.format("[%d] AddNumbers called.", id));
-        AddNumbersObserver obs = new AddNumbersObserver(responseObserver, id);
+        System.out.println("AddNumbers called.");
+        AddNumbersObserver obs = new AddNumbersObserver(responseObserver);
         return obs;
     }
 
     @Override
     public StreamObserver<OperationRequest> addNumbersCont(StreamObserver<OperationReply> responseObserver) {
-//        int id = 1000 + (int)(Math.random() * 1000);
-        System.out.println(String.format("AddNumbersCont called."));
+        System.out.println("AddNumbersCont called.");
         AddNumbersContObserver obs = new AddNumbersContObserver(responseObserver);
         return obs;
     }
 
     @Override
     public void findPrimesInterval(PrimesInterval request, StreamObserver<Prime> responseObserver) {
-        System.out.println(String.format("[%s] FindPrimesInterval called. Start '%d'. End '%d'.", request.getId(), request.getStart(), request.getEnd()));
+        System.out.println(String.format("FindPrimesInterval called. Start '%d'. End '%d'.", request.getStart(), request.getEnd()));
         for (int i = 0; i < request.getEnd() - request.getStart(); i++) {
             int curr = request.getStart() + i;
             if(isPrime(curr))
@@ -78,7 +75,7 @@ public class Server extends PrimesServiceGrpc.PrimesServiceImplBase {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(String.format("[%s] Found prime: '%d'.", request.getId(), curr));
+                System.out.println(String.format("Found prime: '%d'.", curr));
                 responseObserver.onNext(Prime.newBuilder().setPrime(curr).build());
             }
         }

@@ -62,19 +62,18 @@ public final class RpcService {
       "OfPrimes\022\023\n\013numOfPrimes\030\001 \001(\005\022\020\n\010startNu" +
       "m\030\002 \001(\005\"\026\n\005Prime\022\r\n\005prime\030\001 \001(\005\"\036\n\tSumRe" +
       "sult\022\021\n\tsumResult\030\001 \001(\005\"\030\n\006Number\022\016\n\006num" +
-      "ber\030\001 \001(\005\":\n\020OperationRequest\022\014\n\004num1\030\001 " +
-      "\001(\005\022\014\n\004num2\030\002 \001(\005\022\n\n\002id\030\003 \001(\t\")\n\016Operati" +
-      "onReply\022\013\n\003res\030\001 \001(\005\022\n\n\002id\030\002 \001(\t\"8\n\016Prim" +
-      "esInterval\022\n\n\002id\030\001 \001(\t\022\r\n\005start\030\002 \001(\005\022\013\n" +
-      "\003end\030\003 \001(\0052\265\002\n\rPrimesService\022@\n\nfindPrim" +
-      "es\022\032.primesservice.NumOfPrimes\032\024.primess" +
-      "ervice.Prime0\001\022?\n\naddNumbers\022\025.primesser" +
-      "vice.Number\032\030.primesservice.SumResult(\001\022" +
-      "T\n\016addNumbersCont\022\037.primesservice.Operat" +
-      "ionRequest\032\035.primesservice.OperationRepl" +
-      "y(\0010\001\022K\n\022findPrimesInterval\022\035.primesserv" +
-      "ice.PrimesInterval\032\024.primesservice.Prime" +
-      "0\001B\021\n\rprimesserviceP\001b\006proto3"
+      "ber\030\001 \001(\005\".\n\020OperationRequest\022\014\n\004num1\030\001 " +
+      "\001(\005\022\014\n\004num2\030\002 \001(\005\"\035\n\016OperationReply\022\013\n\003r" +
+      "es\030\001 \001(\005\",\n\016PrimesInterval\022\r\n\005start\030\001 \001(" +
+      "\005\022\013\n\003end\030\002 \001(\0052\265\002\n\rPrimesService\022@\n\nfind" +
+      "Primes\022\032.primesservice.NumOfPrimes\032\024.pri" +
+      "messervice.Prime0\001\022?\n\naddNumbers\022\025.prime" +
+      "sservice.Number\032\030.primesservice.SumResul" +
+      "t(\001\022T\n\016addNumbersCont\022\037.primesservice.Op" +
+      "erationRequest\032\035.primesservice.Operation" +
+      "Reply(\0010\001\022K\n\022findPrimesInterval\022\035.primes" +
+      "service.PrimesInterval\032\024.primesservice.P" +
+      "rime0\001B\021\n\rprimesserviceP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -117,19 +116,19 @@ public final class RpcService {
     internal_static_primesservice_OperationRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_primesservice_OperationRequest_descriptor,
-        new java.lang.String[] { "Num1", "Num2", "Id", });
+        new java.lang.String[] { "Num1", "Num2", });
     internal_static_primesservice_OperationReply_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_primesservice_OperationReply_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_primesservice_OperationReply_descriptor,
-        new java.lang.String[] { "Res", "Id", });
+        new java.lang.String[] { "Res", });
     internal_static_primesservice_PrimesInterval_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_primesservice_PrimesInterval_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_primesservice_PrimesInterval_descriptor,
-        new java.lang.String[] { "Id", "Start", "End", });
+        new java.lang.String[] { "Start", "End", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -8,22 +8,12 @@ public interface PrimesIntervalOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string id = 1;</code>
-   */
-  java.lang.String getId();
-  /**
-   * <code>string id = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getIdBytes();
-
-  /**
-   * <code>int32 start = 2;</code>
+   * <code>int32 start = 1;</code>
    */
   int getStart();
 
   /**
-   * <code>int32 end = 3;</code>
+   * <code>int32 end = 2;</code>
    */
   int getEnd();
 }

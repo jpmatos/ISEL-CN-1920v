@@ -36,16 +36,13 @@ message Number {
 message OperationRequest {
     int32 num1 = 1;
     int32 num2 = 2;
-    string id = 3;
 }
 
 message OperationReply {
     int32 res = 1;
-    string id = 2;
 }
 
 message PrimesInterval {
-    string id = 1;
-    int32 start = 2;
-    int32 end = 3;
+    int32 start = 1;
+    int32 end = 2;
 }
