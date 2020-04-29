@@ -1,18 +1,26 @@
 package clientapp;
 
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.*;
 import com.google.protobuf.Empty;
 import forum.ForumGrpc;
 import forum.ForumMessage;
 import forum.SubscribeUnSubscribe;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import javafx.util.Pair;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Client {
 
@@ -21,7 +29,7 @@ public class Client {
     private static ManagedChannel channel;
     private static ForumGrpc.ForumStub stub;
     private static Scanner sc = new Scanner(System.in);
-
+    private static Queue<Pair<String, LocalDateTime>> messages = new ConcurrentLinkedQueue<>();
 
     public static void main(String[] args) {
         try {
@@ -31,6 +39,14 @@ public class Client {
                     .usePlaintext()
                     .build();
             stub = ForumGrpc.newStub(channel);
+
+            new Thread(() -> {
+                try {
+                    verifyBlobTimeout();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
 
             while (true) {
                 System.out.println(
@@ -121,6 +137,7 @@ public class Client {
 //        ForumMessage req = ForumMessage.newBuilder().setFromUser("joao").setTopicName("topic01").setTxtMsg("msg01[;bucket-g1-aus;world.tif]").build();
         EmptyStreamObserver emptyStreamObserver = new EmptyStreamObserver();
         stub.messagePublish(req, emptyStreamObserver);
+        messages.add(new Pair<>(text, LocalDateTime.now()));
     }
 
     private static void getAllTopics() throws InterruptedException {
@@ -128,5 +145,51 @@ public class Client {
         stub.getAllTopics(Empty.newBuilder().build(), topicStreamObserver);
         while (!topicStreamObserver.isComplete())
             Thread.sleep(1000);
+    }
+
+    private static void verifyBlobTimeout() throws InterruptedException {
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+
+        while (true){
+
+            //Wait 10 seconds before checking timeouts
+            Thread.sleep(10000);
+            for (Pair pair : messages) {
+
+                //Separate pair
+                String message = (String)pair.getKey();
+                LocalDateTime messageTime = (LocalDateTime) pair.getValue();
+
+                //Apply regex to message
+                Matcher match = Pattern.compile("\\[(.*?)\\]").matcher(message);
+                match.find();
+                String info = match.group(1);
+                if(info.length() > 0){
+
+                    //Split info
+                    String[] split = info.split(";");
+                    String bucketName = split[1];
+                    String blobName = split[2];
+
+                    //Get blob
+                    BlobId blobId = BlobId.of(bucketName, blobName);
+                    Blob blob = storage.get(blobId);
+                    Map<String, String> metadata = blob.getMetadata();
+
+                    //See if blob has Timeout
+                    if(!metadata.containsKey("Timeout"))
+                        continue;
+
+                    //Make blob private if Timeout already passed
+                    long timeout = Long.parseLong(metadata.get("Timeout"));
+                    if(messageTime.plusMinutes(timeout).isAfter(LocalDateTime.now()))
+                        continue;
+
+                    System.out.println(String.format("Blob 'gs://%s/%s' exceeded timeout of %d minutes! Making it private...", bucketName, blobName, timeout));
+                    blob.deleteAcl(Acl.User.ofAllUsers());
+                    messages.remove(pair);
+                }
+            }
+        }
     }
 }
