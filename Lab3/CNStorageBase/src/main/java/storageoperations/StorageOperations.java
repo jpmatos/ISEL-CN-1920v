@@ -206,5 +206,55 @@ public class StorageOperations {
 
     // Develop other Operations
 
+    public void setBlobPublic() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Qual o nome do Bucket?");
+        String bucketName = scan.nextLine();
+        System.out.println("Qual o nome para o Blob?");
+        String blobName = scan.nextLine();
+        BlobId blobId = BlobId.of(bucketName, blobName);
+        Blob blob = storage.get(blobId);
+        blob.updateAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
+        System.out.println("Blob access URL: " + "https://storage.googleapis.com/" + bucketName + "/" + blobName);
+    }
+
+    public void setBlobPrivate() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Qual o nome do Bucket?");
+        String bucketName = scan.nextLine();
+        System.out.println("Qual o nome para o Blob?");
+        String blobName = scan.nextLine();
+        BlobId blobId = BlobId.of(bucketName, blobName);
+        Blob blob = storage.get(blobId);
+        blob.deleteAcl(Acl.User.ofAllUsers());
+
+        System.out.println("Blob access URL: " + "https://storage.googleapis.com/" + bucketName + "/" + blobName);
+    }
+
+    public void setBlobWithCache() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Qual o nome do Bucket?");
+        String bucketName = scan.nextLine();
+        System.out.println("Qual o nome para o Blob?");
+        String blobName = scan.nextLine();
+        BlobId blobId = BlobId.of(bucketName, blobName);
+        Blob blob = storage.get(blobId);
+        blob.toBuilder().setCacheControl("public").build().update();
+
+        System.out.println("Blob access URL: " + "https://storage.googleapis.com/" + bucketName + "/" + blobName);
+    }
+
+    public void setBlobWithoutCache() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Qual o nome do Bucket?");
+        String bucketName = scan.nextLine();
+        System.out.println("Qual o nome para o Blob?");
+        String blobName = scan.nextLine();
+        BlobId blobId = BlobId.of(bucketName, blobName);
+        Blob blob = storage.get(blobId);
+        blob.toBuilder().setCacheControl("no-cache").build().update();
+
+        System.out.println("Blob access URL: " + "https://storage.googleapis.com/" + bucketName + "/" + blobName);
+    }
 }

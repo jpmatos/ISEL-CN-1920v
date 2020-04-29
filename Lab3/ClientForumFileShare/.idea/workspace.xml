@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1d57b5a4-bd8b-41c2-82ac-fe61b0db03b6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Lab2/Ex3/BaseClientApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lab2/Ex3/BaseClientApp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/clientapp/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/clientapp/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/clientapp/ForumMessageStreamObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/clientapp/ForumMessageStreamObserver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CNStorageBase/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CNStorageBase/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CNStorageBase/src/main/java/storageoperations/StorageOperations.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CNStorageBase/src/main/java/storageoperations/StorageOperations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CNStorageBase/src/main/java/storageoperations/TestStorageOperations.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CNStorageBase/src/main/java/storageoperations/TestStorageOperations.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -238,12 +237,12 @@
       <updated>1587939838230</updated>
       <workItem from="1587939839511" duration="10267000" />
       <workItem from="1588008962204" duration="1181000" />
-      <workItem from="1588140752029" duration="1714000" />
+      <workItem from="1588140752029" duration="2101000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13162000" />
+    <option name="totallyTimeSpent" value="13549000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="-1" width="1606" height="874" extended-state="6" />

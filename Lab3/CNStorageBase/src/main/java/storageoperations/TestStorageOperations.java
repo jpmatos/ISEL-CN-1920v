@@ -23,11 +23,15 @@ public class TestStorageOperations {
             System.out.println(" 2: Upload Blob to Bucket");
             System.out.println(" 3: Download Blob from Bucket");
             System.out.println(" 4: Delete a Bucket");
+            System.out.println(" 5: Set Blob public");
+            System.out.println(" 6: Set Blob private");
+            System.out.println(" 7: Set Blob with Cache");
+            System.out.println(" 8: Set Blob without Cache");
             System.out.println("..........");
             System.out.println("99: Exit");
             System.out.print("Enter an Option:");
             option = scan.nextInt();
-        } while (!((option >= 0 && option <= 4) || option == 99));
+        } while (!((option >= 0 && option <= 8) || option == 99));
         return option;
     }
 
@@ -74,6 +78,18 @@ public class TestStorageOperations {
                         soper.deleteBucket();
                         break;
                     // Other Operations
+                    case 5:
+                        soper.setBlobPublic();
+                        break;
+                    case 6:
+                        soper.setBlobPrivate();
+                        break;
+                    case 7:
+                        soper.setBlobWithCache();
+                        break;
+                    case 8:
+                        soper.setBlobWithoutCache();
+                        break;
                     case 99:
                         System.exit(0);
                 }
