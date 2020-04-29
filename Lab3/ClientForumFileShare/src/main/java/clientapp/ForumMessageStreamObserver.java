@@ -50,7 +50,7 @@ public class ForumMessageStreamObserver implements StreamObserver<ForumMessage> 
 
     private void downloadBlob(String bucketName, String blobName) {
         try{
-            Path downloadTo = Paths.get(downloadLocation + blobName);
+            Path downloadTo = Paths.get(downloadLocation + "/" + blobName);
             BlobId blobId = BlobId.of(bucketName, blobName);
             Blob blob = storage.get(blobId);
             if (blob == null) {

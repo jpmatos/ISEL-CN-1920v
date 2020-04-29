@@ -130,7 +130,7 @@ public class Client {
         System.out.println("Topic Name:");
         String topic = sc.next();
 
-        System.out.println("Text Message: *<text>[;<bucket>;<blob>]*");
+        System.out.println("Text Message: <text>[;<bucket>;<blob>]");
         String text = sc.next();
 
         ForumMessage req = ForumMessage.newBuilder().setFromUser(user).setTopicName(topic).setTxtMsg(text).build();
