@@ -214,6 +214,10 @@ public class StorageOperations {
         String blobName = scan.nextLine();
         BlobId blobId = BlobId.of(bucketName, blobName);
         Blob blob = storage.get(blobId);
+        if (blob == null) {
+            System.out.println("No such Blob exists !");
+            return;
+        }
         blob.updateAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
 
         System.out.println("Blob access URL: " + "https://storage.googleapis.com/" + bucketName + "/" + blobName);
@@ -227,6 +231,10 @@ public class StorageOperations {
         String blobName = scan.nextLine();
         BlobId blobId = BlobId.of(bucketName, blobName);
         Blob blob = storage.get(blobId);
+        if (blob == null) {
+            System.out.println("No such Blob exists !");
+            return;
+        }
         blob.deleteAcl(Acl.User.ofAllUsers());
 
         System.out.println("Blob access URL: " + "https://storage.googleapis.com/" + bucketName + "/" + blobName);
@@ -240,6 +248,10 @@ public class StorageOperations {
         String blobName = scan.nextLine();
         BlobId blobId = BlobId.of(bucketName, blobName);
         Blob blob = storage.get(blobId);
+        if (blob == null) {
+            System.out.println("No such Blob exists !");
+            return;
+        }
         blob.toBuilder().setCacheControl("public").build().update();
 
         System.out.println("Blob access URL: " + "https://storage.googleapis.com/" + bucketName + "/" + blobName);
@@ -253,6 +265,10 @@ public class StorageOperations {
         String blobName = scan.nextLine();
         BlobId blobId = BlobId.of(bucketName, blobName);
         Blob blob = storage.get(blobId);
+        if (blob == null) {
+            System.out.println("No such Blob exists !");
+            return;
+        }
         blob.toBuilder().setCacheControl("no-cache").build().update();
 
         System.out.println("Blob access URL: " + "https://storage.googleapis.com/" + bucketName + "/" + blobName);

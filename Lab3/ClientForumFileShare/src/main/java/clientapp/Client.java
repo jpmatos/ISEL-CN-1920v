@@ -11,9 +11,7 @@ import io.grpc.ManagedChannelBuilder;
 import javafx.util.Pair;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Queue;
@@ -29,7 +27,6 @@ public class Client {
     private static ManagedChannel channel;
     private static ForumGrpc.ForumStub stub;
     private static Scanner sc = new Scanner(System.in);
-    private static Queue<Pair<String, LocalDateTime>> messages = new ConcurrentLinkedQueue<>();
 
     public static void main(String[] args) {
         try {
@@ -48,13 +45,16 @@ public class Client {
                     .build();
             stub = ForumGrpc.newStub(channel);
 
-            new Thread(() -> {
-                try {
-                    verifyBlobTimeout();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).start();
+//            new Thread(() -> {
+//                try {
+//                    verifyBlobTimeout();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }).start();
+
+            System.out.println("User:");
+            String user = sc.next();
 
             while (true) {
                 System.out.println(
@@ -69,16 +69,16 @@ public class Client {
 
                 switch (oper) {
                     case 1:
-                        getAllTopics();
+                        getAllTopics(user);
                         break;
                     case 2:
-                        messagePublish();
+                        messagePublish(user);
                         break;
                     case 3:
-                        topicSubscribe(googleCredentialFile);
+                        topicSubscribe(user, googleCredentialFile);
                         break;
                     case 4:
-                        topicUnsubscribe();
+                        topicUnsubscribe(user);
                         break;
                     case 0:
                         System.exit(0);
@@ -91,10 +91,7 @@ public class Client {
         }
     }
 
-    private static void topicUnsubscribe() {
-        System.out.println("User:");
-        String user = sc.next();
-
+    private static void topicUnsubscribe(String user) {
         System.out.println("Topic Name:");
         String topic = sc.next();
 
@@ -104,10 +101,7 @@ public class Client {
         stub.topicUnSubscribe(unsub, emptyStreamObserver);
     }
 
-    private static void topicSubscribe(String googleCredentialFile) throws IOException {
-        System.out.println("User:");
-        String user = sc.next();
-
+    private static void topicSubscribe(String user, String googleCredentialFile) throws IOException {
         System.out.println("Topic Name:");
         String topic = sc.next();
 
@@ -131,10 +125,7 @@ public class Client {
         stub.topicSubscribe(sub,forumMessageStreamObserver);
     }
 
-    private static void messagePublish() {
-        System.out.println("User:");
-        String user = sc.next();
-
+    private static void messagePublish(String user) {
         System.out.println("Topic Name:");
         String topic = sc.next();
 
@@ -145,61 +136,57 @@ public class Client {
 //        ForumMessage req = ForumMessage.newBuilder().setFromUser("joao").setTopicName("topic01").setTxtMsg("msg01[;bucket-g1-aus;world.tif]").build();
         EmptyStreamObserver emptyStreamObserver = new EmptyStreamObserver();
         stub.messagePublish(req, emptyStreamObserver);
-        messages.add(new Pair<>(text, LocalDateTime.now()));
+
+        new Thread(() -> {
+            try {
+                verifyBlobTimeout(text);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
-    private static void getAllTopics() throws InterruptedException {
+    private static void getAllTopics(String user) throws InterruptedException {
         TopicStreamObserver topicStreamObserver = new TopicStreamObserver();
         stub.getAllTopics(Empty.newBuilder().build(), topicStreamObserver);
         while (!topicStreamObserver.isComplete())
             Thread.sleep(1000);
     }
 
-    private static void verifyBlobTimeout() throws InterruptedException {
+
+    private static void verifyBlobTimeout(String message) throws InterruptedException {
         Storage storage = StorageOptions.getDefaultInstance().getService();
 
-        while (true){
+        //Apply regex to message
+        Matcher match = Pattern.compile("\\[(.*?)\\]").matcher(message);
+        match.find();
+        String info = "";
+        if (match.groupCount() > 0)
+            info = match.group(1);
+        if (info.length() == 0)
+            return;
 
-            //Wait 10 seconds before checking timeouts
-            Thread.sleep(10000);
-            for (Pair pair : messages) {
+        //Split info
+        String[] split = info.split(";");
+        String bucketName = split[1];
+        String blobName = split[2];
 
-                //Separate pair
-                String message = (String)pair.getKey();
-                LocalDateTime messageTime = (LocalDateTime) pair.getValue();
+        //Get blob
+        BlobId blobId = BlobId.of(bucketName, blobName);
+        Blob blob = storage.get(blobId);
+        Map<String, String> metadata = blob.getMetadata();
 
-                //Apply regex to message
-                Matcher match = Pattern.compile("\\[(.*?)\\]").matcher(message);
-                match.find();
-                String info = "";
-                if(match.groupCount() > 0)
-                    info = match.group(1);
-                if(info.length() > 0){
+        //See if blob has Timeout
+        if (!metadata.containsKey("Timeout"))
+            return;
 
-                    //Split info
-                    String[] split = info.split(";");
-                    String bucketName = split[1];
-                    String blobName = split[2];
+        //Sleep Thread until timeout
+        int timeout = Integer.parseInt(metadata.get("Timeout"));
+        System.out.println(String.format("Blob 'gs://%s/%s' sleeping %d minutes...", bucketName, blobName, timeout));
+        Thread.sleep(timeout * 1000 * 60);
 
-                    //Get blob
-                    BlobId blobId = BlobId.of(bucketName, blobName);
-                    Blob blob = storage.get(blobId);
-                    Map<String, String> metadata = blob.getMetadata();
-
-                    //See if blob has Timeout
-                    if(!metadata.containsKey("Timeout"))
-                        continue;
-
-                    //Make blob private if Timeout already passed
-                    long timeout = Long.parseLong(metadata.get("Timeout"));
-                    if(messageTime.plusMinutes(timeout).isAfter(LocalDateTime.now()))
-                        continue;
-
-                    System.out.println(String.format("Blob 'gs://%s/%s' exceeded timeout of %d minutes! Making it private...", bucketName, blobName, timeout));
-                    blob.deleteAcl(Acl.User.ofAllUsers());
-                    messages.remove(pair);
-                }
-            }
-        }
+        //Make blob private
+        System.out.println(String.format("Blob 'gs://%s/%s' exceeded timeout of %d minutes! Making it private...", bucketName, blobName, timeout));
+        blob.deleteAcl(Acl.User.ofAllUsers());
     }
 }
