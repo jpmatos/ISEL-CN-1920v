@@ -1,0 +1,20 @@
+2020/04/29 07:27:13:35:352000000 : Server started, listening on port 8000
+2020/04/29 07:27:13:35:354000000 : *** server await termination
+2020/04/29 07:28:31:64:642000000 : Subscribe joao to topic01
+2020/04/29 07:28:31:64:642000000 : New subscriber joao for  a new topic topic01
+2020/04/29 07:29:47:75:759000000 : Publish message from joao to topic topic01:msg01[;bucket-g1-aus;world.tif]
+2020/04/29 07:29:47:75:759000000 : Go Publish to user:joao
+2020/04/29 07:31:22:03:31000000 : Unsubscribe joao to topic01
+2020/04/29 07:33:52:10:108000000 : Subscribe joao to topic01
+2020/04/29 07:33:52:10:108000000 : New subscriber joao for  a new topic topic01
+2020/04/29 07:34:23:66:661000000 : Publish message from joao to topic topic01:msg01[;bucket-g1-aus;world.tif]
+2020/04/29 07:34:23:66:662000000 : Go Publish to user:joao
+2020/04/29 07:35:21:91:910000000 : Unsubscribe joao to topic01
+2020/04/29 07:35:43:20:208000000 : Subscribe joao to topic01
+2020/04/29 07:35:43:20:209000000 : New subscriber joao for  a new topic topic01
+2020/04/29 07:35:52:88:884000000 : Publish message from joao to topic topic01:msg01[;bucket-g1-aus;world.tif]
+2020/04/29 07:35:52:88:885000000 : Go Publish to user:joao
+2020/04/29 07:36:38:11:114000000 : Publish message from joao to topic topic01:msg01[]
+2020/04/29 07:36:38:11:114000000 : Go Publish to user:joao
+2020/04/29 07:36:53:41:417000000 : *** shutting down gRPC server since JVM is shutting down
+2020/04/29 07:36:53:42:420000000 : *** server shut down

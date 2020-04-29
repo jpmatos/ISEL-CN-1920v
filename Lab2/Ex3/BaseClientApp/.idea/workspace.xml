@@ -2,164 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9f0d8ea-6501-41e5-8021-0b5758164497" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/Contrato/.idea/artifacts/Contrato_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/Contrato/.idea/artifacts/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/Contrato/.idea/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/Contrato/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/Contrato/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/Contrato/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/Contrato/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/Contrato/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/Contrato/src/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/Contrato/src/contrato/ICallback.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/Contrato/src/contrato/IPrimesServices.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/.idea/artifacts/ServerRMI_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/.idea/artifacts/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/.idea/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/.idea/libraries/Contrato.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/.idea/libraries/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/src/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/src/server/ServerRMI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/ServerRMI/src/server/Worker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/.idea/artifacts/clientRMI_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/.idea/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/.idea/libraries/Contrato.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/.idea/libraries/desktop.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/src/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/src/client/ClientRMI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex1/clientRMI/src/client/CuriousAboutPrimes.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/.idea/artifacts/BaseClientApp_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/src/main/java/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/src/main/java/clientapp/Client.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/src/main/java/clientapp/PrimesStreamObserver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/src/main/java/clientapp/SumContStreamObserver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/src/main/java/clientapp/SumStreamObserver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/target/classes/META-INF/BaseClientApp.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseClientApp/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/src/main/java/serverapp/AddNumbersContObserver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/src/main/java/serverapp/AddNumbersObserver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/src/main/java/serverapp/Server.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/BaseServiceImpl/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/src/main/proto/rpcService.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/classes/rpcService.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/grpc-java/primesservice/PrimesServiceGrpc.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/NumOfPrimes.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/NumOfPrimesOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/Number.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/NumberOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationReply.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationReplyOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/OperationRequestOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/Prime.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/PrimeOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/PrimesInterval.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/PrimesIntervalOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/RpcService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/SumResult.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/generated-sources/protobuf/java/primesservice/SumResultOrBuilder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/annotations.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/auth.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/backend.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/billing.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/client.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/config_change.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/consumer.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/context.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/control.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/distribution.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/documentation.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/endpoint.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/field_behavior.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/http.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/httpbody.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/label.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/launch_stage.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/log.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/logging.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/metric.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/monitored_resource.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/monitoring.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/quota.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/resource.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/service.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/source_info.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/system_parameter.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/api/usage.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/cloud/audit/audit_log.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/geo/type/viewport.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/logging/type/http_request.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/logging/type/log_severity.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/longrunning/operations.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/rpc/code.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/rpc/error_details.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/rpc/status.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/type/calendar_period.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/type/color.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/type/date.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/type/dayofweek.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/type/expr.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/type/fraction.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/type/latlng.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/type/money.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/type/postal_address.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/type/quaternion.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/0e79181e0ce7e2fa9cd8fcd6a52b588e/google/type/timeofday.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/any.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/api.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/compiler/plugin.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/descriptor.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/duration.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/empty.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/field_mask.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/source_context.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/struct.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/timestamp.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/type.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-dependencies/31cb06276b3d0f4d420e3f1dfd48ad2f/google/protobuf/wrappers.proto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-plugins/protoc-3.5.1-1-linux-x86_64.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Ex3/rpcContract/target/protoc-plugins/protoc-gen-grpc-java-1.18.0-linux-x86_64.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Lab3/ClientForumFileShare/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Lab3/ClientForumFileShare/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -191,7 +34,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="100" />
     <option name="y" value="10" />
     <option name="width" value="1386" />
@@ -282,7 +125,7 @@
     <option name="totallyTimeSpent" value="1268000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-3" y="-1" width="1606" height="874" extended-state="7" />
+    <frame x="-3" y="-1" width="1606" height="874" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Image Layers" />

@@ -18,10 +18,14 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
 
 public class ForumMessageStreamObserver implements StreamObserver<ForumMessage> {
+    StorageOptions storageOptions;
+    Storage storage;
     String id;
     String downloadLocation;
 
-    public ForumMessageStreamObserver(String id, String downloadLocation) {
+    public ForumMessageStreamObserver(StorageOptions storageOptions, String downloadLocation, String id) {
+        this.storageOptions = storageOptions;
+        this.storage = StorageOptions.getDefaultInstance().getService();
         this.id = id;
         this.downloadLocation = downloadLocation;
     }
@@ -46,10 +50,6 @@ public class ForumMessageStreamObserver implements StreamObserver<ForumMessage> 
 
     private void downloadBlob(String bucketName, String blobName) {
         try{
-            Storage storage = StorageOptions.getDefaultInstance().getService();
-            StorageOptions storageOptions = StorageOptions.getDefaultInstance();
-            String projID = storageOptions.getProjectId();
-
             Path downloadTo = Paths.get(downloadLocation + blobName);
             BlobId blobId = BlobId.of(bucketName, blobName);
             Blob blob = storage.get(blobId);
