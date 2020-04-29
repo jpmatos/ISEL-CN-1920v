@@ -33,6 +33,14 @@ public class Client {
 
     public static void main(String[] args) {
         try {
+            if (args.length == 2) {
+                svcIP=args[0];
+                svcPort=Integer.parseInt(args[1]);
+            }
+            String googleCredentialFile = "";
+            if (args.length == 3) {
+                googleCredentialFile = args[2];
+            }
             channel = ManagedChannelBuilder.forAddress(svcIP, svcPort)
                     // Channels are secure by default (via SSL/TLS). For the example we disable TLS to avoid
                     // needing certificates.
@@ -67,7 +75,7 @@ public class Client {
                         messagePublish();
                         break;
                     case 3:
-                        topicSubscribe(args);
+                        topicSubscribe(googleCredentialFile);
                         break;
                     case 4:
                         topicUnsubscribe();
@@ -96,7 +104,7 @@ public class Client {
         stub.topicUnSubscribe(unsub, emptyStreamObserver);
     }
 
-    private static void topicSubscribe(String[] args) throws IOException {
+    private static void topicSubscribe(String googleCredentialFile) throws IOException {
         System.out.println("User:");
         String user = sc.next();
 
@@ -110,10 +118,10 @@ public class Client {
         String id = sc.next();
 
         StorageOptions storageOptions;
-        if (args.length == 0) {
+        if (googleCredentialFile.equals("")) {
             storageOptions = StorageOptions.getDefaultInstance();
         } else {
-            GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(args[0]));
+            GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(googleCredentialFile));
             storageOptions = StorageOptions.newBuilder().setCredentials(credentials).build();
         }
         SubscribeUnSubscribe sub = SubscribeUnSubscribe.newBuilder().setUsrName(user).setTopicName(topic).build();
