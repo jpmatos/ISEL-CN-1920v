@@ -37,7 +37,9 @@ public class ForumMessageStreamObserver implements StreamObserver<ForumMessage> 
 
         Matcher match = Pattern.compile("\\[(.*?)\\]").matcher(forumMessage.getTxtMsg());
         match.find();
-        String info = match.group(1);
+        String info = "";
+        if(match.groupCount() > 0)
+            info = match.group(1);
         if(info.length() > 0){
             String[] split = info.split(";");
             String bucket = split[1];

@@ -171,7 +171,9 @@ public class Client {
                 //Apply regex to message
                 Matcher match = Pattern.compile("\\[(.*?)\\]").matcher(message);
                 match.find();
-                String info = match.group(1);
+                String info = "";
+                if(match.groupCount() > 0)
+                    info = match.group(1);
                 if(info.length() > 0){
 
                     //Split info
