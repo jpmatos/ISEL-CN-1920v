@@ -5,6 +5,15 @@ public class OcupacaoTemporaria {
     public Localizacao location;
     public Evento event;
 
-public OcupacaoTemporaria() {}
+    @Override
+    public String toString() {
+        return "OcupacaoTemporaria{" +
+                "ID=" + ID +
+                ", location=" + location +
+                ", event=" + event +
+                '}';
+    }
+
+    public OcupacaoTemporaria() {}
 
 }

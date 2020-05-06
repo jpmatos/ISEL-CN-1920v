@@ -12,5 +12,18 @@ public class Evento {
     public Licenciamento licenciamento;
     public Map<String, String>  details;
 
+    @Override
+    public String toString() {
+        return "Evento{" +
+                "evtID=" + evtID +
+                ", nome='" + nome + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", dtInicio=" + dtInicio +
+                ", dtFinal=" + dtFinal +
+                ", licenciamento=" + licenciamento +
+                ", details=" + details +
+                '}';
+    }
+
     public Evento() {}
 }

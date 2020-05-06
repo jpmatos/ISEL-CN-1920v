@@ -1,55 +1,108 @@
 package cn.operations;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.*;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.FirestoreOptions;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
+import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 public class Main {
+    private static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
+        try{
+            GoogleCredentials credentials = GoogleCredentials.getApplicationDefault();
+            FirestoreOptions options = FirestoreOptions.newBuilder().setCredentials(credentials).build();
+            Firestore db = options.getService();
+            Operations operations = new Operations(db);
 
-    }
+            while (true) {
+                System.out.println(
+                        "------------------\n" +
+                                "Pick an operation:\n" +
+                                "[1] - Insert Document\n" +
+                                "[2] - Show Document by ID\n" +
+                                "[3] - Delete Document by ID and Name\n" +
+                                "[4] - Get Freguesia\n" +
+                                "[5] - Get Document Complex\n" +
+                                "[6] - \n" +
+                                "[0] - Quit");
+                int oper = sc.nextInt();
 
-    public static OcupacaoTemporaria convertLineToObject (String line) throws ParseException {
-        String[] cols = line.split(",");
-        OcupacaoTemporaria ocup = new OcupacaoTemporaria();
-        ocup.ID = Integer.parseInt(cols[0]);
-        ocup.location = new Localizacao();
-        ocup.location.point = new GeoPoint(Double.parseDouble(cols[1]), Double.parseDouble(cols[2]));
-        ocup.location.coord = new Coordenadas();
-        ocup.location.coord.X = Double.parseDouble(cols[1]);
-        ocup.location.coord.Y = Double.parseDouble(cols[2]);
-        ocup.location.freguesia = cols[3];
-        ocup.location.local = cols[4];
-        ocup.event = new Evento();
-        ocup.event.evtID = Integer.parseInt(cols[5]);
-        ocup.event.nome = cols[6];
-        ocup.event.tipo = cols[7];
-        ocup.event.details = new HashMap<String, String>();
-        if (!cols[8].isEmpty()) ocup.event.details.put("Participantes", cols[8]);
-        if (!cols[9].isEmpty()) ocup.event.details.put("Custo", cols[9]);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        ocup.event.dtInicio = formatter.parse(cols[10]);
-        ocup.event.dtFinal = formatter.parse(cols[11]);
-        ocup.event.licenciamento = new Licenciamento();
-        ocup.event.licenciamento.code = cols[12];
-        ocup.event.licenciamento.dtLicenc = formatter.parse(cols[13]);
-        return ocup;
-    }
-
-    public static void insertDocuments(String pathnameCSV, Firestore db, String collectionName)
-            throws Exception {
-        BufferedReader reader = new BufferedReader(new FileReader(pathnameCSV));
-        CollectionReference colRef = db.collection(collectionName);
-        String line;
-        while ((line = reader.readLine()) != null) {
-            OcupacaoTemporaria ocup = convertLineToObject(line);
-            DocumentReference docRef = colRef.document(ocup.ID + "");
-            ApiFuture<WriteResult> result = docRef.set(ocup);
+                switch (oper) {
+                    case 1:
+                        operations.insertDocuments();
+                        break;
+                    case 2:
+                        showDocumentID(operations);
+                        break;
+                    case 3:
+                        deleteDocumentIDFieldName(operations);
+                        break;
+                    case 4:
+                        getDocumentsByFreguesia(operations);
+                        break;
+                    case 5:
+                        getDocumentsGreaterIDByFreguesiaByEvent(operations);
+                        break;
+                    case 0:
+                        System.exit(0);
+                    default:
+                        System.out.println("Unknown operation");
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+    }
+
+    private static void getDocumentsGreaterIDByFreguesiaByEvent(Operations operations) throws ExecutionException, InterruptedException {
+        System.out.println("Collection Name:");
+        String collectionName = sc.next();
+
+        System.out.println("ID: ");
+        int ID = sc.nextInt();
+
+        System.out.println("Freguesia: ");
+        String freguesia = sc.next();
+
+        System.out.println("Event: ");
+        String event = sc.next();
+
+        operations.getDocumentsGreaterIDByFreguesiaByEvent(collectionName, ID, freguesia, event);
+    }
+
+    private static void getDocumentsByFreguesia(Operations operations) throws ExecutionException, InterruptedException {
+        System.out.println("Collection Name:");
+        String collectionName = sc.next();
+
+        System.out.println("Freguesia:");
+        String freguesia = sc.next();
+
+        operations.getDocumentByFreguesia(collectionName, freguesia);
+    }
+
+    private static void deleteDocumentIDFieldName(Operations operations) throws ExecutionException, InterruptedException {
+        System.out.println("Collection Name:");
+        String collectionName = sc.next();
+
+        System.out.println("ID:");
+        String ID = sc.next();
+
+        System.out.println("Field Name:");
+        String fieldName = sc.next();
+
+        operations.deleteDocumentIDFieldName(collectionName, ID, fieldName);
+    }
+
+    private static void showDocumentID(Operations operations) throws ExecutionException, InterruptedException {
+        System.out.println("Collection Name:");
+        String collectionName = sc.next();
+
+        System.out.println("ID:");
+        String ID = sc.next();
+
+        operations.showDocumentByID(collectionName, ID);
     }
 }

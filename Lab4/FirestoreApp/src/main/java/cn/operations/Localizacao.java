@@ -8,5 +8,15 @@ public class Localizacao {
   public String freguesia;
   public String local;
 
+  @Override
+  public String toString() {
+    return "Localizacao{" +
+            "point=" + point +
+            ", coord=" + coord +
+            ", freguesia='" + freguesia + '\'' +
+            ", local='" + local + '\'' +
+            '}';
+  }
+
   public Localizacao() {}
 }

@@ -4,5 +4,13 @@ public class Coordenadas {
   public Double X;
   public Double Y;
 
-    public Coordenadas() {}
+  @Override
+  public String toString() {
+    return "Coordenadas{" +
+            "X=" + X +
+            ", Y=" + Y +
+            '}';
+  }
+
+  public Coordenadas() {}
 }
