@@ -4,6 +4,7 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.WriteResult;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
+import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 
 import java.util.Map;
@@ -18,7 +19,7 @@ public class MessageReceiveHandler implements MessageReceiver {
 
     public void receiveMessage(PubsubMessage msg, AckReplyConsumer ackReply) {
         try {
-            insertDocument(msg.getAttributesMap(), msg.getMessageId());
+            insertDocument(msg.getAttributesMap(), msg.getData(), msg.getMessageId());
             ackReply.ack();
         } catch (Exception e) {
             e.printStackTrace();
@@ -26,9 +27,10 @@ public class MessageReceiveHandler implements MessageReceiver {
         }
     }
 
-    private void insertDocument(Map<String, String> attributesMap, String messageId) throws ExecutionException, InterruptedException {
+    private void insertDocument(Map<String, String> attributesMap, ByteString data, String messageId) throws ExecutionException, InterruptedException {
         Sale sale = new Sale(
             messageId,
+            data.toStringUtf8(),
             attributesMap.get("caixa"),
             attributesMap.get("item"),
             Double.valueOf(attributesMap.get("quant")),
