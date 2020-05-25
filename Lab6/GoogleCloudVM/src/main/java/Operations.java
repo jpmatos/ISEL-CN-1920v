@@ -24,7 +24,7 @@ public class Operations {
         }
     }
 
-    public Operation createNewInstance(String instanceName, String projectID, String zoneName, String machineType) throws IOException {
+    public Operation.Error createNewInstance(String instanceName, String projectID, String zoneName, String machineType) throws IOException, InterruptedException {
         Instance instance = new Instance();
         instance.setName(instanceName);
         instance.setMachineType(
@@ -40,13 +40,14 @@ public class Operations {
         Compute.Instances.Insert insert =
                 compute.instances().insert(projectID, zoneName, instance);
         Operation op = insert.execute();
-        return op;
+        return waitOperation(compute, op, projectID);
     }
 
-    public Operation deleteVM(String projectID, String zoneName, String instanceName) throws IOException {
+    public Operation.Error deleteVM(String projectID, String zoneName, String instanceName) throws IOException, InterruptedException {
         Compute.Instances.Delete delete =
                 compute.instances().delete(projectID, zoneName, instanceName);
-        return delete.execute();
+        Operation op = delete.execute();
+        return waitOperation(compute, op, projectID);
     }
 
     public void listGroupManagers(String projectID, String zoneName) throws IOException {
@@ -60,11 +61,12 @@ public class Operations {
         }
     }
 
-    public Operation resizeInstanceGroup(String projectID, String zoneName, String instanceGroup, int newSize) throws IOException {
+    public Operation.Error resizeInstanceGroup(String projectID, String zoneName, String instanceGroup, int newSize) throws IOException, InterruptedException {
         Compute.InstanceGroupManagers.Resize request = compute
                 .instanceGroupManagers()
                 .resize(projectID, zoneName, instanceGroup, newSize);
-        return request.execute();
+        Operation op = request.execute();
+        return waitOperation(compute, op, projectID);
     }
 
     private NetworkInterface createNetworkInterface(String projectID)
@@ -100,5 +102,20 @@ public class Operations {
                 + zoneName + "/diskTypes/pd-standard");
         disk.setInitializeParams(params);
         return disk;
+    }
+
+    public Operation.Error waitOperation(Compute compute, Operation op, String projectID) throws InterruptedException, IOException {
+        String zone = op.getZone(); // null for global/regional operations
+        if (zone != null) {
+            String[] bits = zone.split("/");
+            zone = bits[bits.length - 1];
+        }
+        while (!op.getStatus().equals("DONE")) {
+            Thread.sleep(5000);
+            Compute.ZoneOperations.Get get =
+                    compute.zoneOperations().get(projectID, zone, op.getName());
+            op = get.execute();
+        }
+        return op == null ? null : op.getError();
     }
 }

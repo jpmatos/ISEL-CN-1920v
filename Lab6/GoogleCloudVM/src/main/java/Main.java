@@ -5,6 +5,8 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.compute.Compute;
 import com.google.api.services.compute.ComputeScopes;
+import com.google.api.services.compute.model.NetworkInterface;
+import com.google.api.services.compute.model.Operation;
 import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auth.oauth2.GoogleCredentials;
 
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    private final static String PROJECT_ID = "g01-li61n";
+    private static String PROJECT_ID;
 
     public static void main(String[] args) {
 
@@ -29,6 +31,8 @@ public class Main {
                     .Builder(transport, jsonFactory, requestInit)
                     .setApplicationName(PROJECT_ID)
                     .build();
+
+            PROJECT_ID = ScanUtils.getInputString("Project ID: ", "g01-li61n");
 
             Operations operations = new Operations(computeService);
             while (true) {
@@ -68,33 +72,39 @@ public class Main {
         }
     }
 
-    private static void resizeInstanceGroup(Operations operations) throws IOException {
-        String instanceGroup = ScanUtils.getInputString("Instance group:");
-        String zoneName = ScanUtils.getInputString("Zone name:"); // europe-west1-c
+    private static void resizeInstanceGroup(Operations operations) throws IOException, InterruptedException {
+        String instanceGroup = ScanUtils.getInputString("Instance group:", null);
+        String zoneName = ScanUtils.getInputString("Zone name:", "us-central1-a");
         int newSize = ScanUtils.getInputInt("New size:");
-        operations.resizeInstanceGroup(PROJECT_ID, zoneName, instanceGroup, newSize);
+        Operation.Error err = operations.resizeInstanceGroup(PROJECT_ID, zoneName, instanceGroup, newSize);
+        if(err != null)
+            System.out.println(err);
     }
 
     private static void listGroupManagers(Operations operations) throws IOException {
-        String zoneName = ScanUtils.getInputString("Zone name:"); // europe-west1-c
+        String zoneName = ScanUtils.getInputString("Zone name:", "us-central1-a");
         operations.listGroupManagers(PROJECT_ID, zoneName);
     }
 
-    private static void deleteVM(Operations operations) throws IOException {
-        String instanceName = ScanUtils.getInputString("Instance name:");
-        String zoneName = ScanUtils.getInputString("Zone name:"); // europe-west1-c
-        operations.deleteVM(PROJECT_ID, zoneName, instanceName);
+    private static void deleteVM(Operations operations) throws IOException, InterruptedException {
+        String instanceName = ScanUtils.getInputString("Instance name:", null);
+        String zoneName = ScanUtils.getInputString("Zone name:", "europe-west2-c");
+        Operation.Error err = operations.deleteVM(PROJECT_ID, zoneName, instanceName);
+        if(err != null)
+            System.out.println(err);
     }
 
-    private static void createNewInstance(Operations operations) throws IOException {
-        String instanceName = ScanUtils.getInputString("Instance name:");
-        String zoneName = ScanUtils.getInputString("Zone name"); // europe-west1-c
-        String machineType = ScanUtils.getInputString("Machine type"); // f1-micro
-        operations.createNewInstance(instanceName, PROJECT_ID, zoneName, machineType);
+    private static void createNewInstance(Operations operations) throws IOException, InterruptedException {
+        String instanceName = ScanUtils.getInputString("Instance name:", null);
+        String zoneName = ScanUtils.getInputString("Zone name", "europe-west2-c");
+        String machineType = ScanUtils.getInputString("Machine type", "f1-micro");
+        Operation.Error err = operations.createNewInstance(instanceName, PROJECT_ID, zoneName, machineType);
+        if(err != null)
+            System.out.println(err);
     }
 
     private static void listVMs(Operations operations) throws IOException {
-        String zoneName = ScanUtils.getInputString("Zone name:"); // europe-west1-c
+        String zoneName = ScanUtils.getInputString("Zone name:", "europe-west2-c");
         operations.listVms(PROJECT_ID, zoneName);
     }
 }
