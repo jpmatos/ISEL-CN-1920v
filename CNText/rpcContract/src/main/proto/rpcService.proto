@@ -1,0 +1,48 @@
+syntax = "proto3";
+option java_multiple_files = true;
+option java_package = "cntext";
+
+package cntext;
+
+service cnText {
+    rpc start (Login) returns (Session);
+    rpc close (Session) returns (CloseResponse);
+    rpc upload (UploadRequest) returns (UploadRequestResponse);
+    rpc consult (UploadRequestResponse) returns (stream UploadStatus);
+    rpc translate (TranslateRequest) returns (TranslateResponse);
+}
+
+message Login {
+    string user = 1;
+}
+
+message Session {
+    string sessionId = 1;
+}
+
+message CloseResponse {
+    string response = 1;
+}
+
+message UploadRequest {
+    bytes image = 1;
+    string sessionId = 2;
+}
+
+message UploadRequestResponse {
+    string uploadToken = 1;
+}
+
+message UploadStatus {
+    string status = 1;
+}
+
+message TranslateRequest {
+    string uploadToken = 1;
+    string language = 2;
+    string sessionId = 3;
+}
+
+message TranslateResponse {
+    string translation = 1;
+}
