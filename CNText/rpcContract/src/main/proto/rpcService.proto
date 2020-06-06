@@ -1,23 +1,33 @@
 syntax = "proto3";
 option java_multiple_files = true;
-option java_package = "cntext";
+option java_package = "CnText";
 
-package cntext;
+package CnText;
 
-service cnText {
+service CnText {
     rpc start (Login) returns (Session);
     rpc close (Session) returns (CloseResponse);
     rpc upload (UploadRequest) returns (UploadRequestResponse);
-    rpc consult (UploadRequestResponse) returns (stream UploadStatus);
+//    rpc consult (UploadRequestResponse) returns (stream UploadStatus);
     rpc translate (TranslateRequest) returns (TranslateResponse);
+}
+
+enum LoginStatus {
+    SUCCESS = 0;
+    UNKNOWN_USER = 1;
+    WRONG_PASSWORD = 2;
+    COMMUNICATION_ERROR = 3;
 }
 
 message Login {
     string user = 1;
+    string password = 2;
 }
 
 message Session {
     string sessionId = 1;
+    string user = 2;
+    LoginStatus status = 3;
 }
 
 message CloseResponse {
@@ -31,11 +41,12 @@ message UploadRequest {
 
 message UploadRequestResponse {
     string uploadToken = 1;
+    string status = 2;
 }
 
-message UploadStatus {
-    string status = 1;
-}
+//message UploadStatus {
+//    string status = 1;
+//}
 
 message TranslateRequest {
     string uploadToken = 1;
@@ -45,4 +56,5 @@ message TranslateRequest {
 
 message TranslateResponse {
     string translation = 1;
+    string status = 2;
 }
