@@ -98,7 +98,7 @@ public final class CnTextGrpc {
       fullMethodName = SERVICE_NAME + '/' + "upload",
       requestType = CnText.UploadRequest.class,
       responseType = CnText.UploadRequestResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
   public static io.grpc.MethodDescriptor<CnText.UploadRequest,
       CnText.UploadRequestResponse> getUploadMethod() {
     io.grpc.MethodDescriptor<CnText.UploadRequest, CnText.UploadRequestResponse> getUploadMethod;
@@ -107,7 +107,7 @@ public final class CnTextGrpc {
         if ((getUploadMethod = CnTextGrpc.getUploadMethod) == null) {
           CnTextGrpc.getUploadMethod = getUploadMethod = 
               io.grpc.MethodDescriptor.<CnText.UploadRequest, CnText.UploadRequestResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "CnText.CnText", "upload"))
               .setSampledToLocalTracing(true)
@@ -130,7 +130,7 @@ public final class CnTextGrpc {
       fullMethodName = SERVICE_NAME + '/' + "translate",
       requestType = CnText.TranslateRequest.class,
       responseType = CnText.TranslateResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
   public static io.grpc.MethodDescriptor<CnText.TranslateRequest,
       CnText.TranslateResponse> getTranslateMethod() {
     io.grpc.MethodDescriptor<CnText.TranslateRequest, CnText.TranslateResponse> getTranslateMethod;
@@ -139,7 +139,7 @@ public final class CnTextGrpc {
         if ((getTranslateMethod = CnTextGrpc.getTranslateMethod) == null) {
           CnTextGrpc.getTranslateMethod = getTranslateMethod = 
               io.grpc.MethodDescriptor.<CnText.TranslateRequest, CnText.TranslateResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "CnText.CnText", "translate"))
               .setSampledToLocalTracing(true)
@@ -204,9 +204,6 @@ public final class CnTextGrpc {
     }
 
     /**
-     * <pre>
-     *    rpc consult (UploadRequestResponse) returns (stream UploadStatus);
-     * </pre>
      */
     public void translate(CnText.TranslateRequest request,
         io.grpc.stub.StreamObserver<CnText.TranslateResponse> responseObserver) {
@@ -231,14 +228,14 @@ public final class CnTextGrpc {
                   this, METHODID_CLOSE)))
           .addMethod(
             getUploadMethod(),
-            asyncUnaryCall(
+            asyncServerStreamingCall(
               new MethodHandlers<
                 CnText.UploadRequest,
                 CnText.UploadRequestResponse>(
                   this, METHODID_UPLOAD)))
           .addMethod(
             getTranslateMethod(),
-            asyncUnaryCall(
+            asyncServerStreamingCall(
               new MethodHandlers<
                 CnText.TranslateRequest,
                 CnText.TranslateResponse>(
@@ -285,18 +282,15 @@ public final class CnTextGrpc {
      */
     public void upload(CnText.UploadRequest request,
         io.grpc.stub.StreamObserver<CnText.UploadRequestResponse> responseObserver) {
-      asyncUnaryCall(
+      asyncServerStreamingCall(
           getChannel().newCall(getUploadMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
-     * <pre>
-     *    rpc consult (UploadRequestResponse) returns (stream UploadStatus);
-     * </pre>
      */
     public void translate(CnText.TranslateRequest request,
         io.grpc.stub.StreamObserver<CnText.TranslateResponse> responseObserver) {
-      asyncUnaryCall(
+      asyncServerStreamingCall(
           getChannel().newCall(getTranslateMethod(), getCallOptions()), request, responseObserver);
     }
   }
@@ -335,18 +329,17 @@ public final class CnTextGrpc {
 
     /**
      */
-    public CnText.UploadRequestResponse upload(CnText.UploadRequest request) {
-      return blockingUnaryCall(
+    public java.util.Iterator<CnText.UploadRequestResponse> upload(
+        CnText.UploadRequest request) {
+      return blockingServerStreamingCall(
           getChannel(), getUploadMethod(), getCallOptions(), request);
     }
 
     /**
-     * <pre>
-     *    rpc consult (UploadRequestResponse) returns (stream UploadStatus);
-     * </pre>
      */
-    public CnText.TranslateResponse translate(CnText.TranslateRequest request) {
-      return blockingUnaryCall(
+    public java.util.Iterator<CnText.TranslateResponse> translate(
+        CnText.TranslateRequest request) {
+      return blockingServerStreamingCall(
           getChannel(), getTranslateMethod(), getCallOptions(), request);
     }
   }
@@ -383,25 +376,6 @@ public final class CnTextGrpc {
         CnText.Session request) {
       return futureUnaryCall(
           getChannel().newCall(getCloseMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
-    public com.google.common.util.concurrent.ListenableFuture<CnText.UploadRequestResponse> upload(
-        CnText.UploadRequest request) {
-      return futureUnaryCall(
-          getChannel().newCall(getUploadMethod(), getCallOptions()), request);
-    }
-
-    /**
-     * <pre>
-     *    rpc consult (UploadRequestResponse) returns (stream UploadStatus);
-     * </pre>
-     */
-    public com.google.common.util.concurrent.ListenableFuture<CnText.TranslateResponse> translate(
-        CnText.TranslateRequest request) {
-      return futureUnaryCall(
-          getChannel().newCall(getTranslateMethod(), getCallOptions()), request);
     }
   }
 

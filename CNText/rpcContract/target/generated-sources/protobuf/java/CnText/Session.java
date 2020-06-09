@@ -196,7 +196,7 @@ private static final long serialVersionUID = 0L;
     if (!getUserBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, user_);
     }
-    if (status_ != CnText.LoginStatus.SUCCESS.getNumber()) {
+    if (status_ != CnText.LoginStatus.LOGIN_SUCCESS.getNumber()) {
       output.writeEnum(3, status_);
     }
     unknownFields.writeTo(output);
@@ -213,7 +213,7 @@ private static final long serialVersionUID = 0L;
     if (!getUserBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, user_);
     }
-    if (status_ != CnText.LoginStatus.SUCCESS.getNumber()) {
+    if (status_ != CnText.LoginStatus.LOGIN_SUCCESS.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(3, status_);
     }

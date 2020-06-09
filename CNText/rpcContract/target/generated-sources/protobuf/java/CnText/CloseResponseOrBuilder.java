@@ -8,12 +8,11 @@ public interface CloseResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string response = 1;</code>
+   * <code>.CnText.LogoutStatus status = 1;</code>
    */
-  java.lang.String getResponse();
+  int getStatusValue();
   /**
-   * <code>string response = 1;</code>
+   * <code>.CnText.LogoutStatus status = 1;</code>
    */
-  com.google.protobuf.ByteString
-      getResponseBytes();
+  CnText.LogoutStatus getStatus();
 }

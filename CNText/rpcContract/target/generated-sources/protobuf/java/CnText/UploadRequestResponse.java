@@ -17,7 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private UploadRequestResponse() {
     uploadToken_ = "";
-    status_ = "";
+    status_ = 0;
   }
 
   @java.lang.Override
@@ -57,10 +57,10 @@ private static final long serialVersionUID = 0L;
             uploadToken_ = s;
             break;
           }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 24: {
+            int rawValue = input.readEnum();
 
-            status_ = s;
+            status_ = rawValue;
             break;
           }
         }
@@ -121,38 +121,20 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int STATUS_FIELD_NUMBER = 2;
-  private volatile java.lang.Object status_;
+  public static final int STATUS_FIELD_NUMBER = 3;
+  private int status_;
   /**
-   * <code>string status = 2;</code>
+   * <code>.CnText.UploadStatus status = 3;</code>
    */
-  public java.lang.String getStatus() {
-    java.lang.Object ref = status_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      status_ = s;
-      return s;
-    }
+  public int getStatusValue() {
+    return status_;
   }
   /**
-   * <code>string status = 2;</code>
+   * <code>.CnText.UploadStatus status = 3;</code>
    */
-  public com.google.protobuf.ByteString
-      getStatusBytes() {
-    java.lang.Object ref = status_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      status_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public CnText.UploadStatus getStatus() {
+    CnText.UploadStatus result = CnText.UploadStatus.valueOf(status_);
+    return result == null ? CnText.UploadStatus.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -170,8 +152,8 @@ private static final long serialVersionUID = 0L;
     if (!getUploadTokenBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, uploadToken_);
     }
-    if (!getStatusBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, status_);
+    if (status_ != CnText.UploadStatus.UPLOAD_SUCCESS.getNumber()) {
+      output.writeEnum(3, status_);
     }
     unknownFields.writeTo(output);
   }
@@ -184,8 +166,9 @@ private static final long serialVersionUID = 0L;
     if (!getUploadTokenBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, uploadToken_);
     }
-    if (!getStatusBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, status_);
+    if (status_ != CnText.UploadStatus.UPLOAD_SUCCESS.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(3, status_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -205,8 +188,7 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getUploadToken()
         .equals(other.getUploadToken());
-    result = result && getStatus()
-        .equals(other.getStatus());
+    result = result && status_ == other.status_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -221,7 +203,7 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + UPLOADTOKEN_FIELD_NUMBER;
     hash = (53 * hash) + getUploadToken().hashCode();
     hash = (37 * hash) + STATUS_FIELD_NUMBER;
-    hash = (53 * hash) + getStatus().hashCode();
+    hash = (53 * hash) + status_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -353,7 +335,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       uploadToken_ = "";
 
-      status_ = "";
+      status_ = 0;
 
       return this;
     }
@@ -424,9 +406,8 @@ private static final long serialVersionUID = 0L;
         uploadToken_ = other.uploadToken_;
         onChanged();
       }
-      if (!other.getStatus().isEmpty()) {
-        status_ = other.status_;
-        onChanged();
+      if (other.status_ != 0) {
+        setStatusValue(other.getStatusValue());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -524,71 +505,46 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object status_ = "";
+    private int status_ = 0;
     /**
-     * <code>string status = 2;</code>
+     * <code>.CnText.UploadStatus status = 3;</code>
      */
-    public java.lang.String getStatus() {
-      java.lang.Object ref = status_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        status_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getStatusValue() {
+      return status_;
     }
     /**
-     * <code>string status = 2;</code>
+     * <code>.CnText.UploadStatus status = 3;</code>
      */
-    public com.google.protobuf.ByteString
-        getStatusBytes() {
-      java.lang.Object ref = status_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        status_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string status = 2;</code>
-     */
-    public Builder setStatus(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+    public Builder setStatusValue(int value) {
       status_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string status = 2;</code>
+     * <code>.CnText.UploadStatus status = 3;</code>
+     */
+    public CnText.UploadStatus getStatus() {
+      CnText.UploadStatus result = CnText.UploadStatus.valueOf(status_);
+      return result == null ? CnText.UploadStatus.UNRECOGNIZED : result;
+    }
+    /**
+     * <code>.CnText.UploadStatus status = 3;</code>
+     */
+    public Builder setStatus(CnText.UploadStatus value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      status_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.CnText.UploadStatus status = 3;</code>
      */
     public Builder clearStatus() {
       
-      status_ = getDefaultInstance().getStatus();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string status = 2;</code>
-     */
-    public Builder setStatusBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      status_ = value;
+      status_ = 0;
       onChanged();
       return this;
     }

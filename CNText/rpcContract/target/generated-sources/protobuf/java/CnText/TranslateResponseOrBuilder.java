@@ -18,12 +18,11 @@ public interface TranslateResponseOrBuilder extends
       getTranslationBytes();
 
   /**
-   * <code>string status = 2;</code>
+   * <code>.CnText.TranslateStatus status = 3;</code>
    */
-  java.lang.String getStatus();
+  int getStatusValue();
   /**
-   * <code>string status = 2;</code>
+   * <code>.CnText.TranslateStatus status = 3;</code>
    */
-  com.google.protobuf.ByteString
-      getStatusBytes();
+  CnText.TranslateStatus getStatus();
 }

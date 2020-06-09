@@ -1,11 +1,10 @@
 package clientapp;
 
 import CnText.*;
-import clientapp.observers.TranslateRequestObserver;
+import clientapp.observers.TranslationRequestObserver;
 import clientapp.observers.UploadRequestObserver;
-import clientapp.utils.CompletedTranslations;
-import clientapp.utils.CompletedUploads;
-import clientapp.utils.IOpers;
+import clientapp.utils.ITranslationRequest;
+import clientapp.utils.IUploadRequest;
 import com.google.protobuf.ByteString;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -15,13 +14,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class Operations implements IOpers {
+import static CnText.TranslateStatus.TRANSLATE_SUCCESS;
+import static CnText.UploadStatus.UPLOAD_SUCCESS;
+
+public class Operations {
     private final ManagedChannel channel;
     private final CnTextGrpc.CnTextStub noBlockStub;
     private final CnTextGrpc.CnTextBlockingStub blockingStub;
     private Session session;
-    private ArrayList<CompletedUploads> completedUploads = new ArrayList<>();
-    private ArrayList<CompletedTranslations> completedTranslations = new ArrayList<>();
+    private ArrayList<UploadRequestObserver> uploadRequests = new ArrayList<>();
+    private ArrayList<TranslationRequestObserver> translationRequests = new ArrayList<>();
 
     public Operations(String svcIP, int svcPort) {
         channel = ManagedChannelBuilder.forAddress(svcIP, svcPort)
@@ -35,47 +37,43 @@ public class Operations implements IOpers {
         try {
             Session res = blockingStub.start(Login.newBuilder().setUser(username).setPassword(password).build());
 
-            if (res.getStatus() == LoginStatus.SUCCESS)
+            if (res.getStatus() == LoginStatus.LOGIN_SUCCESS)
                 this.session = res;
 
             return res.getStatus();
         }
         catch (Exception e){
-            return LoginStatus.COMMUNICATION_ERROR;
+            return LoginStatus.LOGIN_COMMUNICATION_ERROR;
         }
     }
 
     public void upload(Path path) throws IOException {
         byte[] file = Files.readAllBytes(path);
         ByteString bs = ByteString.copyFrom(file);
-        UploadRequestObserver urObserver = new UploadRequestObserver(this, path.getFileName().toString());
-        noBlockStub.upload(UploadRequest.newBuilder().setImage(bs).setSessionId(session.getSessionId()).build(), urObserver);
+        UploadRequestObserver urObserver = new UploadRequestObserver(path.getFileName().toString());
+        UploadRequest uploadRequest = UploadRequest.newBuilder()
+                .setImage(bs)
+                .setSessionId(session.getSessionId())
+                .build();
+        noBlockStub.upload(uploadRequest, urObserver);
+        uploadRequests.add(urObserver);
     }
 
-    public void translate(String uploadToken, String language){
+    public void translate(String uploadToken, String filename, String language){
+        TranslationRequestObserver trObserver = new TranslationRequestObserver(uploadToken, filename, language);
         TranslateRequest translateRequest = TranslateRequest.newBuilder()
                 .setUploadToken(uploadToken)
                 .setLanguage(language)
                 .setSessionId(session.getSessionId())
                 .build();
-        TranslateRequestObserver trObserver = new TranslateRequestObserver(this, uploadToken, language);
         noBlockStub.translate(translateRequest, trObserver);
+        translationRequests.add(trObserver);
     }
 
-    public void logout() {
-        //TODO Rework this response into a enum like in login
+    public LogoutStatus logout() {
         CloseResponse closeResponse = blockingStub.close(session);
         session = null;
-    }
-
-    @Override
-    public void addToCompletedObserversList(UploadRequestObserver urObserver) {
-        completedUploads.add(new CompletedUploads(urObserver.getFilename(), urObserver.getUploadToken()));
-    }
-
-    @Override
-    public void addToCompletedTranslationsList(TranslateRequestObserver trObserver) {
-        completedTranslations.add(new CompletedTranslations(trObserver.getUploadToken(), trObserver.getTranslation(), trObserver.getLanguage()));
+        return closeResponse.getStatus();
     }
 
     public boolean isLogged() {
@@ -89,11 +87,49 @@ public class Operations implements IOpers {
             return session.getUser();
     }
 
-    public ArrayList<CompletedUploads> getCompletedUploads() {
-        return completedUploads;
+    public ArrayList<ITranslationRequest> getTranslationSuccesses() {
+        ArrayList<ITranslationRequest> res = new ArrayList<>();
+        for (TranslationRequestObserver req : translationRequests) {
+            if(req.getStatus() == TRANSLATE_SUCCESS)
+                res.add(req);
+        }
+        return res;
     }
 
-    public ArrayList<CompletedTranslations> getCompletedTranslations() {
-        return completedTranslations;
+    public ArrayList<ITranslationRequest> getTranslationOngoing() {
+        ArrayList<ITranslationRequest> res = new ArrayList<>();
+        for (TranslationRequestObserver req : translationRequests) {
+            if(!req.isCompleted())
+                res.add(req);
+        }
+        return res;
+    }
+
+    public ArrayList<ITranslationRequest> getTranslationAllRequests() {
+        ArrayList<ITranslationRequest> res = new ArrayList<>(translationRequests);
+        return res;
+    }
+
+    public ArrayList<IUploadRequest> getUploadSuccesses() {
+        ArrayList<IUploadRequest> res = new ArrayList<>();
+        for (UploadRequestObserver req : uploadRequests) {
+            if(req.getStatus() == UPLOAD_SUCCESS)
+                res.add(req);
+        }
+        return res;
+    }
+
+    public ArrayList<IUploadRequest> getUploadOngoing() {
+        ArrayList<IUploadRequest> res = new ArrayList<>();
+        for (UploadRequestObserver req : uploadRequests) {
+            if(!req.isCompleted())
+                res.add(req);
+        }
+        return res;
+    }
+
+    public ArrayList<IUploadRequest> getUploadAllRequests() {
+        ArrayList<IUploadRequest> res = new ArrayList<>(uploadRequests);
+        return res;
     }
 }

@@ -4,45 +4,37 @@
 package CnText;
 
 /**
- * Protobuf enum {@code CnText.LoginStatus}
+ * Protobuf enum {@code CnText.LogoutStatus}
  */
-public enum LoginStatus
+public enum LogoutStatus
     implements com.google.protobuf.ProtocolMessageEnum {
   /**
-   * <code>LOGIN_SUCCESS = 0;</code>
+   * <code>LOGOUT_SUCCESS = 0;</code>
    */
-  LOGIN_SUCCESS(0),
+  LOGOUT_SUCCESS(0),
   /**
-   * <code>LOGIN_COMMUNICATION_ERROR = 1;</code>
+   * <code>LOGOUT_COMMUNICATION_ERROR = 1;</code>
    */
-  LOGIN_COMMUNICATION_ERROR(1),
+  LOGOUT_COMMUNICATION_ERROR(1),
   /**
-   * <code>UNKNOWN_USER = 2;</code>
+   * <code>LOGOUT_INVALID_SESSION = 2;</code>
    */
-  UNKNOWN_USER(2),
-  /**
-   * <code>WRONG_PASSWORD = 3;</code>
-   */
-  WRONG_PASSWORD(3),
+  LOGOUT_INVALID_SESSION(2),
   UNRECOGNIZED(-1),
   ;
 
   /**
-   * <code>LOGIN_SUCCESS = 0;</code>
+   * <code>LOGOUT_SUCCESS = 0;</code>
    */
-  public static final int LOGIN_SUCCESS_VALUE = 0;
+  public static final int LOGOUT_SUCCESS_VALUE = 0;
   /**
-   * <code>LOGIN_COMMUNICATION_ERROR = 1;</code>
+   * <code>LOGOUT_COMMUNICATION_ERROR = 1;</code>
    */
-  public static final int LOGIN_COMMUNICATION_ERROR_VALUE = 1;
+  public static final int LOGOUT_COMMUNICATION_ERROR_VALUE = 1;
   /**
-   * <code>UNKNOWN_USER = 2;</code>
+   * <code>LOGOUT_INVALID_SESSION = 2;</code>
    */
-  public static final int UNKNOWN_USER_VALUE = 2;
-  /**
-   * <code>WRONG_PASSWORD = 3;</code>
-   */
-  public static final int WRONG_PASSWORD_VALUE = 3;
+  public static final int LOGOUT_INVALID_SESSION_VALUE = 2;
 
 
   public final int getNumber() {
@@ -57,29 +49,28 @@ public enum LoginStatus
    * @deprecated Use {@link #forNumber(int)} instead.
    */
   @java.lang.Deprecated
-  public static LoginStatus valueOf(int value) {
+  public static LogoutStatus valueOf(int value) {
     return forNumber(value);
   }
 
-  public static LoginStatus forNumber(int value) {
+  public static LogoutStatus forNumber(int value) {
     switch (value) {
-      case 0: return LOGIN_SUCCESS;
-      case 1: return LOGIN_COMMUNICATION_ERROR;
-      case 2: return UNKNOWN_USER;
-      case 3: return WRONG_PASSWORD;
+      case 0: return LOGOUT_SUCCESS;
+      case 1: return LOGOUT_COMMUNICATION_ERROR;
+      case 2: return LOGOUT_INVALID_SESSION;
       default: return null;
     }
   }
 
-  public static com.google.protobuf.Internal.EnumLiteMap<LoginStatus>
+  public static com.google.protobuf.Internal.EnumLiteMap<LogoutStatus>
       internalGetValueMap() {
     return internalValueMap;
   }
   private static final com.google.protobuf.Internal.EnumLiteMap<
-      LoginStatus> internalValueMap =
-        new com.google.protobuf.Internal.EnumLiteMap<LoginStatus>() {
-          public LoginStatus findValueByNumber(int number) {
-            return LoginStatus.forNumber(number);
+      LogoutStatus> internalValueMap =
+        new com.google.protobuf.Internal.EnumLiteMap<LogoutStatus>() {
+          public LogoutStatus findValueByNumber(int number) {
+            return LogoutStatus.forNumber(number);
           }
         };
 
@@ -93,12 +84,12 @@ public enum LoginStatus
   }
   public static final com.google.protobuf.Descriptors.EnumDescriptor
       getDescriptor() {
-    return CnText.RpcService.getDescriptor().getEnumTypes().get(0);
+    return CnText.RpcService.getDescriptor().getEnumTypes().get(3);
   }
 
-  private static final LoginStatus[] VALUES = values();
+  private static final LogoutStatus[] VALUES = values();
 
-  public static LoginStatus valueOf(
+  public static LogoutStatus valueOf(
       com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
     if (desc.getType() != getDescriptor()) {
       throw new java.lang.IllegalArgumentException(
@@ -112,10 +103,10 @@ public enum LoginStatus
 
   private final int value;
 
-  private LoginStatus(int value) {
+  private LogoutStatus(int value) {
     this.value = value;
   }
 
-  // @@protoc_insertion_point(enum_scope:CnText.LoginStatus)
+  // @@protoc_insertion_point(enum_scope:CnText.LogoutStatus)
 }
 

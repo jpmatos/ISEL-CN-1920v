@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private CloseResponse() {
-    response_ = "";
+    status_ = 0;
   }
 
   @java.lang.Override
@@ -50,10 +50,10 @@ private static final long serialVersionUID = 0L;
             }
             break;
           }
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 8: {
+            int rawValue = input.readEnum();
 
-            response_ = s;
+            status_ = rawValue;
             break;
           }
         }
@@ -80,38 +80,20 @@ private static final long serialVersionUID = 0L;
             CnText.CloseResponse.class, CnText.CloseResponse.Builder.class);
   }
 
-  public static final int RESPONSE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object response_;
+  public static final int STATUS_FIELD_NUMBER = 1;
+  private int status_;
   /**
-   * <code>string response = 1;</code>
+   * <code>.CnText.LogoutStatus status = 1;</code>
    */
-  public java.lang.String getResponse() {
-    java.lang.Object ref = response_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      response_ = s;
-      return s;
-    }
+  public int getStatusValue() {
+    return status_;
   }
   /**
-   * <code>string response = 1;</code>
+   * <code>.CnText.LogoutStatus status = 1;</code>
    */
-  public com.google.protobuf.ByteString
-      getResponseBytes() {
-    java.lang.Object ref = response_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      response_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public CnText.LogoutStatus getStatus() {
+    CnText.LogoutStatus result = CnText.LogoutStatus.valueOf(status_);
+    return result == null ? CnText.LogoutStatus.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -126,8 +108,8 @@ private static final long serialVersionUID = 0L;
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getResponseBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, response_);
+    if (status_ != CnText.LogoutStatus.LOGOUT_SUCCESS.getNumber()) {
+      output.writeEnum(1, status_);
     }
     unknownFields.writeTo(output);
   }
@@ -137,8 +119,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getResponseBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, response_);
+    if (status_ != CnText.LogoutStatus.LOGOUT_SUCCESS.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(1, status_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -156,8 +139,7 @@ private static final long serialVersionUID = 0L;
     CnText.CloseResponse other = (CnText.CloseResponse) obj;
 
     boolean result = true;
-    result = result && getResponse()
-        .equals(other.getResponse());
+    result = result && status_ == other.status_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -169,8 +151,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + RESPONSE_FIELD_NUMBER;
-    hash = (53 * hash) + getResponse().hashCode();
+    hash = (37 * hash) + STATUS_FIELD_NUMBER;
+    hash = (53 * hash) + status_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -300,7 +282,7 @@ private static final long serialVersionUID = 0L;
     }
     public Builder clear() {
       super.clear();
-      response_ = "";
+      status_ = 0;
 
       return this;
     }
@@ -324,7 +306,7 @@ private static final long serialVersionUID = 0L;
 
     public CnText.CloseResponse buildPartial() {
       CnText.CloseResponse result = new CnText.CloseResponse(this);
-      result.response_ = response_;
+      result.status_ = status_;
       onBuilt();
       return result;
     }
@@ -366,9 +348,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(CnText.CloseResponse other) {
       if (other == CnText.CloseResponse.getDefaultInstance()) return this;
-      if (!other.getResponse().isEmpty()) {
-        response_ = other.response_;
-        onChanged();
+      if (other.status_ != 0) {
+        setStatusValue(other.getStatusValue());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -397,71 +378,46 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object response_ = "";
+    private int status_ = 0;
     /**
-     * <code>string response = 1;</code>
+     * <code>.CnText.LogoutStatus status = 1;</code>
      */
-    public java.lang.String getResponse() {
-      java.lang.Object ref = response_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        response_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getStatusValue() {
+      return status_;
     }
     /**
-     * <code>string response = 1;</code>
+     * <code>.CnText.LogoutStatus status = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getResponseBytes() {
-      java.lang.Object ref = response_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        response_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string response = 1;</code>
-     */
-    public Builder setResponse(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      response_ = value;
+    public Builder setStatusValue(int value) {
+      status_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string response = 1;</code>
+     * <code>.CnText.LogoutStatus status = 1;</code>
      */
-    public Builder clearResponse() {
+    public CnText.LogoutStatus getStatus() {
+      CnText.LogoutStatus result = CnText.LogoutStatus.valueOf(status_);
+      return result == null ? CnText.LogoutStatus.UNRECOGNIZED : result;
+    }
+    /**
+     * <code>.CnText.LogoutStatus status = 1;</code>
+     */
+    public Builder setStatus(CnText.LogoutStatus value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
       
-      response_ = getDefaultInstance().getResponse();
+      status_ = value.getNumber();
       onChanged();
       return this;
     }
     /**
-     * <code>string response = 1;</code>
+     * <code>.CnText.LogoutStatus status = 1;</code>
      */
-    public Builder setResponseBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+    public Builder clearStatus() {
       
-      response_ = value;
+      status_ = 0;
       onChanged();
       return this;
     }

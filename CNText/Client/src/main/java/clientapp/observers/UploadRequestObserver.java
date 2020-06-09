@@ -1,24 +1,36 @@
 package clientapp.observers;
 
 import CnText.UploadRequestResponse;
-import clientapp.utils.IOpers;
+import CnText.UploadStatus;
+import clientapp.utils.IUploadRequest;
 import io.grpc.stub.StreamObserver;
 
-public class UploadRequestObserver implements StreamObserver<UploadRequestResponse> {
-    private IOpers operations;
+public class UploadRequestObserver implements StreamObserver<UploadRequestResponse>, IUploadRequest {
     private String fileName;
     private String uploadToken;
-    private String status;
+    private UploadStatus status;
+    private boolean completed = false;
 
-    public UploadRequestObserver(IOpers operations, String fileName) {
-        this.operations = operations;
+    public UploadRequestObserver(String fileName) {
         this.fileName = fileName;
     }
 
+    @Override
     public String getUploadToken(){
         return uploadToken;
     }
 
+    @Override
+    public UploadStatus getStatus() {
+        return status;
+    }
+
+    @Override
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    @Override
     public String getFilename() {
         return this.fileName;
     }
@@ -30,21 +42,18 @@ public class UploadRequestObserver implements StreamObserver<UploadRequestRespon
             this.uploadToken = uploadRequestResponse.getUploadToken();
         this.status = uploadRequestResponse.getStatus();
 
-        System.out.println(String.format("[%s] - %s", this.uploadToken, this.status));
+        System.out.println(String.format("[%s] Update - %s", this.uploadToken, this.status));
     }
 
     @Override
     public void onError(Throwable throwable) {
-        this.status = "Failed";
-
-        System.out.println(String.format("[%s] - %s", this.uploadToken, this.status));
+        completed = true;
+        System.out.println(String.format("[%s] Failure - %s", this.uploadToken, this.status));
     }
 
     @Override
     public void onCompleted() {
-        operations.addToCompletedObserversList(this);
-        this.status = "Success";
-
-        System.out.println(String.format("[%s] - %s", this.uploadToken, this.status));
+        completed = true;
+        System.out.println(String.format("[%s] Completed - %s", this.uploadToken, this.status));
     }
 }

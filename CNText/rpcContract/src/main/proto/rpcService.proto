@@ -7,16 +7,38 @@ package CnText;
 service CnText {
     rpc start (Login) returns (Session);
     rpc close (Session) returns (CloseResponse);
-    rpc upload (UploadRequest) returns (UploadRequestResponse);
-//    rpc consult (UploadRequestResponse) returns (stream UploadStatus);
-    rpc translate (TranslateRequest) returns (TranslateResponse);
+    rpc upload (UploadRequest) returns (stream UploadRequestResponse);
+    rpc translate (TranslateRequest) returns (stream TranslateResponse);
 }
 
 enum LoginStatus {
-    SUCCESS = 0;
-    UNKNOWN_USER = 1;
-    WRONG_PASSWORD = 2;
-    COMMUNICATION_ERROR = 3;
+    LOGIN_SUCCESS = 0;
+    LOGIN_COMMUNICATION_ERROR = 1;
+    UNKNOWN_USER = 2;
+    WRONG_PASSWORD = 3;
+}
+
+enum UploadStatus {
+    UPLOAD_SUCCESS = 0;
+    UPLOAD_COMMUNICATION_ERROR = 1;
+    UPLOAD_INVALID_SESSION = 2;
+    IMAGE_TOO_BIG = 3;
+    UNSUPPORTED_FORMAT = 4;
+    IMAGE_CORRUPTED = 5;
+}
+
+enum TranslateStatus {
+    TRANSLATE_SUCCESS = 0;
+    TRANSLATE_COMMUNICATION_ERROR = 1;
+    TRANSLATE_INVALID_SESSION = 2;
+    UNSUPPORTED_LANGUAGE = 3;
+    INVALID_TOKEN = 4;
+}
+
+enum LogoutStatus {
+    LOGOUT_SUCCESS = 0;
+    LOGOUT_COMMUNICATION_ERROR = 1;
+    LOGOUT_INVALID_SESSION = 2;
 }
 
 message Login {
@@ -31,7 +53,7 @@ message Session {
 }
 
 message CloseResponse {
-    string response = 1;
+    LogoutStatus status = 1;
 }
 
 message UploadRequest {
@@ -41,12 +63,8 @@ message UploadRequest {
 
 message UploadRequestResponse {
     string uploadToken = 1;
-    string status = 2;
+    UploadStatus status = 3;
 }
-
-//message UploadStatus {
-//    string status = 1;
-//}
 
 message TranslateRequest {
     string uploadToken = 1;
@@ -56,5 +74,5 @@ message TranslateRequest {
 
 message TranslateResponse {
     string translation = 1;
-    string status = 2;
+    TranslateStatus status = 3;
 }

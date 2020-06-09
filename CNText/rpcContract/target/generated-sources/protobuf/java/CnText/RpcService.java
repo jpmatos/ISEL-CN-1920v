@@ -61,23 +61,35 @@ public final class RpcService {
       "\n\020rpcService.proto\022\006CnText\"\'\n\005Login\022\014\n\004u" +
       "ser\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"O\n\007Session\022\021" +
       "\n\tsessionId\030\001 \001(\t\022\014\n\004user\030\002 \001(\t\022#\n\006statu" +
-      "s\030\003 \001(\0162\023.CnText.LoginStatus\"!\n\rCloseRes" +
-      "ponse\022\020\n\010response\030\001 \001(\t\"1\n\rUploadRequest" +
-      "\022\r\n\005image\030\001 \001(\014\022\021\n\tsessionId\030\002 \001(\t\"<\n\025Up" +
-      "loadRequestResponse\022\023\n\013uploadToken\030\001 \001(\t" +
-      "\022\016\n\006status\030\002 \001(\t\"L\n\020TranslateRequest\022\023\n\013" +
-      "uploadToken\030\001 \001(\t\022\020\n\010language\030\002 \001(\t\022\021\n\ts" +
-      "essionId\030\003 \001(\t\"8\n\021TranslateResponse\022\023\n\013t" +
-      "ranslation\030\001 \001(\t\022\016\n\006status\030\002 \001(\t*Y\n\013Logi" +
-      "nStatus\022\013\n\007SUCCESS\020\000\022\020\n\014UNKNOWN_USER\020\001\022\022" +
-      "\n\016WRONG_PASSWORD\020\002\022\027\n\023COMMUNICATION_ERRO" +
-      "R\020\0032\344\001\n\006CnText\022\'\n\005start\022\r.CnText.Login\032\017" +
-      ".CnText.Session\022/\n\005close\022\017.CnText.Sessio" +
-      "n\032\025.CnText.CloseResponse\022>\n\006upload\022\025.CnT" +
-      "ext.UploadRequest\032\035.CnText.UploadRequest" +
-      "Response\022@\n\ttranslate\022\030.CnText.Translate" +
-      "Request\032\031.CnText.TranslateResponseB\n\n\006Cn" +
-      "TextP\001b\006proto3"
+      "s\030\003 \001(\0162\023.CnText.LoginStatus\"5\n\rCloseRes" +
+      "ponse\022$\n\006status\030\001 \001(\0162\024.CnText.LogoutSta" +
+      "tus\"1\n\rUploadRequest\022\r\n\005image\030\001 \001(\014\022\021\n\ts" +
+      "essionId\030\002 \001(\t\"R\n\025UploadRequestResponse\022" +
+      "\023\n\013uploadToken\030\001 \001(\t\022$\n\006status\030\003 \001(\0162\024.C" +
+      "nText.UploadStatus\"L\n\020TranslateRequest\022\023" +
+      "\n\013uploadToken\030\001 \001(\t\022\020\n\010language\030\002 \001(\t\022\021\n" +
+      "\tsessionId\030\003 \001(\t\"Q\n\021TranslateResponse\022\023\n" +
+      "\013translation\030\001 \001(\t\022\'\n\006status\030\003 \001(\0162\027.CnT" +
+      "ext.TranslateStatus*e\n\013LoginStatus\022\021\n\rLO" +
+      "GIN_SUCCESS\020\000\022\035\n\031LOGIN_COMMUNICATION_ERR" +
+      "OR\020\001\022\020\n\014UNKNOWN_USER\020\002\022\022\n\016WRONG_PASSWORD" +
+      "\020\003*\236\001\n\014UploadStatus\022\022\n\016UPLOAD_SUCCESS\020\000\022" +
+      "\036\n\032UPLOAD_COMMUNICATION_ERROR\020\001\022\032\n\026UPLOA" +
+      "D_INVALID_SESSION\020\002\022\021\n\rIMAGE_TOO_BIG\020\003\022\026" +
+      "\n\022UNSUPPORTED_FORMAT\020\004\022\023\n\017IMAGE_CORRUPTE" +
+      "D\020\005*\227\001\n\017TranslateStatus\022\025\n\021TRANSLATE_SUC" +
+      "CESS\020\000\022!\n\035TRANSLATE_COMMUNICATION_ERROR\020" +
+      "\001\022\035\n\031TRANSLATE_INVALID_SESSION\020\002\022\030\n\024UNSU" +
+      "PPORTED_LANGUAGE\020\003\022\021\n\rINVALID_TOKEN\020\004*^\n" +
+      "\014LogoutStatus\022\022\n\016LOGOUT_SUCCESS\020\000\022\036\n\032LOG" +
+      "OUT_COMMUNICATION_ERROR\020\001\022\032\n\026LOGOUT_INVA" +
+      "LID_SESSION\020\0022\350\001\n\006CnText\022\'\n\005start\022\r.CnTe" +
+      "xt.Login\032\017.CnText.Session\022/\n\005close\022\017.CnT" +
+      "ext.Session\032\025.CnText.CloseResponse\022@\n\006up" +
+      "load\022\025.CnText.UploadRequest\032\035.CnText.Upl" +
+      "oadRequestResponse0\001\022B\n\ttranslate\022\030.CnTe" +
+      "xt.TranslateRequest\032\031.CnText.TranslateRe" +
+      "sponse0\001B\n\n\006CnTextP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -108,7 +120,7 @@ public final class RpcService {
     internal_static_CnText_CloseResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CnText_CloseResponse_descriptor,
-        new java.lang.String[] { "Response", });
+        new java.lang.String[] { "Status", });
     internal_static_CnText_UploadRequest_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_CnText_UploadRequest_fieldAccessorTable = new
