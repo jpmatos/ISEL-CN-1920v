@@ -1,4 +1,4 @@
-package clientapp.utils;
+package clientapp.interfaces;
 
 import CnText.UploadStatus;
 

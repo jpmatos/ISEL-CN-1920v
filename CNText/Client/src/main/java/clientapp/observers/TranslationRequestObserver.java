@@ -2,7 +2,7 @@ package clientapp.observers;
 
 import CnText.TranslateResponse;
 import CnText.TranslateStatus;
-import clientapp.utils.ITranslationRequest;
+import clientapp.interfaces.ITranslationRequest;
 import io.grpc.stub.StreamObserver;
 
 public class TranslationRequestObserver implements StreamObserver<TranslateResponse>, ITranslationRequest {

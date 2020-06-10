@@ -1,10 +1,11 @@
 package clientapp;
 
 import CnText.*;
+import clientapp.interfaces.IOperations;
+import clientapp.interfaces.ITranslationRequest;
+import clientapp.interfaces.IUploadRequest;
 import clientapp.observers.TranslationRequestObserver;
 import clientapp.observers.UploadRequestObserver;
-import clientapp.utils.ITranslationRequest;
-import clientapp.utils.IUploadRequest;
 import com.google.protobuf.ByteString;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -14,10 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-import static CnText.TranslateStatus.TRANSLATE_SUCCESS;
-import static CnText.UploadStatus.UPLOAD_SUCCESS;
-
-public class Operations {
+public class Operations implements IOperations {
     private final ManagedChannel channel;
     private final CnTextGrpc.CnTextStub noBlockStub;
     private final CnTextGrpc.CnTextBlockingStub blockingStub;
@@ -33,6 +31,7 @@ public class Operations {
         blockingStub = CnTextGrpc.newBlockingStub(channel);
     }
 
+    @Override
     public CnText.LoginStatus login(String username, String password) {
         try {
             Session res = blockingStub.start(Login.newBuilder().setUser(username).setPassword(password).build());
@@ -47,6 +46,7 @@ public class Operations {
         }
     }
 
+    @Override
     public void upload(Path path) throws IOException {
         byte[] file = Files.readAllBytes(path);
         ByteString bs = ByteString.copyFrom(file);
@@ -59,6 +59,7 @@ public class Operations {
         uploadRequests.add(urObserver);
     }
 
+    @Override
     public void translate(String uploadToken, String filename, String language){
         TranslationRequestObserver trObserver = new TranslationRequestObserver(uploadToken, filename, language);
         TranslateRequest translateRequest = TranslateRequest.newBuilder()
@@ -70,16 +71,19 @@ public class Operations {
         translationRequests.add(trObserver);
     }
 
+    @Override
     public LogoutStatus logout() {
         CloseResponse closeResponse = blockingStub.close(session);
         session = null;
         return closeResponse.getStatus();
     }
 
+    @Override
     public boolean isLogged() {
         return session != null;
     }
 
+    @Override
     public String getUser() {
         if(session == null)
             return null;
@@ -87,48 +91,14 @@ public class Operations {
             return session.getUser();
     }
 
-    public ArrayList<ITranslationRequest> getTranslationSuccesses() {
-        ArrayList<ITranslationRequest> res = new ArrayList<>();
-        for (TranslationRequestObserver req : translationRequests) {
-            if(req.getStatus() == TRANSLATE_SUCCESS)
-                res.add(req);
-        }
-        return res;
-    }
-
-    public ArrayList<ITranslationRequest> getTranslationOngoing() {
-        ArrayList<ITranslationRequest> res = new ArrayList<>();
-        for (TranslationRequestObserver req : translationRequests) {
-            if(!req.isCompleted())
-                res.add(req);
-        }
-        return res;
-    }
-
-    public ArrayList<ITranslationRequest> getTranslationAllRequests() {
+    @Override
+    public ArrayList<ITranslationRequest> getTranslationRequests(){
         ArrayList<ITranslationRequest> res = new ArrayList<>(translationRequests);
         return res;
     }
 
-    public ArrayList<IUploadRequest> getUploadSuccesses() {
-        ArrayList<IUploadRequest> res = new ArrayList<>();
-        for (UploadRequestObserver req : uploadRequests) {
-            if(req.getStatus() == UPLOAD_SUCCESS)
-                res.add(req);
-        }
-        return res;
-    }
-
-    public ArrayList<IUploadRequest> getUploadOngoing() {
-        ArrayList<IUploadRequest> res = new ArrayList<>();
-        for (UploadRequestObserver req : uploadRequests) {
-            if(!req.isCompleted())
-                res.add(req);
-        }
-        return res;
-    }
-
-    public ArrayList<IUploadRequest> getUploadAllRequests() {
+    @Override
+    public ArrayList<IUploadRequest> getUploadRequests() {
         ArrayList<IUploadRequest> res = new ArrayList<>(uploadRequests);
         return res;
     }

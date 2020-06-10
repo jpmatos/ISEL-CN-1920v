@@ -2,7 +2,7 @@ package clientapp.observers;
 
 import CnText.UploadRequestResponse;
 import CnText.UploadStatus;
-import clientapp.utils.IUploadRequest;
+import clientapp.interfaces.IUploadRequest;
 import io.grpc.stub.StreamObserver;
 
 public class UploadRequestObserver implements StreamObserver<UploadRequestResponse>, IUploadRequest {

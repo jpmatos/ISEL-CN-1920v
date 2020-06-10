@@ -2,13 +2,11 @@ package clientapp;
 
 import CnText.LoginStatus;
 import CnText.LogoutStatus;
-import clientapp.utils.IUploadRequest;
-import clientapp.utils.ScanUtils;
-
+import clientapp.interfaces.IOperations;
+import clientapp.interfaces.IUploadRequest;
+import clientapp.interfaces.IView;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 
 public class Client {
     private static String svcIP = "localhost";
@@ -21,44 +19,37 @@ public class Client {
                 svcPort = Integer.parseInt(args[1]);
             }
 
-            Operations operations = new Operations(svcIP, svcPort);
+            IOperations operations = new Operations(svcIP, svcPort);
+            IView view = new View();
             boolean cont = true;
             while (cont) {
                 if(operations.isLogged())
                     System.out.println("\nLogged in as '" + operations.getUser() + "'");
-                int oper = ScanUtils.getInputInt(
-                            "------------------\n" +
-                                "Pick an option:\n" +
-                                "[1] - Login\n" +
-                                "[2] - Upload\n" +
-                                "[3] - Translate\n" +
-                                "[4] - View\n" +
-                                "[5] - Logout\n" +
-                                "[0] - Quit");
+                int oper = view.PrintMainMenuSelection();
                 switch (oper) {
                     case 1:
-                        login(operations);
+                        login(operations, view);
                         break;
                     case 2:
-                        upload(operations);
+                        upload(operations, view);
                         break;
                     case 3:
-                        translate(operations);
+                        translate(operations, view);
                         break;
                     case 4:
-                        view(operations);
+                        view(operations, view);
                         break;
                     case 5:
-                        logout(operations);
+                        logout(operations, view);
                     case 0:
                         cont = false;
                     default:
-                        System.out.println("Invalid option");
+                        view.printInvalidOption();
                 }
             }
 
             if(operations.isLogged())
-                logout(operations);
+                logout(operations, view);
 
             System.exit(0);
         } catch (Exception ex) {
@@ -66,105 +57,84 @@ public class Client {
         }
     }
 
-    private static void login(Operations operations) {
+    private static void login(IOperations operations, IView view) {
         if(operations.isLogged()){
-            System.out.println("Already logged in!");
+            view.printNotLoggedIn();
             return;
         }
 
-        String username = ScanUtils.getInputString("Username:");
-        String password = ScanUtils.getInputString("Password:");
+        String username = view.printUsernameInput();
+        String password = view.printPasswordInput();
         LoginStatus res = operations.login(username, password);
         if(res == LoginStatus.LOGIN_SUCCESS)
-            System.out.println("Successfully logged in as '" + operations.getUser() + "'");
+            view.printSuccessfulLogin(operations.getUser());
         else
-            System.out.println("Failed to login! Reason: '" + res + "'");
+            view.printFailedLogin(res.name());
     }
 
-    private static void upload(Operations operations) throws IOException {
+    private static void upload(IOperations operations, IView view) throws IOException {
         if(!operations.isLogged()){
-            System.out.println("Log in first!");
+            view.printNotLoggedIn();
             return;
         }
 
-        Path path = Paths.get(ScanUtils.getInputString("File Path:"));
+        Path path = view.printPathInput();
         operations.upload(path);
     }
 
-    private static void translate(Operations operations) {
+    private static void translate(IOperations operations, IView view) {
         if(!operations.isLogged()){
-            System.out.println("Log in first!");
+            view.printNotLoggedIn();
             return;
         }
 
-        ArrayList<IUploadRequest> uploadSuccesses = operations.getUploadSuccesses();
-        for (int i = 0; i < uploadSuccesses.size(); i++) {
-            System.out.println(String.format("[%d] - '%s'", i + 1, uploadSuccesses.get(i).getFilename()));
-        }
-        System.out.println("[0] - Cancel");
-        int option = ScanUtils.getInputInt("Pick a file:");
+        IUploadRequest req = view.printUploadSuccessesPicker(operations.getUploadRequests());
+        String language = view.printSelectLanguage();
 
-        if(option == 0)
-            return;
-        if(option < 0 || option > uploadSuccesses.size()){
-            System.out.println("Invalid option");
-            return;
-        }
-        String language = ScanUtils.getInputString("Language to Translate:");
-        IUploadRequest req = uploadSuccesses.get(option - 1);
         operations.translate(req.getUploadToken(), req.getFilename(), language);
     }
 
-    private static void logout(Operations operations) {
+    private static void logout(IOperations operations, IView view) {
         if(!operations.isLogged()){
-            System.out.println("Log in first!");
+            view.printNotLoggedIn();
             return;
         }
 
         LogoutStatus status = operations.logout();
-        System.out.println("Logged out with status '" + status + "'");
+        view.printSuccessfulLogout(status.name());
     }
 
-    private static void view(Operations operations) {
+    private static void view(IOperations operations, IView view) {
         if(!operations.isLogged()){
-            System.out.println("Log in first!");
+            view.printNotLoggedIn();
             return;
         }
         boolean cont = true;
         while(cont){
-            int oper = ScanUtils.getInputInt(
-                    "------------------\n" +
-                            "Pick an option:\n" +
-                            "[1] - Translations: Successes\n" +
-                            "[2] - Translations: Ongoing\n" +
-                            "[3] - Translations: All\n" +
-                            "[4] - Upload: Successes\n" +
-                            "[5] - Upload: Ongoing" +
-                            "[6] - Upload: All\n" +
-                            "[0] - Back");
+            int oper = view.printViewMenuSelection();
             switch (oper){
                 case 1:
-                    View.printTranslationSuccesses(operations);
+                    view.printTranslationSuccesses(operations.getTranslationRequests());
                     break;
                 case 2:
-                    View.printTranslationOngoing(operations);
+                    view.printTranslationOngoing(operations.getTranslationRequests());
                     break;
                 case 3:
-                    View.printTranslationAllRequests(operations);
+                    view.printTranslationAllRequests(operations.getTranslationRequests());
                     break;
                 case 4:
-                    View.printUploadSuccesses(operations);
+                    view.printUploadSuccesses(operations.getUploadRequests());
                     break;
                 case 5:
-                    View.printUploadOngoing(operations);
+                    view.printUploadOngoing(operations.getUploadRequests());
                     break;
                 case 6:
-                    View.printUploadAllRequests(operations);
+                    view.printUploadAllRequests(operations.getUploadRequests());
                     break;
                 case 0:
                     cont = false;
                 default:
-                    System.out.println("Invalid option");
+                    view.printInvalidOption();
             }
         }
     }
