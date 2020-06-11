@@ -2,13 +2,11 @@ package dao;
 
 public class OCRRequest {
     private final String sessionID;
-    private final String token;
-    private final String blobName;
+        private final String blobName;
     private final String language;
 
-    public OCRRequest(String sessionID, String token, String imageBlob, String language) {
+    public OCRRequest(String sessionID, String imageBlob, String language) {
         this.sessionID = sessionID;
-        this.token = token;
         this.blobName = imageBlob;
         this.language = language;
     }
@@ -21,10 +19,6 @@ public class OCRRequest {
         return sessionID;
     }
 
-    public String getToken() {
-        return token;
-    }
-
     public String getLanguage() {
         return language;
     }
@@ -33,7 +27,6 @@ public class OCRRequest {
     public String toString() {
         return "OCRRequest{" +
                 "sessionID='" + sessionID + '\'' +
-                ", token='" + token + '\'' +
                 ", imageBlob='" + blobName + '\'' +
                 ", language='" + language + '\'' +
                 '}';

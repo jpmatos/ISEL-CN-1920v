@@ -16,6 +16,7 @@ import gcloud.vision.IVisionOpsDummy;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import static utils.Console.PrintType.ERROR;
 import static utils.Console.print;
@@ -28,7 +29,7 @@ public class MessageReceiverHandler implements MessageReceiver {
 
 
     public MessageReceiverHandler(boolean premium) {
-        try (PublishTopic publishTopic = new PublishTopic(premium)){
+        try (PublishTopic publishTopic = new PublishTopic(premium)) {
             this.publish = publishTopic;
         } catch (IOException e) {
             e.printStackTrace();
@@ -40,12 +41,13 @@ public class MessageReceiverHandler implements MessageReceiver {
         Map<String, String> attributesMap = msg.getAttributesMap();
         OCRRequest ocrRequest = new OCRRequest(
                 attributesMap.get("sessionID"),
-                attributesMap.get("token"),
                 attributesMap.get("blobName"),
                 attributesMap.get("language")
         );
 
-        print("[Request received] " + ocrRequest.toString());
+        String id = msg.getMessageId();
+
+        print("[Request received] " + id + " | " + ocrRequest.toString());
 
         ackReplyConsumer.ack();
         try {
@@ -56,7 +58,7 @@ public class MessageReceiverHandler implements MessageReceiver {
             String ocrResult = visionOps.getTextFromImage(blobBytes);
 
             print("Save OCR result to Firestore");
-            if (!firestoreOps.storeOCRResult(ocrRequest.getToken(), ocrResult)) {
+            if (!firestoreOps.storeOCRResult(id, ocrResult)) {
                 print(ERROR, "Cannot save OCR result to Firestore");
             }
 
@@ -66,10 +68,11 @@ public class MessageReceiverHandler implements MessageReceiver {
             }
 
             print("Send translate request");
-            publish.publishMessage(new TranslateRequest(ocrRequest.getToken(), ocrResult, ocrRequest.getLanguage()));
+            String translateReqId = publish.publishMessage(new TranslateRequest(id, ocrResult, ocrRequest.getLanguage()));
+            print("Translate Request: " + translateReqId);
 
             print("Done");
-        } catch (IOException e) {
+        } catch (IOException | ExecutionException | InterruptedException e) {
 //            ackReplyConsumer.nack(); //TODO
             e.printStackTrace();
         }

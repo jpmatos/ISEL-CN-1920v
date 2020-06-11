@@ -33,26 +33,12 @@ public class Worker {
         ReadSubscription readSubscription = new ReadSubscription(premium);
         readSubscription.startRead();
 
-        new Thread(Worker::simulateRequest).start();
+//        new Thread(Worker::simulateRequest).start();
 
         print("Listening... Press Enter to exit.");
         sc.nextLine();
 
     }
-
-    private static void simulateRequest() {
-        try (PublishTopic publishTopic = new PublishTopic("free-ocr")) {
-            publishTopic.publishMessage(new OCRRequest(
-                    "1234",
-                    "token-sdfpojepg",
-                    "image-for-ocr-translate.JPG",
-                    "EN"
-            ));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private static void illegalArguments() {
         print("Arguments: -free|-premium");
         System.exit(0);

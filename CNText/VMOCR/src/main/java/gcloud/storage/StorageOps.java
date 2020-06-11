@@ -1,18 +1,18 @@
 package gcloud.storage;
 
 import com.google.cloud.ReadChannel;
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.WriteChannel;
+import com.google.cloud.storage.*;
 import com.google.protobuf.ByteString;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -76,6 +76,40 @@ public class StorageOps implements IStorageOps {
     public boolean deleteBlob(String blobName) throws IOException {
         Blob blob = getBlob(blobName);
         return storage.delete(blob.getBlobId());
+    }
+
+
+    @Override
+    public BlobId uploadBlob(String path, String blobName) throws IOException {
+        Path uploadFrom = Paths.get(path);
+        String contentType = Files.probeContentType(uploadFrom);
+        BlobId blobId = BlobId.of(BUCKET_NAME, blobName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+                .setContentType(contentType)
+                .build();
+
+        if (Files.size(uploadFrom) < 1_000_000) {
+            byte[] bytes = Files.readAllBytes(uploadFrom);
+            // create the blob in one request.
+            storage.create(blobInfo, bytes);
+        } else {
+            //Blob greather than 1Mbyte
+            try (WriteChannel writer = storage.writer(blobInfo)) {
+                byte[] buffer = new byte[1024];
+                try (InputStream input = Files.newInputStream(uploadFrom)) {
+                    int limit;
+                    while ((limit = input.read(buffer)) >= 0) {
+                        try {
+                            writer.write(ByteBuffer.wrap(buffer, 0, limit));
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+
+        return blobId;
     }
 
     private Blob getBlob(String blobName) throws IOException {

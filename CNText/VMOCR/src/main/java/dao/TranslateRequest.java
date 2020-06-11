@@ -1,18 +1,18 @@
 package dao;
 
 public class TranslateRequest {
-    private final String token;
+    private final String id;
     private final String textToTranslate;
     private final String language;
 
-    public TranslateRequest(String token, String textToTranslate, String language) {
-        this.token = token;
+    public TranslateRequest(String id, String textToTranslate, String language) {
+        this.id = id;
         this.textToTranslate = textToTranslate;
         this.language = language;
     }
 
-    public String getToken() {
-        return token;
+    public String getId() {
+        return id;
     }
 
     public String getTextToTranslate() {

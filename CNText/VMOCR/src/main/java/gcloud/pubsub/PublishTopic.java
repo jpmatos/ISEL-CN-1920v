@@ -1,5 +1,6 @@
 package gcloud.pubsub;
 
+import com.google.api.core.ApiFuture;
 import com.google.cloud.pubsub.v1.Publisher;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
@@ -8,6 +9,7 @@ import dao.OCRRequest;
 import dao.TranslateRequest;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import static utils.Console.print;
 
@@ -29,32 +31,44 @@ public class PublishTopic implements AutoCloseable {
         this.publisher = Publisher.newBuilder(tName).build();
     }
 
-    public void publishMessage(TranslateRequest translateRequest) {
+    /**
+     * @param translateRequest
+     * @return msgID
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public String publishMessage(TranslateRequest translateRequest) throws ExecutionException, InterruptedException {
         ByteString msgData = ByteString.copyFromUtf8(translateRequest.getTextToTranslate());
         PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
                 .setData(msgData)
-                .putAttributes("token", translateRequest.getToken())
+                .putAttributes("id", translateRequest.getId())
                 .putAttributes("language", translateRequest.getLanguage())
                 .build();
 
-        //TODO fire and forget?
-        publisher.publish(pubsubMessage);
+        ApiFuture<String> future = publisher.publish(pubsubMessage);
+        return future.get();
     }
 
-    public void publishMessage(OCRRequest ocrRequest) {
+    /**
+     * @param ocrRequest
+     * @return msgID
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    public String publishMessage(OCRRequest ocrRequest) throws ExecutionException, InterruptedException {
         print("Publishing Demo message...");
         PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
                 .putAttributes("sessionID", ocrRequest.getSessionID())
-                .putAttributes("token", ocrRequest.getToken())
                 .putAttributes("blobName", ocrRequest.getBlobName())
                 .putAttributes("language", ocrRequest.getLanguage())
                 .build();
 
-        publisher.publish(pubsubMessage);
+        ApiFuture<String> future = publisher.publish(pubsubMessage);
+        return future.get();
     }
 
     @Override
-    public void close(){
+    public void close() {
         //TODO
         print("Shutdown publisher");
         publisher.shutdown();
