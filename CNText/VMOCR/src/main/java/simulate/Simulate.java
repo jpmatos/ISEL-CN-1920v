@@ -1,12 +1,10 @@
 package simulate;
 
-import com.google.api.core.ApiFuture;
 import com.google.cloud.storage.BlobId;
 import dao.OCRRequest;
 import gcloud.pubsub.PublishTopic;
 import gcloud.storage.IStorageOps;
 import gcloud.storage.StorageOps;
-import utils.Console;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;

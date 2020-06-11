@@ -25,12 +25,11 @@ public class MessageReceiverHandler implements MessageReceiver {
     private final IVisionOps visionOps = new IVisionOpsDummy();
     private final IStorageOps storageOps = new StorageOps();
     private final IFirestoreOps firestoreOps = new FirestoreOps();
-    private PublishTopic publish;
-
+    private PublishTopic publishToTranslate;
 
     public MessageReceiverHandler(boolean premium) {
-        try (PublishTopic publishTopic = new PublishTopic(premium)) {
-            this.publish = publishTopic;
+        try {
+            this.publishToTranslate = new PublishTopic(premium);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -68,7 +67,7 @@ public class MessageReceiverHandler implements MessageReceiver {
             }
 
             print("Send translate request");
-            String translateReqId = publish.publishMessage(new TranslateRequest(id, ocrResult, ocrRequest.getLanguage()));
+            String translateReqId = publishToTranslate.publishMessage(new TranslateRequest(id, ocrResult, ocrRequest.getLanguage()));
             print("Translate Request: " + translateReqId);
 
             print("Done");
