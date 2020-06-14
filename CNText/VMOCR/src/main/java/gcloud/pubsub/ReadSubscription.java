@@ -2,6 +2,8 @@ package gcloud.pubsub;
 
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.pubsub.v1.ProjectSubscriptionName;
+import io.grpc.LoadBalancerRegistry;
+import io.grpc.internal.PickFirstLoadBalancerProvider;
 import vmocr.MessageReceiverHandler;
 
 import static utils.Console.print;

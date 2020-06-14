@@ -24,12 +24,13 @@ import static utils.Console.print;
 public class MessageReceiverHandler implements MessageReceiver {
     private final IVisionOps visionOps = new IVisionOpsDummy();
     private final IStorageOps storageOps = new StorageOps();
-    private final IFirestoreOps firestoreOps = new FirestoreOps();
+    private IFirestoreOps firestoreOps;
     private PublishTopic publishToTranslate;
 
     public MessageReceiverHandler(boolean premium) {
         try {
             this.publishToTranslate = new PublishTopic(premium);
+            this.firestoreOps = new FirestoreOps();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,13 +58,13 @@ public class MessageReceiverHandler implements MessageReceiver {
             String ocrResult = visionOps.getTextFromImage(blobBytes);
 
             print("Save OCR result to Firestore");
-            if (!firestoreOps.storeOCRResult(id, ocrResult)) {
+            if (!firestoreOps.storeOCRResult(id, ocrResult, ocrRequest.getLanguage())) {
                 print(ERROR, "Cannot save OCR result to Firestore");
             }
 
             print("Delete blob image from Cloud Store");
             if (!storageOps.deleteBlob(ocrRequest.getBlobName())) {
-                print(ERROR + "Cannot delete blob from Cloud Store: " + ocrRequest.getBlobName());
+                print(ERROR, "Cannot delete blob from Cloud Store: " + ocrRequest.getBlobName());
             }
 
             print("Send translate request");

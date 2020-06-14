@@ -1,13 +1,11 @@
 package vmocr;
 
-import dao.OCRRequest;
-import gcloud.pubsub.PublishTopic;
 import gcloud.pubsub.ReadSubscription;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 import static utils.Console.print;
+import static utils.Gcloud.registerBalancerProvider;
 
 public class Worker {
     private static Scanner sc = new Scanner(System.in); //TODO delete?
@@ -30,6 +28,7 @@ public class Worker {
             illegalArguments();
         }
 
+        registerBalancerProvider();
         ReadSubscription readSubscription = new ReadSubscription(premium);
         readSubscription.startRead();
 

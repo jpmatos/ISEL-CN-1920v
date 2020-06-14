@@ -15,11 +15,11 @@ import static utils.Console.print;
 public class Simulate {
 
     public static void main(String[] args) throws IOException {
-        simulateRequest();
+        simulateOCRRequest();
     }
 
 
-    private static void simulateRequest() throws IOException {
+    private static void simulateOCRRequest() throws IOException {
         String blobName = "image-for-ocr-translate.JPG";
         String fileToUpload = "C:\\Users\\helio.fitas\\Dropbox\\Helio\\ISEL\\2019-2020 SV\\CN\\LABs\\Final\\" + blobName;
         IStorageOps storageOps = new StorageOps();

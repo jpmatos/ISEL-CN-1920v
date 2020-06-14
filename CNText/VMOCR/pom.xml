@@ -35,7 +35,18 @@
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-vision</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>google-cloud-firestore</artifactId>
+            <version>1.33.0</version>
+        </dependency>
     </dependencies>
+
+<!--    <properties>-->
+<!--        <service.declaration.dir>src/main/resources</service.declaration.dir>-->
+<!--        <service.files.path>META-INF/services</service.files.path>-->
+<!--    </properties>-->
+
 
     <build>
         <plugins>
@@ -48,7 +59,32 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>assemble-all</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
+<!--        <resources>-->
+<!--            <resource>-->
+<!--                <directory>resources</directory>-->
+<!--            </resource>-->
+<!--        </resources>-->
     </build>
 
 </project>
