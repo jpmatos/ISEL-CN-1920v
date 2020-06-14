@@ -1,5 +1,9 @@
 package utils;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Timer;
+
 public class Console {
 
     public enum PrintType {
@@ -13,7 +17,10 @@ public class Console {
     }
 
     public static void print(PrintType type, String msg) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
         long threadId = Thread.currentThread().getId();
-        System.out.println("[" + threadId + "]" + "[" + type + "] " + msg);
+
+        System.out.println("[" + dtf.format(now) + "]" + "[Thread " + threadId + "]" + "[" + type + "] " + msg);
     }
 }
