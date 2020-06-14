@@ -2,6 +2,7 @@ package vmocr;
 
 import gcloud.pubsub.ReadSubscription;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import static utils.Console.print;
@@ -32,10 +33,23 @@ public class Worker {
         ReadSubscription readSubscription = new ReadSubscription(premium);
         readSubscription.startRead();
 
-//        new Thread(Worker::simulateRequest).start();
+        print("Listening...");
 
-        print("Listening... Press Enter to exit.");
-        sc.nextLine();
+        while (true) {
+            try {
+                sc.nextLine();
+                print("Leaving\n");
+                break;
+            } catch (NoSuchElementException ex) {
+                try {
+                    Thread.sleep(60_000);
+                    print("PING - Main thread is alive.");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    break;
+                }
+            }
+        }
 
     }
     private static void illegalArguments() {
