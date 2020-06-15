@@ -1,0 +1,15 @@
+dao\TextOfImage.class
+gcloud\firestore\FirestoreOps.class
+vmocr\Worker.class
+gcloud\pubsub\PublishTopic.class
+gcloud\firestore\IFirestoreOps.class
+gcloud\vision\IVisionOpsDummy.class
+gcloud\storage\IStorageOps.class
+gcloud\pubsub\ReadSubscription.class
+gcloud\vision\QuickstartSample.class
+gcloud\vision\IVisionOps.class
+dao\TranslateRequest.class
+dao\OCRRequest.class
+gcloud\storage\StorageOps.class
+simulate\Simulate.class
+vmocr\MessageReceiverHandler.class
