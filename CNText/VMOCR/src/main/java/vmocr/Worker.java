@@ -1,15 +1,15 @@
 package vmocr;
 
 import gcloud.pubsub.ReadSubscription;
+import utils.Output;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import static utils.Console.print;
 import static utils.Gcloud.registerBalancerProvider;
 
 public class Worker {
-    private static Scanner sc = new Scanner(System.in); //TODO delete?
+    private static Scanner sc = new Scanner(System.in);
     public static final String PROJECT_ID = "g01-li61n";
 
     private static boolean premium;
@@ -20,10 +20,10 @@ public class Worker {
         }
 
         if ("-free".equals(args[0])) {
-            print("Free selected");
+            Output.log("Free selected");
             premium = false;
         } else if ("-premium".equals(args[0])) {
-            print("Premium selected");
+            Output.log("Premium selected");
             premium = true;
         } else {
             illegalArguments();
@@ -33,17 +33,17 @@ public class Worker {
         ReadSubscription readSubscription = new ReadSubscription(premium);
         readSubscription.startRead();
 
-        print("Listening...");
+        Output.log("Listening...");
 
         while (true) {
             try {
                 sc.nextLine();
-                print("Leaving\n");
+                Output.log("Leaving\n");
                 break;
             } catch (NoSuchElementException ex) {
                 try {
                     Thread.sleep(60_000);
-                    print("PING - Main thread is alive.");
+                    Output.log("PING - Main thread is alive.");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     break;
@@ -52,8 +52,9 @@ public class Worker {
         }
 
     }
+
     private static void illegalArguments() {
-        print("Arguments: -free|-premium");
+        Output.log("Arguments: -free|-premium");
         System.exit(0);
     }
 }

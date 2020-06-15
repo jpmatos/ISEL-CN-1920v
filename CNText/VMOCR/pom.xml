@@ -42,12 +42,6 @@
         </dependency>
     </dependencies>
 
-<!--    <properties>-->
-<!--        <service.declaration.dir>src/main/resources</service.declaration.dir>-->
-<!--        <service.files.path>META-INF/services</service.files.path>-->
-<!--    </properties>-->
-
-
     <build>
         <plugins>
             <plugin>
@@ -80,11 +74,6 @@
             </plugin>
         </plugins>
 
-<!--        <resources>-->
-<!--            <resource>-->
-<!--                <directory>resources</directory>-->
-<!--            </resource>-->
-<!--        </resources>-->
     </build>
 
 </project>

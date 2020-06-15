@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import static utils.Console.print;
+import static utils.Output.log;
 
 public class FirestoreOps implements IFirestoreOps {
     private final String COLLECTION = "TextOfImages";
@@ -38,7 +38,7 @@ public class FirestoreOps implements IFirestoreOps {
         ApiFuture<WriteResult> future = docRef.set(textOfImage);
         try {
             Timestamp updateTime = future.get().getUpdateTime();
-            print("OCR Result stored at " + updateTime.toString());
+            log("OCR Result stored at " + updateTime.toString());
             return true;
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();

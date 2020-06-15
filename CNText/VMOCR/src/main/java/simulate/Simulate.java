@@ -9,8 +9,8 @@ import gcloud.storage.StorageOps;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import static utils.Console.PrintType.ERROR;
-import static utils.Console.print;
+import static utils.Output.OutputType.ERROR;
+import static utils.Output.log;
 
 public class Simulate {
 
@@ -24,17 +24,18 @@ public class Simulate {
         String fileToUpload = "C:\\Users\\helio.fitas\\Dropbox\\Helio\\ISEL\\2019-2020 SV\\CN\\LABs\\Final\\" + blobName;
         IStorageOps storageOps = new StorageOps();
 
-        print("Try to upload blob");
+        log("Try to upload blob");
         BlobId blobId = storageOps.uploadBlob(fileToUpload, blobName);
         if (blobId == null) {
-            print(ERROR, "Cannot Upload blob");
+            log(ERROR, "Cannot Upload blob");
             return;
         } else {
-            print("Blob uploaded successfully!");
+            log("Blob uploaded successfully!");
         }
 
 
         try (PublishTopic publishTopic = new PublishTopic("free-ocr")) {
+            log("Publishing Demo message...");
             String msgID = publishTopic.publishMessage(
                     new OCRRequest(
                             "1234",
@@ -42,7 +43,7 @@ public class Simulate {
                             "EN"
                     ));
 
-            print("Request submited with ID: " + msgID);
+            log("Request submited with ID: " + msgID);
         } catch (IOException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }

@@ -11,7 +11,7 @@ import dao.TranslateRequest;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import static utils.Console.print;
+import static utils.Output.log;
 
 public class PublishTopic implements AutoCloseable {
     private static final String FREE_TRANSLATE = "free-translate";
@@ -56,7 +56,6 @@ public class PublishTopic implements AutoCloseable {
      * @throws InterruptedException
      */
     public String publishMessage(OCRRequest ocrRequest) throws ExecutionException, InterruptedException {
-        print("Publishing Demo message...");
         PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
                 .putAttributes("sessionID", ocrRequest.getSessionID())
                 .putAttributes("blobName", ocrRequest.getBlobName())
@@ -67,10 +66,20 @@ public class PublishTopic implements AutoCloseable {
         return future.get();
     }
 
+    public String publishMessage(String msg) throws ExecutionException, InterruptedException {
+        ByteString msgData = ByteString.copyFromUtf8(msg);
+        PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
+                .setData(msgData)
+                .build();
+
+        ApiFuture<String> future = publisher.publish(pubsubMessage);
+        return future.get();
+    }
+
     @Override
     public void close() {
         //TODO
-        print("Shutdown publisher");
+        log("Shutdown publisher");
         publisher.shutdown();
     }
 }

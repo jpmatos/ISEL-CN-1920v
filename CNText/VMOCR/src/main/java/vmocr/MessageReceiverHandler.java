@@ -13,13 +13,13 @@ import gcloud.storage.IStorageOps;
 import gcloud.storage.StorageOps;
 import gcloud.vision.IVisionOps;
 import gcloud.vision.IVisionOpsDummy;
+import utils.Output;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import static utils.Console.PrintType.ERROR;
-import static utils.Console.print;
+import static utils.Output.OutputType.ERROR;
 
 public class MessageReceiverHandler implements MessageReceiver {
     private final IVisionOps visionOps = new IVisionOpsDummy();
@@ -47,31 +47,31 @@ public class MessageReceiverHandler implements MessageReceiver {
 
         String id = msg.getMessageId();
 
-        print("[Request received] " + id + " | " + ocrRequest.toString());
+        Output.log("[Request received] " + id + " | " + ocrRequest.toString());
 
         ackReplyConsumer.ack();
         try {
-            print("Read blob from CloudStorare");
+            Output.log("Read blob from CloudStorare");
             ByteString blobBytes = storageOps.getBlobToByteString(ocrRequest.getBlobName());
 
-            print("Get OCR from Vision");
+            Output.log("Get OCR from Vision");
             String ocrResult = visionOps.getTextFromImage(blobBytes);
 
-            print("Save OCR result to Firestore");
+            Output.log("Save OCR result to Firestore");
             if (!firestoreOps.storeOCRResult(id, ocrResult, ocrRequest.getLanguage())) {
-                print(ERROR, "Cannot save OCR result to Firestore");
+                Output.log(ERROR, "Cannot save OCR result to Firestore");
             }
 
-            print("Delete blob image from Cloud Store");
+            Output.log("Delete blob image from Cloud Store");
             if (!storageOps.deleteBlob(ocrRequest.getBlobName())) {
-                print(ERROR, "Cannot delete blob from Cloud Store: " + ocrRequest.getBlobName());
+                Output.log(ERROR, "Cannot delete blob from Cloud Store: " + ocrRequest.getBlobName());
             }
 
-            print("Send translate request");
+            Output.log("Send translate request");
             String translateReqId = publishToTranslate.publishMessage(new TranslateRequest(id, ocrResult, ocrRequest.getLanguage()));
-            print("Translate Request: " + translateReqId);
+            Output.log("Translate Request: " + translateReqId);
 
-            print("Done");
+            Output.log("Done");
         } catch (IOException | ExecutionException | InterruptedException e) {
 //            ackReplyConsumer.nack(); //TODO
             e.printStackTrace();
