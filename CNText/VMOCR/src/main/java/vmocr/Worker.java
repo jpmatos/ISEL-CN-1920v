@@ -6,7 +6,7 @@ import utils.Output;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import static utils.Gcloud.registerBalancerProvider;
+import static utils.Output.log;
 
 public class Worker {
     private static Scanner sc = new Scanner(System.in);
@@ -20,30 +20,29 @@ public class Worker {
         }
 
         if ("-free".equals(args[0])) {
-            Output.log("Free selected");
+            log("Free selected");
             premium = false;
         } else if ("-premium".equals(args[0])) {
-            Output.log("Premium selected");
+            log("Premium selected");
             premium = true;
         } else {
             illegalArguments();
         }
 
-        registerBalancerProvider();
         ReadSubscription readSubscription = new ReadSubscription(premium);
         readSubscription.startRead();
 
-        Output.log("Listening...");
+        log("Listening...");
 
         while (true) {
             try {
                 sc.nextLine();
-                Output.log("Leaving\n");
+                log("Leaving\n");
                 break;
             } catch (NoSuchElementException ex) {
                 try {
                     Thread.sleep(60_000);
-                    Output.log("PING - Main thread is alive.");
+                    log("PING - Main thread is alive.");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     break;
@@ -54,7 +53,7 @@ public class Worker {
     }
 
     private static void illegalArguments() {
-        Output.log("Arguments: -free|-premium");
+        log("Arguments: -free|-premium");
         System.exit(0);
     }
 }

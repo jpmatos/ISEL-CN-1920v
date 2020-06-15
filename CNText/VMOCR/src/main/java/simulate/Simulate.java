@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutionException;
 import static utils.Output.OutputType.ERROR;
 import static utils.Output.log;
 
+
 public class Simulate {
 
     public static void main(String[] args) throws IOException {

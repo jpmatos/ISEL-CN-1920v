@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuickstartSample {
+    //TODO delete
 
     public static void main(String... args) throws Exception {
         // Initialize client that will be used to send requests. This client only needs to be created
