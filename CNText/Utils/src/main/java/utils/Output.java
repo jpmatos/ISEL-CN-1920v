@@ -1,6 +1,6 @@
 package utils;
 
-import gcloud.pubsub.PublishTopic;
+import gcloud.PublishOps;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -10,11 +10,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutionException;
 
 public class Output {
-    private static PublishTopic publishTopic;
+    private static PublishOps publishOps;
 
     static {
         try {
-            publishTopic = new PublishTopic("logger");
+            publishOps = new PublishOps("logger");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,16 +36,16 @@ public class Output {
             LocalDateTime now = LocalDateTime.now();
             long threadId = Thread.currentThread().getId();
 
+            //Output to console
             String hostname = InetAddress.getLocalHost().getHostName();
             String message = "[" + hostname + "]" + "[" + dtf.format(now) + "]" + "[Thread " + threadId + "]" + "[" + type + "] " + msg;
             System.out.println(message);
 
-            publishTopic.publishMessage(message);
+            //Output to Topic Logger
+            publishOps.publishMessage(message);
 
         } catch (UnknownHostException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-
-
     }
 }
