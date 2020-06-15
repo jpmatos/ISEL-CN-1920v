@@ -37,7 +37,7 @@
             <artifactId>google-cloud-firestore</artifactId>
             <version>1.34.0</version>
         </dependency>
-        <!-- Dependência explícita -->
+        <!-- Explicit dependency -->
         <dependency>
             <groupId>utils.g01</groupId>
             <artifactId>Utils</artifactId>
