@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private UploadRequestResponse() {
     uploadToken_ = "";
+    translation_ = "";
     status_ = 0;
   }
 
@@ -55,6 +56,12 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             uploadToken_ = s;
+            break;
+          }
+          case 18: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            translation_ = s;
             break;
           }
           case 24: {
@@ -121,6 +128,40 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int TRANSLATION_FIELD_NUMBER = 2;
+  private volatile java.lang.Object translation_;
+  /**
+   * <code>string translation = 2;</code>
+   */
+  public java.lang.String getTranslation() {
+    java.lang.Object ref = translation_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      translation_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string translation = 2;</code>
+   */
+  public com.google.protobuf.ByteString
+      getTranslationBytes() {
+    java.lang.Object ref = translation_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      translation_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   public static final int STATUS_FIELD_NUMBER = 3;
   private int status_;
   /**
@@ -152,6 +193,9 @@ private static final long serialVersionUID = 0L;
     if (!getUploadTokenBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, uploadToken_);
     }
+    if (!getTranslationBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, translation_);
+    }
     if (status_ != CnText.UploadStatus.UPLOAD_SUCCESS.getNumber()) {
       output.writeEnum(3, status_);
     }
@@ -165,6 +209,9 @@ private static final long serialVersionUID = 0L;
     size = 0;
     if (!getUploadTokenBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, uploadToken_);
+    }
+    if (!getTranslationBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, translation_);
     }
     if (status_ != CnText.UploadStatus.UPLOAD_SUCCESS.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
@@ -188,6 +235,8 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getUploadToken()
         .equals(other.getUploadToken());
+    result = result && getTranslation()
+        .equals(other.getTranslation());
     result = result && status_ == other.status_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
@@ -202,6 +251,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + UPLOADTOKEN_FIELD_NUMBER;
     hash = (53 * hash) + getUploadToken().hashCode();
+    hash = (37 * hash) + TRANSLATION_FIELD_NUMBER;
+    hash = (53 * hash) + getTranslation().hashCode();
     hash = (37 * hash) + STATUS_FIELD_NUMBER;
     hash = (53 * hash) + status_;
     hash = (29 * hash) + unknownFields.hashCode();
@@ -335,6 +386,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       uploadToken_ = "";
 
+      translation_ = "";
+
       status_ = 0;
 
       return this;
@@ -360,6 +413,7 @@ private static final long serialVersionUID = 0L;
     public CnText.UploadRequestResponse buildPartial() {
       CnText.UploadRequestResponse result = new CnText.UploadRequestResponse(this);
       result.uploadToken_ = uploadToken_;
+      result.translation_ = translation_;
       result.status_ = status_;
       onBuilt();
       return result;
@@ -404,6 +458,10 @@ private static final long serialVersionUID = 0L;
       if (other == CnText.UploadRequestResponse.getDefaultInstance()) return this;
       if (!other.getUploadToken().isEmpty()) {
         uploadToken_ = other.uploadToken_;
+        onChanged();
+      }
+      if (!other.getTranslation().isEmpty()) {
+        translation_ = other.translation_;
         onChanged();
       }
       if (other.status_ != 0) {
@@ -501,6 +559,75 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       uploadToken_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object translation_ = "";
+    /**
+     * <code>string translation = 2;</code>
+     */
+    public java.lang.String getTranslation() {
+      java.lang.Object ref = translation_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        translation_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string translation = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTranslationBytes() {
+      java.lang.Object ref = translation_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        translation_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string translation = 2;</code>
+     */
+    public Builder setTranslation(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      translation_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string translation = 2;</code>
+     */
+    public Builder clearTranslation() {
+      
+      translation_ = getDefaultInstance().getTranslation();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string translation = 2;</code>
+     */
+    public Builder setTranslationBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      translation_ = value;
       onChanged();
       return this;
     }

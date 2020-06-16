@@ -8,6 +8,7 @@ import io.grpc.stub.StreamObserver;
 public class UploadRequestObserver implements StreamObserver<UploadRequestResponse>, IUploadRequest {
     private String fileName;
     private String uploadToken;
+    private String translation;
     private UploadStatus status;
     private boolean completed = false;
 
@@ -36,10 +37,18 @@ public class UploadRequestObserver implements StreamObserver<UploadRequestRespon
     }
 
     @Override
+    public String getTranslation() {
+        return this.translation;
+    }
+
+    @Override
     public void onNext(UploadRequestResponse uploadRequestResponse) {
         String token = uploadRequestResponse.getUploadToken();
+        String translation = uploadRequestResponse.getTranslation();
         if(token != null && !token.equals(""))
             this.uploadToken = uploadRequestResponse.getUploadToken();
+        if(translation != null && !translation.equals(""))
+            this.translation = translation;
         this.status = uploadRequestResponse.getStatus();
 
         System.out.println(String.format("[%s] Update - %s", this.uploadToken, this.status));

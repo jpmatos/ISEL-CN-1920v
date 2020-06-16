@@ -39,16 +39,6 @@ public final class RpcService {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_CnText_UploadRequestResponse_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_CnText_TranslateRequest_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_CnText_TranslateRequest_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_CnText_TranslateResponse_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_CnText_TranslateResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -63,33 +53,27 @@ public final class RpcService {
       "\n\tsessionId\030\001 \001(\t\022\014\n\004user\030\002 \001(\t\022#\n\006statu" +
       "s\030\003 \001(\0162\023.CnText.LoginStatus\"5\n\rCloseRes" +
       "ponse\022$\n\006status\030\001 \001(\0162\024.CnText.LogoutSta" +
-      "tus\"1\n\rUploadRequest\022\r\n\005image\030\001 \001(\014\022\021\n\ts" +
-      "essionId\030\002 \001(\t\"R\n\025UploadRequestResponse\022" +
-      "\023\n\013uploadToken\030\001 \001(\t\022$\n\006status\030\003 \001(\0162\024.C" +
-      "nText.UploadStatus\"L\n\020TranslateRequest\022\023" +
-      "\n\013uploadToken\030\001 \001(\t\022\020\n\010language\030\002 \001(\t\022\021\n" +
-      "\tsessionId\030\003 \001(\t\"Q\n\021TranslateResponse\022\023\n" +
-      "\013translation\030\001 \001(\t\022\'\n\006status\030\003 \001(\0162\027.CnT" +
-      "ext.TranslateStatus*e\n\013LoginStatus\022\021\n\rLO" +
-      "GIN_SUCCESS\020\000\022\035\n\031LOGIN_COMMUNICATION_ERR" +
-      "OR\020\001\022\020\n\014UNKNOWN_USER\020\002\022\022\n\016WRONG_PASSWORD" +
-      "\020\003*\236\001\n\014UploadStatus\022\022\n\016UPLOAD_SUCCESS\020\000\022" +
-      "\036\n\032UPLOAD_COMMUNICATION_ERROR\020\001\022\032\n\026UPLOA" +
-      "D_INVALID_SESSION\020\002\022\021\n\rIMAGE_TOO_BIG\020\003\022\026" +
-      "\n\022UNSUPPORTED_FORMAT\020\004\022\023\n\017IMAGE_CORRUPTE" +
-      "D\020\005*\227\001\n\017TranslateStatus\022\025\n\021TRANSLATE_SUC" +
-      "CESS\020\000\022!\n\035TRANSLATE_COMMUNICATION_ERROR\020" +
-      "\001\022\035\n\031TRANSLATE_INVALID_SESSION\020\002\022\030\n\024UNSU" +
-      "PPORTED_LANGUAGE\020\003\022\021\n\rINVALID_TOKEN\020\004*^\n" +
-      "\014LogoutStatus\022\022\n\016LOGOUT_SUCCESS\020\000\022\036\n\032LOG" +
-      "OUT_COMMUNICATION_ERROR\020\001\022\032\n\026LOGOUT_INVA" +
-      "LID_SESSION\020\0022\350\001\n\006CnText\022\'\n\005start\022\r.CnTe" +
-      "xt.Login\032\017.CnText.Session\022/\n\005close\022\017.CnT" +
-      "ext.Session\032\025.CnText.CloseResponse\022@\n\006up" +
-      "load\022\025.CnText.UploadRequest\032\035.CnText.Upl" +
-      "oadRequestResponse0\001\022B\n\ttranslate\022\030.CnTe" +
-      "xt.TranslateRequest\032\031.CnText.TranslateRe" +
-      "sponse0\001B\n\n\006CnTextP\001b\006proto3"
+      "tus\"e\n\rUploadRequest\022\r\n\005image\030\001 \001(\014\022\014\n\004m" +
+      "ime\030\002 \001(\t\022\021\n\textension\030\003 \001(\t\022\021\n\tlanguage" +
+      "s\030\004 \001(\t\022\021\n\tsessionId\030\005 \001(\t\"g\n\025UploadRequ" +
+      "estResponse\022\023\n\013uploadToken\030\001 \001(\t\022\023\n\013tran" +
+      "slation\030\002 \001(\t\022$\n\006status\030\003 \001(\0162\024.CnText.U" +
+      "ploadStatus*e\n\013LoginStatus\022\021\n\rLOGIN_SUCC" +
+      "ESS\020\000\022\035\n\031LOGIN_COMMUNICATION_ERROR\020\001\022\020\n\014" +
+      "UNKNOWN_USER\020\002\022\022\n\016WRONG_PASSWORD\020\003*\317\001\n\014U" +
+      "ploadStatus\022\022\n\016UPLOAD_SUCCESS\020\000\022\036\n\032UPLOA" +
+      "D_COMMUNICATION_ERROR\020\001\022\032\n\026UPLOAD_INVALI" +
+      "D_SESSION\020\002\022\021\n\rIMAGE_TOO_BIG\020\003\022\026\n\022UNSUPP" +
+      "ORTED_FORMAT\020\004\022\023\n\017IMAGE_CORRUPTED\020\005\022\030\n\024U" +
+      "NSUPPORTED_LANGUAGE\020\006\022\025\n\021TRANSLATE_SUCCE" +
+      "SS\020\007*^\n\014LogoutStatus\022\022\n\016LOGOUT_SUCCESS\020\000" +
+      "\022\036\n\032LOGOUT_COMMUNICATION_ERROR\020\001\022\032\n\026LOGO" +
+      "UT_INVALID_SESSION\020\0022\246\001\n\006CnText\022\'\n\005start" +
+      "\022\r.CnText.Login\032\017.CnText.Session\022/\n\005clos" +
+      "e\022\017.CnText.Session\032\025.CnText.CloseRespons" +
+      "e\022B\n\006upload\022\025.CnText.UploadRequest\032\035.CnT" +
+      "ext.UploadRequestResponse(\0010\001B\n\n\006CnTextP" +
+      "\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -126,25 +110,13 @@ public final class RpcService {
     internal_static_CnText_UploadRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CnText_UploadRequest_descriptor,
-        new java.lang.String[] { "Image", "SessionId", });
+        new java.lang.String[] { "Image", "Mime", "Extension", "Languages", "SessionId", });
     internal_static_CnText_UploadRequestResponse_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_CnText_UploadRequestResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CnText_UploadRequestResponse_descriptor,
-        new java.lang.String[] { "UploadToken", "Status", });
-    internal_static_CnText_TranslateRequest_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_CnText_TranslateRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_CnText_TranslateRequest_descriptor,
-        new java.lang.String[] { "UploadToken", "Language", "SessionId", });
-    internal_static_CnText_TranslateResponse_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_CnText_TranslateResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_CnText_TranslateResponse_descriptor,
-        new java.lang.String[] { "Translation", "Status", });
+        new java.lang.String[] { "UploadToken", "Translation", "Status", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -13,11 +13,41 @@ public interface UploadRequestOrBuilder extends
   com.google.protobuf.ByteString getImage();
 
   /**
-   * <code>string sessionId = 2;</code>
+   * <code>string mime = 2;</code>
+   */
+  java.lang.String getMime();
+  /**
+   * <code>string mime = 2;</code>
+   */
+  com.google.protobuf.ByteString
+      getMimeBytes();
+
+  /**
+   * <code>string extension = 3;</code>
+   */
+  java.lang.String getExtension();
+  /**
+   * <code>string extension = 3;</code>
+   */
+  com.google.protobuf.ByteString
+      getExtensionBytes();
+
+  /**
+   * <code>string languages = 4;</code>
+   */
+  java.lang.String getLanguages();
+  /**
+   * <code>string languages = 4;</code>
+   */
+  com.google.protobuf.ByteString
+      getLanguagesBytes();
+
+  /**
+   * <code>string sessionId = 5;</code>
    */
   java.lang.String getSessionId();
   /**
-   * <code>string sessionId = 2;</code>
+   * <code>string sessionId = 5;</code>
    */
   com.google.protobuf.ByteString
       getSessionIdBytes();
