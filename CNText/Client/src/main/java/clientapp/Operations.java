@@ -81,6 +81,7 @@ public class Operations implements IOperations {
             while ((size = bInputStream.read(buffer)) > 0) {
                 ByteString byteString = ByteString.copyFrom(buffer, 0, size);
                 UploadRequest req = UploadRequest.newBuilder()
+                        .setSessionId(session.getSessionId())
                         .setLanguages(languages)
                         .setImage(byteString)
                         .setMime(mimeType)

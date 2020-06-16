@@ -28,6 +28,16 @@ public class SessionManager {
         return activeSessions;
     }
 
+    public boolean isPremium(String sessionId) {
+        Optional<Session> optional = activeSessions.stream().filter(item -> item.getID().equals(sessionId)).findFirst();
+        if(optional.isPresent()){
+            return  optional.get().getPremium();
+        }
+        else
+            return false;
+        //TODO Throw some exception
+    }
+
     class Session {
         private String ID;
         private boolean premium;
