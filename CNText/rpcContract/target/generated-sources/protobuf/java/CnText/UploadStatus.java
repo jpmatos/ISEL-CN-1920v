@@ -32,6 +32,14 @@ public enum UploadStatus
    * <code>IMAGE_CORRUPTED = 5;</code>
    */
   IMAGE_CORRUPTED(5),
+  /**
+   * <code>UNSUPPORTED_LANGUAGE = 6;</code>
+   */
+  UNSUPPORTED_LANGUAGE(6),
+  /**
+   * <code>TRANSLATE_SUCCESS = 7;</code>
+   */
+  TRANSLATE_SUCCESS(7),
   UNRECOGNIZED(-1),
   ;
 
@@ -59,6 +67,14 @@ public enum UploadStatus
    * <code>IMAGE_CORRUPTED = 5;</code>
    */
   public static final int IMAGE_CORRUPTED_VALUE = 5;
+  /**
+   * <code>UNSUPPORTED_LANGUAGE = 6;</code>
+   */
+  public static final int UNSUPPORTED_LANGUAGE_VALUE = 6;
+  /**
+   * <code>TRANSLATE_SUCCESS = 7;</code>
+   */
+  public static final int TRANSLATE_SUCCESS_VALUE = 7;
 
 
   public final int getNumber() {
@@ -85,6 +101,8 @@ public enum UploadStatus
       case 3: return IMAGE_TOO_BIG;
       case 4: return UNSUPPORTED_FORMAT;
       case 5: return IMAGE_CORRUPTED;
+      case 6: return UNSUPPORTED_LANGUAGE;
+      case 7: return TRANSLATE_SUCCESS;
       default: return null;
     }
   }

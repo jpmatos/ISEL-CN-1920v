@@ -18,6 +18,16 @@ public interface UploadRequestResponseOrBuilder extends
       getUploadTokenBytes();
 
   /**
+   * <code>string translation = 2;</code>
+   */
+  java.lang.String getTranslation();
+  /**
+   * <code>string translation = 2;</code>
+   */
+  com.google.protobuf.ByteString
+      getTranslationBytes();
+
+  /**
    * <code>.CnText.UploadStatus status = 3;</code>
    */
   int getStatusValue();

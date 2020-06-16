@@ -14,10 +14,10 @@ public class Client {
 
     public static void main(String[] args) {
         try {
-            if (args.length == 2) {
-                svcIP = args[0];
-                svcPort = Integer.parseInt(args[1]);
-            }
+//            if (args.length == 2) {
+//                svcIP = args[0];
+//                svcPort = Integer.parseInt(args[1]);
+//            }
 
             IOperations operations = new Operations(svcIP, svcPort);
             IView view = new View();
@@ -33,16 +33,18 @@ public class Client {
                     case 2:
                         upload(operations, view);
                         break;
+//                    case 3:
+//                        translate(operations, view);
+//                        break;
                     case 3:
-                        translate(operations, view);
-                        break;
-                    case 4:
                         view(operations, view);
                         break;
-                    case 5:
+                    case 4:
                         logout(operations, view);
+                        break;
                     case 0:
                         cont = false;
+                        break;
                     default:
                         view.printInvalidOption();
                 }
@@ -79,20 +81,21 @@ public class Client {
         }
 
         Path path = view.printPathInput();
-        operations.upload(path);
+        String languages = view.printSelectLanguage();
+        operations.upload(path, languages);
     }
 
-    private static void translate(IOperations operations, IView view) {
-        if(!operations.isLogged()){
-            view.printNotLoggedIn();
-            return;
-        }
-
-        IUploadRequest req = view.printUploadSuccessesPicker(operations.getUploadRequests());
-        String language = view.printSelectLanguage();
-
-        operations.translate(req.getUploadToken(), req.getFilename(), language);
-    }
+//    private static void translate(IOperations operations, IView view) {
+//        if(!operations.isLogged()){
+//            view.printNotLoggedIn();
+//            return;
+//        }
+//
+//        IUploadRequest req = view.printUploadSuccessesPicker(operations.getUploadRequests());
+//        String language = view.printSelectLanguage();
+//
+//        operations.translate(req.getUploadToken(), req.getFilename(), language);
+//    }
 
     private static void logout(IOperations operations, IView view) {
         if(!operations.isLogged()){
@@ -113,26 +116,27 @@ public class Client {
         while(cont){
             int oper = view.printViewMenuSelection();
             switch (oper){
+//                case 1:
+//                    view.printTranslationSuccesses(operations.getTranslationRequests());
+//                    break;
+//                case 2:
+//                    view.printTranslationOngoing(operations.getTranslationRequests());
+//                    break;
+//                case 3:
+//                    view.printTranslationAllRequests(operations.getTranslationRequests());
+//                    break;
                 case 1:
-                    view.printTranslationSuccesses(operations.getTranslationRequests());
-                    break;
-                case 2:
-                    view.printTranslationOngoing(operations.getTranslationRequests());
-                    break;
-                case 3:
-                    view.printTranslationAllRequests(operations.getTranslationRequests());
-                    break;
-                case 4:
                     view.printUploadSuccesses(operations.getUploadRequests());
                     break;
-                case 5:
+                case 2:
                     view.printUploadOngoing(operations.getUploadRequests());
                     break;
-                case 6:
+                case 3:
                     view.printUploadAllRequests(operations.getUploadRequests());
                     break;
                 case 0:
                     cont = false;
+                    break;
                 default:
                     view.printInvalidOption();
             }
