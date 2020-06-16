@@ -140,6 +140,7 @@ public class StorageOperations {
         String blobName = scan.nextLine();
         System.out.println("Qual pathname do ficheiro?");
         String absFileName = scan.nextLine();
+
         Path uploadFrom = Paths.get(absFileName);
         String contentType = Files.probeContentType(uploadFrom);
         BlobId blobId = BlobId.of(bucketName, blobName);
