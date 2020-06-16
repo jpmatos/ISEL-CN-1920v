@@ -35,7 +35,7 @@ public class Simulate {
         }
 
 
-        try (PublishTopic publishTopic = new PublishTopic("free-ocr")) {
+        try (PublishTopic publishTopic = new PublishTopic("premium-ocr")) {
             log("Publishing Demo message...");
             String msgID = publishTopic.publishMessage(
                     new OCRRequest(
