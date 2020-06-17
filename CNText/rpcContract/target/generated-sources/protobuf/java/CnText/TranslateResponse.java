@@ -4,19 +4,19 @@
 package CnText;
 
 /**
- * Protobuf type {@code CnText.UploadRequestResponse}
+ * Protobuf type {@code CnText.TranslateResponse}
  */
-public  final class UploadRequestResponse extends
+public  final class TranslateResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:CnText.UploadRequestResponse)
-    UploadRequestResponseOrBuilder {
+    // @@protoc_insertion_point(message_implements:CnText.TranslateResponse)
+    TranslateResponseOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use UploadRequestResponse.newBuilder() to construct.
-  private UploadRequestResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use TranslateResponse.newBuilder() to construct.
+  private TranslateResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private UploadRequestResponse() {
-    uploadToken_ = "";
+  private TranslateResponse() {
+    translation_ = "";
     status_ = 0;
   }
 
@@ -25,7 +25,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private UploadRequestResponse(
+  private TranslateResponse(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -54,10 +54,10 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            uploadToken_ = s;
+            translation_ = s;
             break;
           }
-          case 16: {
+          case 24: {
             int rawValue = input.readEnum();
 
             status_ = rawValue;
@@ -77,64 +77,64 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return CnText.RpcService.internal_static_CnText_UploadRequestResponse_descriptor;
+    return CnText.RpcService.internal_static_CnText_TranslateResponse_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return CnText.RpcService.internal_static_CnText_UploadRequestResponse_fieldAccessorTable
+    return CnText.RpcService.internal_static_CnText_TranslateResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            CnText.UploadRequestResponse.class, CnText.UploadRequestResponse.Builder.class);
+            CnText.TranslateResponse.class, CnText.TranslateResponse.Builder.class);
   }
 
-  public static final int UPLOADTOKEN_FIELD_NUMBER = 1;
-  private volatile java.lang.Object uploadToken_;
+  public static final int TRANSLATION_FIELD_NUMBER = 1;
+  private volatile java.lang.Object translation_;
   /**
-   * <code>string uploadToken = 1;</code>
+   * <code>string translation = 1;</code>
    */
-  public java.lang.String getUploadToken() {
-    java.lang.Object ref = uploadToken_;
+  public java.lang.String getTranslation() {
+    java.lang.Object ref = translation_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      uploadToken_ = s;
+      translation_ = s;
       return s;
     }
   }
   /**
-   * <code>string uploadToken = 1;</code>
+   * <code>string translation = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getUploadTokenBytes() {
-    java.lang.Object ref = uploadToken_;
+      getTranslationBytes() {
+    java.lang.Object ref = translation_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      uploadToken_ = b;
+      translation_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int STATUS_FIELD_NUMBER = 2;
+  public static final int STATUS_FIELD_NUMBER = 3;
   private int status_;
   /**
-   * <code>.CnText.UploadStatus status = 2;</code>
+   * <code>.CnText.TranslateStatus status = 3;</code>
    */
   public int getStatusValue() {
     return status_;
   }
   /**
-   * <code>.CnText.UploadStatus status = 2;</code>
+   * <code>.CnText.TranslateStatus status = 3;</code>
    */
-  public CnText.UploadStatus getStatus() {
-    CnText.UploadStatus result = CnText.UploadStatus.valueOf(status_);
-    return result == null ? CnText.UploadStatus.UNRECOGNIZED : result;
+  public CnText.TranslateStatus getStatus() {
+    CnText.TranslateStatus result = CnText.TranslateStatus.valueOf(status_);
+    return result == null ? CnText.TranslateStatus.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -149,11 +149,11 @@ private static final long serialVersionUID = 0L;
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getUploadTokenBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, uploadToken_);
+    if (!getTranslationBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, translation_);
     }
-    if (status_ != CnText.UploadStatus.UPLOAD_STARTING.getNumber()) {
-      output.writeEnum(2, status_);
+    if (status_ != CnText.TranslateStatus.TRANSLATING.getNumber()) {
+      output.writeEnum(3, status_);
     }
     unknownFields.writeTo(output);
   }
@@ -163,12 +163,12 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getUploadTokenBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, uploadToken_);
+    if (!getTranslationBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, translation_);
     }
-    if (status_ != CnText.UploadStatus.UPLOAD_STARTING.getNumber()) {
+    if (status_ != CnText.TranslateStatus.TRANSLATING.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeEnumSize(2, status_);
+        .computeEnumSize(3, status_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -180,14 +180,14 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof CnText.UploadRequestResponse)) {
+    if (!(obj instanceof CnText.TranslateResponse)) {
       return super.equals(obj);
     }
-    CnText.UploadRequestResponse other = (CnText.UploadRequestResponse) obj;
+    CnText.TranslateResponse other = (CnText.TranslateResponse) obj;
 
     boolean result = true;
-    result = result && getUploadToken()
-        .equals(other.getUploadToken());
+    result = result && getTranslation()
+        .equals(other.getTranslation());
     result = result && status_ == other.status_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
@@ -200,8 +200,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + UPLOADTOKEN_FIELD_NUMBER;
-    hash = (53 * hash) + getUploadToken().hashCode();
+    hash = (37 * hash) + TRANSLATION_FIELD_NUMBER;
+    hash = (53 * hash) + getTranslation().hashCode();
     hash = (37 * hash) + STATUS_FIELD_NUMBER;
     hash = (53 * hash) + status_;
     hash = (29 * hash) + unknownFields.hashCode();
@@ -209,69 +209,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static CnText.UploadRequestResponse parseFrom(
+  public static CnText.TranslateResponse parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static CnText.UploadRequestResponse parseFrom(
+  public static CnText.TranslateResponse parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static CnText.UploadRequestResponse parseFrom(
+  public static CnText.TranslateResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static CnText.UploadRequestResponse parseFrom(
+  public static CnText.TranslateResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static CnText.UploadRequestResponse parseFrom(byte[] data)
+  public static CnText.TranslateResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static CnText.UploadRequestResponse parseFrom(
+  public static CnText.TranslateResponse parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static CnText.UploadRequestResponse parseFrom(java.io.InputStream input)
+  public static CnText.TranslateResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static CnText.UploadRequestResponse parseFrom(
+  public static CnText.TranslateResponse parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static CnText.UploadRequestResponse parseDelimitedFrom(java.io.InputStream input)
+  public static CnText.TranslateResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static CnText.UploadRequestResponse parseDelimitedFrom(
+  public static CnText.TranslateResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static CnText.UploadRequestResponse parseFrom(
+  public static CnText.TranslateResponse parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static CnText.UploadRequestResponse parseFrom(
+  public static CnText.TranslateResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -283,7 +283,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(CnText.UploadRequestResponse prototype) {
+  public static Builder newBuilder(CnText.TranslateResponse prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   public Builder toBuilder() {
@@ -298,25 +298,25 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code CnText.UploadRequestResponse}
+   * Protobuf type {@code CnText.TranslateResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:CnText.UploadRequestResponse)
-      CnText.UploadRequestResponseOrBuilder {
+      // @@protoc_insertion_point(builder_implements:CnText.TranslateResponse)
+      CnText.TranslateResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return CnText.RpcService.internal_static_CnText_UploadRequestResponse_descriptor;
+      return CnText.RpcService.internal_static_CnText_TranslateResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return CnText.RpcService.internal_static_CnText_UploadRequestResponse_fieldAccessorTable
+      return CnText.RpcService.internal_static_CnText_TranslateResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              CnText.UploadRequestResponse.class, CnText.UploadRequestResponse.Builder.class);
+              CnText.TranslateResponse.class, CnText.TranslateResponse.Builder.class);
     }
 
-    // Construct using CnText.UploadRequestResponse.newBuilder()
+    // Construct using CnText.TranslateResponse.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -333,7 +333,7 @@ private static final long serialVersionUID = 0L;
     }
     public Builder clear() {
       super.clear();
-      uploadToken_ = "";
+      translation_ = "";
 
       status_ = 0;
 
@@ -342,24 +342,24 @@ private static final long serialVersionUID = 0L;
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return CnText.RpcService.internal_static_CnText_UploadRequestResponse_descriptor;
+      return CnText.RpcService.internal_static_CnText_TranslateResponse_descriptor;
     }
 
-    public CnText.UploadRequestResponse getDefaultInstanceForType() {
-      return CnText.UploadRequestResponse.getDefaultInstance();
+    public CnText.TranslateResponse getDefaultInstanceForType() {
+      return CnText.TranslateResponse.getDefaultInstance();
     }
 
-    public CnText.UploadRequestResponse build() {
-      CnText.UploadRequestResponse result = buildPartial();
+    public CnText.TranslateResponse build() {
+      CnText.TranslateResponse result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public CnText.UploadRequestResponse buildPartial() {
-      CnText.UploadRequestResponse result = new CnText.UploadRequestResponse(this);
-      result.uploadToken_ = uploadToken_;
+    public CnText.TranslateResponse buildPartial() {
+      CnText.TranslateResponse result = new CnText.TranslateResponse(this);
+      result.translation_ = translation_;
       result.status_ = status_;
       onBuilt();
       return result;
@@ -392,18 +392,18 @@ private static final long serialVersionUID = 0L;
       return (Builder) super.addRepeatedField(field, value);
     }
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof CnText.UploadRequestResponse) {
-        return mergeFrom((CnText.UploadRequestResponse)other);
+      if (other instanceof CnText.TranslateResponse) {
+        return mergeFrom((CnText.TranslateResponse)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(CnText.UploadRequestResponse other) {
-      if (other == CnText.UploadRequestResponse.getDefaultInstance()) return this;
-      if (!other.getUploadToken().isEmpty()) {
-        uploadToken_ = other.uploadToken_;
+    public Builder mergeFrom(CnText.TranslateResponse other) {
+      if (other == CnText.TranslateResponse.getDefaultInstance()) return this;
+      if (!other.getTranslation().isEmpty()) {
+        translation_ = other.translation_;
         onChanged();
       }
       if (other.status_ != 0) {
@@ -422,11 +422,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      CnText.UploadRequestResponse parsedMessage = null;
+      CnText.TranslateResponse parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (CnText.UploadRequestResponse) e.getUnfinishedMessage();
+        parsedMessage = (CnText.TranslateResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -436,84 +436,84 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object uploadToken_ = "";
+    private java.lang.Object translation_ = "";
     /**
-     * <code>string uploadToken = 1;</code>
+     * <code>string translation = 1;</code>
      */
-    public java.lang.String getUploadToken() {
-      java.lang.Object ref = uploadToken_;
+    public java.lang.String getTranslation() {
+      java.lang.Object ref = translation_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        uploadToken_ = s;
+        translation_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string uploadToken = 1;</code>
+     * <code>string translation = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getUploadTokenBytes() {
-      java.lang.Object ref = uploadToken_;
+        getTranslationBytes() {
+      java.lang.Object ref = translation_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        uploadToken_ = b;
+        translation_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string uploadToken = 1;</code>
+     * <code>string translation = 1;</code>
      */
-    public Builder setUploadToken(
+    public Builder setTranslation(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      uploadToken_ = value;
+      translation_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string uploadToken = 1;</code>
+     * <code>string translation = 1;</code>
      */
-    public Builder clearUploadToken() {
+    public Builder clearTranslation() {
       
-      uploadToken_ = getDefaultInstance().getUploadToken();
+      translation_ = getDefaultInstance().getTranslation();
       onChanged();
       return this;
     }
     /**
-     * <code>string uploadToken = 1;</code>
+     * <code>string translation = 1;</code>
      */
-    public Builder setUploadTokenBytes(
+    public Builder setTranslationBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      uploadToken_ = value;
+      translation_ = value;
       onChanged();
       return this;
     }
 
     private int status_ = 0;
     /**
-     * <code>.CnText.UploadStatus status = 2;</code>
+     * <code>.CnText.TranslateStatus status = 3;</code>
      */
     public int getStatusValue() {
       return status_;
     }
     /**
-     * <code>.CnText.UploadStatus status = 2;</code>
+     * <code>.CnText.TranslateStatus status = 3;</code>
      */
     public Builder setStatusValue(int value) {
       status_ = value;
@@ -521,16 +521,16 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.CnText.UploadStatus status = 2;</code>
+     * <code>.CnText.TranslateStatus status = 3;</code>
      */
-    public CnText.UploadStatus getStatus() {
-      CnText.UploadStatus result = CnText.UploadStatus.valueOf(status_);
-      return result == null ? CnText.UploadStatus.UNRECOGNIZED : result;
+    public CnText.TranslateStatus getStatus() {
+      CnText.TranslateStatus result = CnText.TranslateStatus.valueOf(status_);
+      return result == null ? CnText.TranslateStatus.UNRECOGNIZED : result;
     }
     /**
-     * <code>.CnText.UploadStatus status = 2;</code>
+     * <code>.CnText.TranslateStatus status = 3;</code>
      */
-    public Builder setStatus(CnText.UploadStatus value) {
+    public Builder setStatus(CnText.TranslateStatus value) {
       if (value == null) {
         throw new NullPointerException();
       }
@@ -540,7 +540,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>.CnText.UploadStatus status = 2;</code>
+     * <code>.CnText.TranslateStatus status = 3;</code>
      */
     public Builder clearStatus() {
       
@@ -559,39 +559,39 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:CnText.UploadRequestResponse)
+    // @@protoc_insertion_point(builder_scope:CnText.TranslateResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:CnText.UploadRequestResponse)
-  private static final CnText.UploadRequestResponse DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:CnText.TranslateResponse)
+  private static final CnText.TranslateResponse DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new CnText.UploadRequestResponse();
+    DEFAULT_INSTANCE = new CnText.TranslateResponse();
   }
 
-  public static CnText.UploadRequestResponse getDefaultInstance() {
+  public static CnText.TranslateResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<UploadRequestResponse>
-      PARSER = new com.google.protobuf.AbstractParser<UploadRequestResponse>() {
-    public UploadRequestResponse parsePartialFrom(
+  private static final com.google.protobuf.Parser<TranslateResponse>
+      PARSER = new com.google.protobuf.AbstractParser<TranslateResponse>() {
+    public TranslateResponse parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new UploadRequestResponse(input, extensionRegistry);
+      return new TranslateResponse(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<UploadRequestResponse> parser() {
+  public static com.google.protobuf.Parser<TranslateResponse> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<UploadRequestResponse> getParserForType() {
+  public com.google.protobuf.Parser<TranslateResponse> getParserForType() {
     return PARSER;
   }
 
-  public CnText.UploadRequestResponse getDefaultInstanceForType() {
+  public CnText.TranslateResponse getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

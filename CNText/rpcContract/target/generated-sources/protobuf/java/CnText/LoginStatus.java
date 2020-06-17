@@ -17,13 +17,13 @@ public enum LoginStatus
    */
   LOGIN_COMMUNICATION_ERROR(1),
   /**
-   * <code>UNKNOWN_USER = 2;</code>
+   * <code>LOGIN_UNKNOWN_USER = 2;</code>
    */
-  UNKNOWN_USER(2),
+  LOGIN_UNKNOWN_USER(2),
   /**
-   * <code>WRONG_PASSWORD = 3;</code>
+   * <code>LOGIN_WRONG_PASSWORD = 3;</code>
    */
-  WRONG_PASSWORD(3),
+  LOGIN_WRONG_PASSWORD(3),
   UNRECOGNIZED(-1),
   ;
 
@@ -36,13 +36,13 @@ public enum LoginStatus
    */
   public static final int LOGIN_COMMUNICATION_ERROR_VALUE = 1;
   /**
-   * <code>UNKNOWN_USER = 2;</code>
+   * <code>LOGIN_UNKNOWN_USER = 2;</code>
    */
-  public static final int UNKNOWN_USER_VALUE = 2;
+  public static final int LOGIN_UNKNOWN_USER_VALUE = 2;
   /**
-   * <code>WRONG_PASSWORD = 3;</code>
+   * <code>LOGIN_WRONG_PASSWORD = 3;</code>
    */
-  public static final int WRONG_PASSWORD_VALUE = 3;
+  public static final int LOGIN_WRONG_PASSWORD_VALUE = 3;
 
 
   public final int getNumber() {
@@ -65,8 +65,8 @@ public enum LoginStatus
     switch (value) {
       case 0: return LOGIN_SUCCESS;
       case 1: return LOGIN_COMMUNICATION_ERROR;
-      case 2: return UNKNOWN_USER;
-      case 3: return WRONG_PASSWORD;
+      case 2: return LOGIN_UNKNOWN_USER;
+      case 3: return LOGIN_WRONG_PASSWORD;
       default: return null;
     }
   }

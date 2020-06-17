@@ -38,6 +38,11 @@ public class SessionManager {
         //TODO Throw some exception
     }
 
+    public boolean isValid(String sessionId) {
+        Optional<Session> optional = activeSessions.stream().filter(item -> item.getID().equals(sessionId)).findFirst();
+        return optional.isPresent();
+    }
+
     class Session {
         private String ID;
         private boolean premium;

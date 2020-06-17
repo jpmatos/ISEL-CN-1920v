@@ -2,18 +2,22 @@ package clientapp.observers;
 
 import CnText.UploadRequestResponse;
 import CnText.UploadStatus;
+import clientapp.interfaces.IOperations;
 import clientapp.interfaces.IUploadRequest;
 import io.grpc.stub.StreamObserver;
 
 public class UploadRequestObserver implements StreamObserver<UploadRequestResponse>, IUploadRequest {
+    private final IOperations operations;
     private String fileName;
+    private String languages;
     private String uploadToken;
-    private String translation;
     private UploadStatus status;
     private boolean completed = false;
 
-    public UploadRequestObserver(String fileName) {
+    public UploadRequestObserver(String fileName, String languages, IOperations operations) {
         this.fileName = fileName;
+        this.operations = operations;
+        this.languages = languages;
     }
 
     @Override
@@ -37,32 +41,25 @@ public class UploadRequestObserver implements StreamObserver<UploadRequestRespon
     }
 
     @Override
-    public String getTranslation() {
-        return this.translation;
-    }
-
-    @Override
     public void onNext(UploadRequestResponse uploadRequestResponse) {
         String token = uploadRequestResponse.getUploadToken();
-        String translation = uploadRequestResponse.getTranslation();
         if(token != null && !token.equals(""))
-            this.uploadToken = uploadRequestResponse.getUploadToken();
-        if(translation != null && !translation.equals(""))
-            this.translation = translation;
-        this.status = uploadRequestResponse.getStatus();
+            uploadToken = token;
+        status = uploadRequestResponse.getStatus();
 
-        System.out.println(String.format("[%s] Update - %s", this.uploadToken, this.status));
+        System.out.println(String.format("[%s] Status - '%s'", fileName, status));
     }
 
     @Override
     public void onError(Throwable throwable) {
         completed = true;
-        System.out.println(String.format("[%s] Failure - %s", this.uploadToken, this.status));
+        System.out.println(String.format("[%s] Failed Status - '%s'", fileName, status));
     }
 
     @Override
     public void onCompleted() {
         completed = true;
-        System.out.println(String.format("[%s] Completed - %s", this.uploadToken, this.status));
+        System.out.println(String.format("[%s] Completed Status - '%s' Token - '%s'", fileName, status, uploadToken));
+        operations.translate(uploadToken, fileName, languages);
     }
 }

@@ -14,12 +14,9 @@ import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
 import io.grpc.stub.StreamObserver;
 
-import java.io.*;
-import java.net.URLConnection;
+import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 public class Operations extends CnTextGrpc.CnTextImplBase  {
@@ -39,17 +36,20 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
     @Override
     public void start(Login request, StreamObserver<CnText.Session> responseObserver) {
         System.out.println("Login called");
+
+        //Load User from Firestore
         String username = request.getUser();
         String password = request.getPassword();
         Query query = db.collection(USERS_COLLECTION_NAME).whereEqualTo("username", username);
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
+        //See if the User is valid, matches password, and if it is premium or not
         LoginStatus loginStatus;
         boolean premium = false;
         try {
             List<QueryDocumentSnapshot> docs = querySnapshot.get().getDocuments();
             if(docs.size() == 0)
-                loginStatus = LoginStatus.UNKNOWN_USER;
+                loginStatus = LoginStatus.LOGIN_UNKNOWN_USER;
             else {
                 DocumentSnapshot doc = docs.get(0);
                 User userFound = doc.toObject(User.class);
@@ -57,7 +57,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                 if (userFound.password.equals(password))
                     loginStatus = LoginStatus.LOGIN_SUCCESS;
                 else
-                    loginStatus = LoginStatus.WRONG_PASSWORD;
+                    loginStatus = LoginStatus.LOGIN_WRONG_PASSWORD;
             }
 
         } catch (InterruptedException | ExecutionException e) {
@@ -65,16 +65,16 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
             loginStatus = LoginStatus.LOGIN_COMMUNICATION_ERROR;
         }
 
+        //Build response
         CnText.Session.Builder sessionBuilder = CnText.Session.newBuilder().setStatus(loginStatus).setUser(username);
         if(loginStatus == LoginStatus.LOGIN_SUCCESS) {
             String sessionID = sessionManager.newSession(premium);
             sessionBuilder.setSessionId(sessionID);
             //TODO Call VMManagement
         }
-        else
-            sessionBuilder.setSessionId("");
-
         CnText.Session response = sessionBuilder.build();
+
+        //Send response and call onCompleted()
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
@@ -82,15 +82,18 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
     @Override
     public void close(CnText.Session request, StreamObserver<CloseResponse> responseObserver) {
         System.out.println("Logout Called");
+
+        //Attempt to clear user from SessionManager
         String sessionID = request.getSessionId();
         LogoutStatus logoutStatus;
-
-        //TODO Call VMManagement
         if(sessionManager.closeSession(sessionID))
             logoutStatus = LogoutStatus.LOGOUT_SUCCESS;
         else
             logoutStatus = LogoutStatus.LOGOUT_INVALID_SESSION;
 
+        //TODO Call VMManagement
+
+        //Send response and call onComplete()
         responseObserver.onNext(CloseResponse.newBuilder().setStatus(logoutStatus).build());
         responseObserver.onCompleted();
     }
@@ -98,32 +101,34 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
     @Override
     public StreamObserver<UploadRequest> upload(StreamObserver<UploadRequestResponse> responseObserver) {
         System.out.println("Called upload");
+        responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(UploadStatus.UPLOAD_STARTING).build());
+
         return new StreamObserver<UploadRequest>() {
             private String blobName = getAlphaNumericString(16);
-            private UploadStatus uploadStatus = UploadStatus.UNRECOGNIZED;
+            private UploadStatus uploadStatus = UploadStatus.UPLOAD_STARTING;
+            private WriteChannel writer = null;
             private RestorableState<WriteChannel> capture;
-
-            private String sessionID = "";
-            private boolean isPremium;
-            private String language;
 
             @Override
             public void onNext(UploadRequest uploadRequest) {
-                //TODO Verify SessionID
 
-                //TODO Verify if valid mime/extension
+                if(uploadStatus != UploadStatus.UPLOADING && uploadStatus != UploadStatus.UPLOAD_STARTING)
+                    return;
 
-                //Only needs to do this the first time
-                if(sessionID.equals("")) {
-                    sessionID = uploadRequest.getSessionId();
-                    isPremium = sessionManager.isPremium(uploadRequest.getSessionId());
-                    language = uploadRequest.getLanguages();
+                //Validate Session
+                if(!sessionManager.isValid(uploadRequest.getSessionId())){
+                    uploadStatus = UploadStatus.UPLOAD_INVALID_SESSION;
+                    responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
+                    responseObserver.onError(null);
+                    return;
                 }
 
-                byte[] data = uploadRequest.getImage().toByteArray();
                 try{
-                    WriteChannel writer;
+                    byte[] data = uploadRequest.getImage().toByteArray();
                     if(capture == null) {
+                        //TODO Validate mime/extension
+
+                        //Create blob and open WriteChannel
                         blobName += "." + uploadRequest.getExtension();
                         BlobId blobId = BlobId.of(IMAGES_BUCKET_NAME, blobName);
                         String contentType = uploadRequest.getMime();
@@ -133,14 +138,24 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                     else {
                         writer = capture.restore();
                     }
+
+                    //Write to Google Cloud and save WriteChannel
                     writer.write(ByteBuffer.wrap(data, 0, data.length));
                     capture = writer.capture();
 
-                    uploadStatus = UploadStatus.UPLOAD_SUCCESS;
+                    //Update Status
+                    uploadStatus = UploadStatus.UPLOADING;
+                    responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
                 } catch (Exception e) {
                     e.printStackTrace();
 
-                    uploadStatus = UploadStatus.IMAGE_CORRUPTED;
+                    //Attempt to close write stream
+                    closeWriteStream(writer, capture);
+
+                    //TODO Delete partial file upload
+
+                    //Update Status
+                    uploadStatus = UploadStatus.UPLOAD_ERROR;
                     responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
                     responseObserver.onError(e);
                 }
@@ -148,59 +163,101 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
 
             @Override
             public void onError(Throwable throwable) {
+
+                //Attempt to close write stream
+                closeWriteStream(writer, capture);
+
                 //TODO Delete partial file upload
+
+                //Update Status
+                uploadStatus = UploadStatus.UPLOAD_USER_ERROR;
+                responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
+                responseObserver.onError(throwable);
             }
 
             @Override
             public void onCompleted() {
-                try {
-                    if(capture != null){
-                        WriteChannel cap = capture.restore();
-                        if(cap.isOpen())
-                            cap.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    responseObserver.onError(e);
+
+                //Attempt to close write stream
+                closeWriteStream(writer, capture);
+
+                if(uploadStatus != UploadStatus.UPLOADING)
                     return;
-                }
 
-                responseObserver.onNext(UploadRequestResponse.newBuilder().setUploadToken(blobName).setStatus(uploadStatus).build());
-                System.out.println("Blob access URL: " + "https://storage.googleapis.com/" + IMAGES_BUCKET_NAME + "/" + blobName);
-
-                String topicName;
-                if(isPremium)
-                    topicName = "premium-ocr";
-                else
-                    topicName = "free-ocr";
-
-                TopicName tName=TopicName.ofProjectTopicName(PROJECT_ID, topicName);
-                try {
-                    Publisher publisher = Publisher.newBuilder(tName).build();
-
-                    ByteString msgData = ByteString.copyFromUtf8("placeholder-message");
-                    System.out.println(blobName + " " + language + " " + sessionID + " " + PROJECT_ID + " " + topicName);
-                    PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
-                            .setData(msgData)
-                            .putAttributes("blobName", blobName)
-                            .putAttributes("language", language)
-                            .putAttributes("sessionID", sessionID)
-                            .build();
-                    ApiFuture<String> future = publisher.publish(pubsubMessage);
-                    String msgID = future.get();
-                    publisher.shutdown();
-
-                    System.out.println("Message Published with ID=" + msgID);
-                } catch (IOException | ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                    responseObserver.onError(e);
-                    return;
-                }
-
-                //TODO Set Firestore Listener for updates
+                //Update Status and call onComplete()
+                uploadStatus = UploadStatus.UPLOAD_SUCCESS;
+                responseObserver.onNext(UploadRequestResponse.newBuilder()
+                        .setUploadToken(blobName)
+                        .setStatus(uploadStatus)
+                        .build());
                 responseObserver.onCompleted();
+                System.out.println("Blob access URL: " + "https://storage.googleapis.com/" + IMAGES_BUCKET_NAME + "/" + blobName);
+            }
+
+            private void closeWriteStream(WriteChannel writer, RestorableState<WriteChannel> capture) {
+                try {
+                    if(writer != null && writer.isOpen())
+                        writer.close();
+                    if(capture != null) {
+                        writer = capture.restore();
+                        if(writer != null && writer.isOpen())
+                            writer.close();
+                    }
+                } catch (IOException ignored) { }
             }
         };
+    }
+
+    @Override
+    public void translate(TranslateRequest translateRequest, StreamObserver<TranslateResponse> responseObserver) {
+        System.out.println("Called Translate");
+        String sessionID = translateRequest.getSessionId();
+
+        //Validate Session
+        if(!sessionManager.isValid(sessionID)){
+            responseObserver.onNext(TranslateResponse.newBuilder().setStatus(TranslateStatus.TRANSLATE_INVALID_SESSION).build());
+            return;
+        }
+
+        //TODO Validate blob/uploadToken
+
+        //Load information
+        String blobName = translateRequest.getUploadToken();
+        String language = translateRequest.getLanguage();
+        String topicName;
+        if(sessionManager.isPremium(sessionID))
+            topicName = "premium-ocr";
+        else
+            topicName = "free-ocr";
+
+        //Publish to free/premium topic
+        TopicName tName=TopicName.ofProjectTopicName(PROJECT_ID, topicName);
+        try {
+            Publisher publisher = Publisher.newBuilder(tName).build();
+
+            ByteString msgData = ByteString.copyFromUtf8("placeholder-message");
+            System.out.println(blobName + " " + language + " " + sessionID + " " + PROJECT_ID + " " + topicName);
+            PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
+                    .setData(msgData)
+                    .putAttributes("blobName", blobName)
+                    .putAttributes("language", language)
+                    .putAttributes("sessionID", sessionID)
+                    .build();
+            ApiFuture<String> future = publisher.publish(pubsubMessage);
+            String msgID = future.get();
+            publisher.shutdown();
+
+            System.out.println("Message Published with ID=" + msgID);
+        } catch (IOException | ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            responseObserver.onError(e);
+            return;
+        }
+
+        //Update Status
+        responseObserver.onNext(TranslateResponse.newBuilder().setStatus(TranslateStatus.TRANSLATING).build());
+
+        //TODO Set Firestore Listener for updates
     }
 
     private String getAlphaNumericString(int n)

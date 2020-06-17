@@ -3,8 +3,10 @@ package clientapp;
 import CnText.*;
 import clientapp.interfaces.IOperations;
 //import clientapp.interfaces.ITranslationRequest;
+import clientapp.interfaces.ITranslationRequest;
 import clientapp.interfaces.IUploadRequest;
 //import clientapp.observers.TranslationRequestObserver;
+import clientapp.observers.TranslationRequestObserver;
 import clientapp.observers.UploadRequestObserver;
 import com.google.protobuf.ByteString;
 import io.grpc.ManagedChannel;
@@ -22,7 +24,7 @@ public class Operations implements IOperations {
     private final CnTextGrpc.CnTextBlockingStub blockingStub;
     private Session session;
     private ArrayList<UploadRequestObserver> uploadRequests = new ArrayList<>();
-//    private ArrayList<TranslationRequestObserver> translationRequests = new ArrayList<>();
+    private ArrayList<TranslationRequestObserver> translationRequests = new ArrayList<>();
 
     public Operations(String svcIP, int svcPort) {
         channel = ManagedChannelBuilder.forAddress(svcIP, svcPort)
@@ -48,31 +50,30 @@ public class Operations implements IOperations {
     }
 
     @Override
-    public void upload(Path path, String languages) {
-        UploadRequestObserver urObserver = new UploadRequestObserver(path.getFileName().toString());
+    public void upload(Path path, String languages) throws IOException {
+
+        //Check if file exists
+        File file = path.toFile();
+        if (!file.exists()) {
+            System.out.println("File does not exist");
+            return;
+        }
+
+        //Get file MIME and Extension
+        String mimeType = Files.probeContentType(path);
+        String extension = "";
+        int i = path.getFileName().toString().lastIndexOf('.');
+        if (i > 0) {
+            extension = path.getFileName().toString().substring(i+1);
+        }
+
+        //TODO Verify if valid mime & extension
+
+        UploadRequestObserver urObserver = new UploadRequestObserver(path.getFileName().toString(), languages, this);
         uploadRequests.add(urObserver);
         StreamObserver<UploadRequest> requestObserver = noBlockStub.upload(urObserver);
 
         try {
-
-            //Check if file exists
-            File file = path.toFile();
-            if (!file.exists()) {
-                System.out.println("File does not exist");
-                return;
-            }
-
-            //Get file MIME and Extension
-            String mimeType = Files.probeContentType(path);
-            String extension = "";
-            int i = path.getFileName().toString().lastIndexOf('.');
-            if (i > 0) {
-                extension = path.getFileName().toString().substring(i+1);
-            }
-
-
-            //TODO Verify if valid mime/extension
-
             //Send file to Service
             BufferedInputStream bInputStream = new BufferedInputStream(new FileInputStream(file));
             int bufferSize = 512 * 1024; // 512k
@@ -82,7 +83,6 @@ public class Operations implements IOperations {
                 ByteString byteString = ByteString.copyFrom(buffer, 0, size);
                 UploadRequest req = UploadRequest.newBuilder()
                         .setSessionId(session.getSessionId())
-                        .setLanguages(languages)
                         .setImage(byteString)
                         .setMime(mimeType)
                         .setExtension(extension)
@@ -97,17 +97,17 @@ public class Operations implements IOperations {
         requestObserver.onCompleted();
     }
 
-//    @Override
-//    public void translate(String uploadToken, String filename, String language){
-//        TranslationRequestObserver trObserver = new TranslationRequestObserver(uploadToken, filename, language);
-//        TranslateRequest translateRequest = TranslateRequest.newBuilder()
-//                .setUploadToken(uploadToken)
-//                .setLanguage(language)
-//                .setSessionId(session.getSessionId())
-//                .build();
-//        noBlockStub.translate(translateRequest, trObserver);
-//        translationRequests.add(trObserver);
-//    }
+    @Override
+    public void translate(String uploadToken, String filename, String language) {
+        TranslationRequestObserver trObserver = new TranslationRequestObserver(uploadToken, filename, language);
+        TranslateRequest trRequest = TranslateRequest.newBuilder()
+                .setSessionId(session.getSessionId())
+                .setUploadToken(uploadToken)
+                .setLanguage(language)
+                .build();
+        noBlockStub.translate(trRequest, trObserver);
+        translationRequests.add(trObserver);
+    }
 
     @Override
     public LogoutStatus logout() {
@@ -129,11 +129,11 @@ public class Operations implements IOperations {
             return session.getUser();
     }
 
-//    @Override
-//    public ArrayList<ITranslationRequest> getTranslationRequests(){
-//        ArrayList<ITranslationRequest> res = new ArrayList<>(translationRequests);
-//        return res;
-//    }
+    @Override
+    public ArrayList<ITranslationRequest> getTranslationRequests(){
+        ArrayList<ITranslationRequest> res = new ArrayList<>(translationRequests);
+        return res;
+    }
 
     @Override
     public ArrayList<IUploadRequest> getUploadRequests() {

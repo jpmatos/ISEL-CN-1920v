@@ -8,34 +8,35 @@ service CnText {
     rpc start (Login) returns (Session);
     rpc close (Session) returns (CloseResponse);
     rpc upload (stream UploadRequest) returns (stream UploadRequestResponse);
-//    rpc translate (TranslateRequest) returns (stream TranslateResponse);
+    rpc translate (TranslateRequest) returns (stream TranslateResponse);
 }
 
 enum LoginStatus {
     LOGIN_SUCCESS = 0;
     LOGIN_COMMUNICATION_ERROR = 1;
-    UNKNOWN_USER = 2;
-    WRONG_PASSWORD = 3;
+    LOGIN_UNKNOWN_USER = 2;
+    LOGIN_WRONG_PASSWORD = 3;
 }
 
 enum UploadStatus {
-    UPLOAD_SUCCESS = 0;
-    UPLOAD_COMMUNICATION_ERROR = 1;
-    UPLOAD_INVALID_SESSION = 2;
-    IMAGE_TOO_BIG = 3;
-    UNSUPPORTED_FORMAT = 4;
-    IMAGE_CORRUPTED = 5;
-    UNSUPPORTED_LANGUAGE = 6;
-    TRANSLATE_SUCCESS = 7;
+    UPLOAD_STARTING = 0;
+    UPLOADING = 1;
+    UPLOAD_SUCCESS = 2;
+    UPLOAD_ERROR = 3;
+    UPLOAD_INVALID_SESSION = 4;
+    UPLOAD_IMAGE_TOO_BIG = 5;
+    UPLOAD_UNSUPPORTED_FORMAT = 6;
+    UPLOAD_USER_ERROR = 7;
 }
 
-//enum TranslateStatus {
-//    TRANSLATE_SUCCESS = 0;
-//    TRANSLATE_COMMUNICATION_ERROR = 1;
-//    TRANSLATE_INVALID_SESSION = 2;
-//    UNSUPPORTED_LANGUAGE = 3;
-//    INVALID_TOKEN = 4;
-//}
+enum TranslateStatus {
+    TRANSLATING = 0;
+    TRANSLATE_SUCCESS = 1;
+    TRANSLATE_ERROR = 2;
+    TRANSLATE_INVALID_SESSION = 3;
+    TRANSLATE_UNSUPPORTED_LANGUAGE = 4;
+    TRANSLATE_INVALID_UPLOAD_TOKEN = 5;
+}
 
 enum LogoutStatus {
     LOGOUT_SUCCESS = 0;
@@ -59,26 +60,24 @@ message CloseResponse {
 }
 
 message UploadRequest {
-    bytes image = 1;
-    string mime = 2;
-    string extension = 3;
-    string languages = 4;
-    string sessionId = 5;
+    string sessionId = 1;
+    bytes image = 2;
+    string mime = 3;
+    string extension = 4;
 }
 
 message UploadRequestResponse {
     string uploadToken = 1;
-    string translation = 2;
-    UploadStatus status = 3;
+    UploadStatus status = 2;
 }
 
-//message TranslateRequest {
-//    string uploadToken = 1;
-//    string language = 2;
-//    string sessionId = 3;
-//}
-//
-//message TranslateResponse {
-//    string translation = 1;
-//    TranslateStatus status = 3;
-//}
+message TranslateRequest {
+    string sessionId = 1;
+    string uploadToken = 2;
+    string language = 3;
+}
+
+message TranslateResponse {
+    string translation = 1;
+    TranslateStatus status = 3;
+}

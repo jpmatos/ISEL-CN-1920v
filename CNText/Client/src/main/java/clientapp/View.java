@@ -1,6 +1,6 @@
 package clientapp;
 
-//import clientapp.interfaces.ITranslationRequest;
+import clientapp.interfaces.ITranslationRequest;
 import clientapp.interfaces.IUploadRequest;
 import clientapp.interfaces.IView;
 import clientapp.utils.ScanUtils;
@@ -9,57 +9,57 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-//import static CnText.TranslateStatus.TRANSLATE_SUCCESS;
+import static CnText.TranslateStatus.TRANSLATE_SUCCESS;
 import static CnText.UploadStatus.UPLOAD_SUCCESS;
 
 public class View implements IView {
-//    @Override
-//    public void printTranslationSuccesses(ArrayList<ITranslationRequest> requests) {
-//        ArrayList<ITranslationRequest> translationSuccesses = new ArrayList<>();
-//        for (ITranslationRequest req : requests) {
-//            if(req.getStatus() == TRANSLATE_SUCCESS)
-//                translationSuccesses.add(req);
-//        }
-//
-//        for (int i = 0; i < translationSuccesses.size(); i++) {
-//            System.out.println(String.format("[%d] - '%s' to '%s'",
-//                    i + 1, translationSuccesses.get(i).getFilename(), translationSuccesses.get(i).getLanguage()));
-//        }
-//        System.out.println("[0] - Cancel");
-//        int option = ScanUtils.getInputInt("Pick a translation:");
-//
-//        if(option == 0)
-//            return;
-//        if(option < 0 || option > translationSuccesses.size()){
-//            System.out.println("Invalid option");
-//            return;
-//        }
-//        ITranslationRequest req = translationSuccesses.get(option - 1);
-//        System.out.println(String.format("[%s] - '%s'", req.getUploadToken(),  req.getTranslation()));
-//    }
-//
-//    @Override
-//    public void printTranslationOngoing(ArrayList<ITranslationRequest> requests) {
-//        for (ITranslationRequest req : requests) {
-//            if(!req.isCompleted())
-//                System.out.println(String.format("[%s] - '%s'; Status: '%s'",
-//                        req.getUploadToken(), req.getFilename(), req.getStatus()));
-//        }
-//    }
-//
-//    @Override
-//    public void printTranslationAllRequests(ArrayList<ITranslationRequest> requests) {
-//        for (ITranslationRequest req : requests) {
-//            System.out.println(String.format("[%s] - '%s'; Status: '%s'",
-//                    req.getUploadToken(), req.getFilename(), req.getStatus()));
-//        }
-//    }
+    @Override
+    public void printTranslationSuccesses(ArrayList<ITranslationRequest> requests) {
+        ArrayList<ITranslationRequest> translationSuccesses = new ArrayList<>();
+        for (ITranslationRequest req : requests) {
+            if(req.getStatus() == TRANSLATE_SUCCESS)
+                translationSuccesses.add(req);
+        }
+
+        for (int i = 0; i < translationSuccesses.size(); i++) {
+            System.out.println(String.format("[%d] - '%s' to '%s'",
+                    i + 1, translationSuccesses.get(i).getFilename(), translationSuccesses.get(i).getLanguage()));
+        }
+        System.out.println("[0] - Cancel");
+        int option = ScanUtils.getInputInt("Pick a translation:");
+
+        if(option == 0)
+            return;
+        if(option < 0 || option > translationSuccesses.size()){
+            System.out.println("Invalid option");
+            return;
+        }
+        ITranslationRequest req = translationSuccesses.get(option - 1);
+        System.out.println(String.format("[%s] - '%s'", req.getUploadToken(),  req.getTranslation()));
+    }
+
+    @Override
+    public void printTranslationOngoing(ArrayList<ITranslationRequest> requests) {
+        for (ITranslationRequest req : requests) {
+            if(!req.isCompleted())
+                System.out.println(String.format("[%s] - '%s'; Status: '%s'",
+                        req.getUploadToken(), req.getFilename(), req.getStatus()));
+        }
+    }
+
+    @Override
+    public void printTranslationAllRequests(ArrayList<ITranslationRequest> requests) {
+        for (ITranslationRequest req : requests) {
+            System.out.println(String.format("[%s] - '%s'; Status: '%s'",
+                    req.getUploadToken(), req.getFilename(), req.getStatus()));
+        }
+    }
 
     @Override
     public void printUploadSuccesses(ArrayList<IUploadRequest> requests) {
         for (IUploadRequest req : requests) {
-            if(req.getStatus() == UPLOAD_SUCCESS)
-                System.out.println(String.format("[%s] - '%s' - %s", req.getUploadToken(), req.getFilename(), req.getTranslation()));
+            if(req.isCompleted() && req.getStatus() == UPLOAD_SUCCESS)
+                System.out.println(String.format("[%s] - '%s'", req.getUploadToken(), req.getFilename()));
         }
     }
 
@@ -80,29 +80,29 @@ public class View implements IView {
         }
     }
 
-//    @Override
-//    public IUploadRequest printUploadSuccessesPicker(ArrayList<IUploadRequest> requests) {
-//        ArrayList<IUploadRequest> uploadSuccesses = new ArrayList<>();
-//        for (IUploadRequest req : requests) {
-//            if(req.getStatus() == UPLOAD_SUCCESS)
-//                uploadSuccesses.add(req);
-//        }
-//        while (true) {
-//            for (int i = 0; i < uploadSuccesses.size(); i++) {
-//                System.out.println(String.format("[%d] - '%s'", i + 1, uploadSuccesses.get(i).getFilename()));
-//            }
-//            System.out.println("[0] - Cancel");
-//            int option = ScanUtils.getInputInt("Pick a file:");
-//
-//            if (option == 0)
-//                return null;
-//            if (option < 0 || option > uploadSuccesses.size()) {
-//                System.out.println("Invalid option");
-//                continue;
-//            }
-//            return uploadSuccesses.get(option - 1);
-//        }
-//    }
+    @Override
+    public IUploadRequest printUploadSuccessesPicker(ArrayList<IUploadRequest> requests) {
+        ArrayList<IUploadRequest> uploadSuccesses = new ArrayList<>();
+        for (IUploadRequest req : requests) {
+            if(req.getStatus() == UPLOAD_SUCCESS)
+                uploadSuccesses.add(req);
+        }
+        while (true) {
+            for (int i = 0; i < uploadSuccesses.size(); i++) {
+                System.out.println(String.format("[%d] - '%s'", i + 1, uploadSuccesses.get(i).getFilename()));
+            }
+            System.out.println("[0] - Cancel");
+            int option = ScanUtils.getInputInt("Pick a file:");
+
+            if (option == 0)
+                return null;
+            if (option < 0 || option > uploadSuccesses.size()) {
+                System.out.println("Invalid option");
+                continue;
+            }
+            return uploadSuccesses.get(option - 1);
+        }
+    }
 
     @Override
     public String printSelectLanguage() {
@@ -149,12 +149,12 @@ public class View implements IView {
         return ScanUtils.getInputInt(
             "------------------\n" +
                 "Pick an option:\n" +
-//                "[1] - Translations: Successes\n" +
-//                "[2] - Translations: Ongoing\n" +
-//                "[3] - Translations: All\n" +
-                "[1] - Upload: Successes\n" +
-                "[2] - Upload: Ongoing" +
-                "[3] - Upload: All\n" +
+                "[1] - Translations: Successes\n" +
+                "[2] - Translations: Ongoing\n" +
+                "[3] - Translations: All\n" +
+                "[4] - Upload: Successes\n" +
+                "[5] - Upload: Ongoing\n" +
+                "[6] - Upload: All\n" +
                 "[0] - Back");
     }
 
@@ -165,9 +165,9 @@ public class View implements IView {
                 "Pick an option:\n" +
                 "[1] - Login\n" +
                 "[2] - Upload\n" +
-//                "[3] - Translate\n" +
-                "[3] - View\n" +
-                "[4] - Logout\n" +
+                "[3] - Translate\n" +
+                "[4] - View\n" +
+                "[5] - Logout\n" +
                 "[0] - Quit");
     }
 

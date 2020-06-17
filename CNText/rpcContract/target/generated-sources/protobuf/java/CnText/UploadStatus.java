@@ -9,72 +9,72 @@ package CnText;
 public enum UploadStatus
     implements com.google.protobuf.ProtocolMessageEnum {
   /**
-   * <code>UPLOAD_SUCCESS = 0;</code>
+   * <code>UPLOAD_STARTING = 0;</code>
    */
-  UPLOAD_SUCCESS(0),
+  UPLOAD_STARTING(0),
   /**
-   * <code>UPLOAD_COMMUNICATION_ERROR = 1;</code>
+   * <code>UPLOADING = 1;</code>
    */
-  UPLOAD_COMMUNICATION_ERROR(1),
+  UPLOADING(1),
   /**
-   * <code>UPLOAD_INVALID_SESSION = 2;</code>
+   * <code>UPLOAD_SUCCESS = 2;</code>
    */
-  UPLOAD_INVALID_SESSION(2),
+  UPLOAD_SUCCESS(2),
   /**
-   * <code>IMAGE_TOO_BIG = 3;</code>
+   * <code>UPLOAD_ERROR = 3;</code>
    */
-  IMAGE_TOO_BIG(3),
+  UPLOAD_ERROR(3),
   /**
-   * <code>UNSUPPORTED_FORMAT = 4;</code>
+   * <code>UPLOAD_INVALID_SESSION = 4;</code>
    */
-  UNSUPPORTED_FORMAT(4),
+  UPLOAD_INVALID_SESSION(4),
   /**
-   * <code>IMAGE_CORRUPTED = 5;</code>
+   * <code>UPLOAD_IMAGE_TOO_BIG = 5;</code>
    */
-  IMAGE_CORRUPTED(5),
+  UPLOAD_IMAGE_TOO_BIG(5),
   /**
-   * <code>UNSUPPORTED_LANGUAGE = 6;</code>
+   * <code>UPLOAD_UNSUPPORTED_FORMAT = 6;</code>
    */
-  UNSUPPORTED_LANGUAGE(6),
+  UPLOAD_UNSUPPORTED_FORMAT(6),
   /**
-   * <code>TRANSLATE_SUCCESS = 7;</code>
+   * <code>UPLOAD_USER_ERROR = 7;</code>
    */
-  TRANSLATE_SUCCESS(7),
+  UPLOAD_USER_ERROR(7),
   UNRECOGNIZED(-1),
   ;
 
   /**
-   * <code>UPLOAD_SUCCESS = 0;</code>
+   * <code>UPLOAD_STARTING = 0;</code>
    */
-  public static final int UPLOAD_SUCCESS_VALUE = 0;
+  public static final int UPLOAD_STARTING_VALUE = 0;
   /**
-   * <code>UPLOAD_COMMUNICATION_ERROR = 1;</code>
+   * <code>UPLOADING = 1;</code>
    */
-  public static final int UPLOAD_COMMUNICATION_ERROR_VALUE = 1;
+  public static final int UPLOADING_VALUE = 1;
   /**
-   * <code>UPLOAD_INVALID_SESSION = 2;</code>
+   * <code>UPLOAD_SUCCESS = 2;</code>
    */
-  public static final int UPLOAD_INVALID_SESSION_VALUE = 2;
+  public static final int UPLOAD_SUCCESS_VALUE = 2;
   /**
-   * <code>IMAGE_TOO_BIG = 3;</code>
+   * <code>UPLOAD_ERROR = 3;</code>
    */
-  public static final int IMAGE_TOO_BIG_VALUE = 3;
+  public static final int UPLOAD_ERROR_VALUE = 3;
   /**
-   * <code>UNSUPPORTED_FORMAT = 4;</code>
+   * <code>UPLOAD_INVALID_SESSION = 4;</code>
    */
-  public static final int UNSUPPORTED_FORMAT_VALUE = 4;
+  public static final int UPLOAD_INVALID_SESSION_VALUE = 4;
   /**
-   * <code>IMAGE_CORRUPTED = 5;</code>
+   * <code>UPLOAD_IMAGE_TOO_BIG = 5;</code>
    */
-  public static final int IMAGE_CORRUPTED_VALUE = 5;
+  public static final int UPLOAD_IMAGE_TOO_BIG_VALUE = 5;
   /**
-   * <code>UNSUPPORTED_LANGUAGE = 6;</code>
+   * <code>UPLOAD_UNSUPPORTED_FORMAT = 6;</code>
    */
-  public static final int UNSUPPORTED_LANGUAGE_VALUE = 6;
+  public static final int UPLOAD_UNSUPPORTED_FORMAT_VALUE = 6;
   /**
-   * <code>TRANSLATE_SUCCESS = 7;</code>
+   * <code>UPLOAD_USER_ERROR = 7;</code>
    */
-  public static final int TRANSLATE_SUCCESS_VALUE = 7;
+  public static final int UPLOAD_USER_ERROR_VALUE = 7;
 
 
   public final int getNumber() {
@@ -95,14 +95,14 @@ public enum UploadStatus
 
   public static UploadStatus forNumber(int value) {
     switch (value) {
-      case 0: return UPLOAD_SUCCESS;
-      case 1: return UPLOAD_COMMUNICATION_ERROR;
-      case 2: return UPLOAD_INVALID_SESSION;
-      case 3: return IMAGE_TOO_BIG;
-      case 4: return UNSUPPORTED_FORMAT;
-      case 5: return IMAGE_CORRUPTED;
-      case 6: return UNSUPPORTED_LANGUAGE;
-      case 7: return TRANSLATE_SUCCESS;
+      case 0: return UPLOAD_STARTING;
+      case 1: return UPLOADING;
+      case 2: return UPLOAD_SUCCESS;
+      case 3: return UPLOAD_ERROR;
+      case 4: return UPLOAD_INVALID_SESSION;
+      case 5: return UPLOAD_IMAGE_TOO_BIG;
+      case 6: return UPLOAD_UNSUPPORTED_FORMAT;
+      case 7: return UPLOAD_USER_ERROR;
       default: return null;
     }
   }

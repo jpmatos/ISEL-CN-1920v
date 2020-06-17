@@ -84,7 +84,7 @@ public enum LogoutStatus
   }
   public static final com.google.protobuf.Descriptors.EnumDescriptor
       getDescriptor() {
-    return CnText.RpcService.getDescriptor().getEnumTypes().get(2);
+    return CnText.RpcService.getDescriptor().getEnumTypes().get(3);
   }
 
   private static final LogoutStatus[] VALUES = values();
