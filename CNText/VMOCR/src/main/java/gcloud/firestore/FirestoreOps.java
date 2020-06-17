@@ -4,6 +4,7 @@ import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
+import dao.OCRResult;
 import dao.TextOfImage;
 
 import java.io.IOException;
@@ -28,11 +29,12 @@ public class FirestoreOps implements IFirestoreOps {
 
 
     @Override
-    public boolean storeOCRResult(String id, String ocrResult, String language) {
+    public boolean storeOCRResult(String id, OCRResult ocrResult, String language) {
         TextOfImage textOfImage = new TextOfImage();
         textOfImage.id = id;
         textOfImage.language = language;
-        textOfImage.ocrResult = ocrResult;
+        textOfImage.locale = ocrResult.getLocale();
+        textOfImage.text = ocrResult.getResult();
 
         DocumentReference docRef = colRef.document(id);
         ApiFuture<WriteResult> future = docRef.set(textOfImage);

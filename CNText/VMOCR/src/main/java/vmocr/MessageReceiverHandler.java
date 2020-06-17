@@ -5,6 +5,7 @@ import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import dao.OCRRequest;
+import dao.OCRResult;
 import dao.TranslateRequest;
 import gcloud.firestore.FirestoreOps;
 import gcloud.firestore.IFirestoreOps;
@@ -12,7 +13,7 @@ import gcloud.pubsub.PublishTopic;
 import gcloud.storage.IStorageOps;
 import gcloud.storage.StorageOps;
 import gcloud.vision.IVisionOps;
-import gcloud.vision.IVisionOpsDummy;
+import gcloud.vision.VisionOps;
 
 import java.io.IOException;
 import java.util.Map;
@@ -23,7 +24,8 @@ import static utils.Output.log;
 
 
 public class MessageReceiverHandler implements MessageReceiver {
-    private final IVisionOps visionOps = new IVisionOpsDummy();
+//    private final IVisionOps visionOps = new VisionOpsDummy(); //TODO delete
+    private final IVisionOps visionOps = new VisionOps();
     private final IStorageOps storageOps = new StorageOps();
     private IFirestoreOps firestoreOps;
     private PublishTopic publishToTranslate;
@@ -56,7 +58,7 @@ public class MessageReceiverHandler implements MessageReceiver {
             ByteString blobBytes = storageOps.getBlobToByteString(ocrRequest.getBlobName());
 
             log("Get OCR from Vision");
-            String ocrResult = visionOps.getTextFromImage(blobBytes);
+            OCRResult ocrResult = visionOps.getTextFromImage(blobBytes);
 
             log("Save OCR result to Firestore");
             if (!firestoreOps.storeOCRResult(id, ocrResult, ocrRequest.getLanguage())) {

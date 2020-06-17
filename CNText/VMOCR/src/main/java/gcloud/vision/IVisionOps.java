@@ -1,7 +1,8 @@
 package gcloud.vision;
 
 import com.google.protobuf.ByteString;
+import dao.OCRResult;
 
 public  interface IVisionOps {
-    String getTextFromImage(ByteString imageBytes);
+    OCRResult getTextFromImage(ByteString imageBytes);
 }

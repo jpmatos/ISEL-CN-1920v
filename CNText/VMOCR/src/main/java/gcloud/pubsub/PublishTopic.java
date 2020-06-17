@@ -39,10 +39,11 @@ public class PublishTopic implements AutoCloseable {
      * @throws InterruptedException
      */
     public String publishMessage(TranslateRequest translateRequest) throws ExecutionException, InterruptedException {
-        ByteString msgData = ByteString.copyFromUtf8(translateRequest.getTextToTranslate());
+        ByteString msgData = ByteString.copyFromUtf8(translateRequest.getOcrResult().getResult());
         PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
                 .setData(msgData)
                 .putAttributes("id", translateRequest.getId())
+                .putAttributes("locale", translateRequest.getOcrResult().getLocale())
                 .putAttributes("language", translateRequest.getLanguage())
                 .build();
 

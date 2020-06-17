@@ -2,12 +2,12 @@ package dao;
 
 public class TranslateRequest {
     private final String id;
-    private final String textToTranslate;
+    private final OCRResult ocrResult;
     private final String language;
 
-    public TranslateRequest(String id, String textToTranslate, String language) {
+    public TranslateRequest(String id, OCRResult ocrResult, String language) {
         this.id = id;
-        this.textToTranslate = textToTranslate;
+        this.ocrResult = ocrResult;
         this.language = language;
     }
 
@@ -15,11 +15,11 @@ public class TranslateRequest {
         return id;
     }
 
-    public String getTextToTranslate() {
-        return textToTranslate;
-    }
-
     public String getLanguage() {
         return language;
+    }
+
+    public OCRResult getOcrResult() {
+        return ocrResult;
     }
 }
