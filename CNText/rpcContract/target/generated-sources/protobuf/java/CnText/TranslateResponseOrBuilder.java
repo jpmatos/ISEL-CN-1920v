@@ -8,11 +8,21 @@ public interface TranslateResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string translation = 1;</code>
+   * <code>string text = 1;</code>
+   */
+  java.lang.String getText();
+  /**
+   * <code>string text = 1;</code>
+   */
+  com.google.protobuf.ByteString
+      getTextBytes();
+
+  /**
+   * <code>string translation = 2;</code>
    */
   java.lang.String getTranslation();
   /**
-   * <code>string translation = 1;</code>
+   * <code>string translation = 2;</code>
    */
   com.google.protobuf.ByteString
       getTranslationBytes();

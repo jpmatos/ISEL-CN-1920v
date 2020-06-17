@@ -16,6 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private TranslateResponse() {
+    text_ = "";
     translation_ = "";
     status_ = 0;
   }
@@ -54,6 +55,12 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
+            text_ = s;
+            break;
+          }
+          case 18: {
+            java.lang.String s = input.readStringRequireUtf8();
+
             translation_ = s;
             break;
           }
@@ -87,10 +94,44 @@ private static final long serialVersionUID = 0L;
             CnText.TranslateResponse.class, CnText.TranslateResponse.Builder.class);
   }
 
-  public static final int TRANSLATION_FIELD_NUMBER = 1;
+  public static final int TEXT_FIELD_NUMBER = 1;
+  private volatile java.lang.Object text_;
+  /**
+   * <code>string text = 1;</code>
+   */
+  public java.lang.String getText() {
+    java.lang.Object ref = text_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      text_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string text = 1;</code>
+   */
+  public com.google.protobuf.ByteString
+      getTextBytes() {
+    java.lang.Object ref = text_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      text_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int TRANSLATION_FIELD_NUMBER = 2;
   private volatile java.lang.Object translation_;
   /**
-   * <code>string translation = 1;</code>
+   * <code>string translation = 2;</code>
    */
   public java.lang.String getTranslation() {
     java.lang.Object ref = translation_;
@@ -105,7 +146,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string translation = 1;</code>
+   * <code>string translation = 2;</code>
    */
   public com.google.protobuf.ByteString
       getTranslationBytes() {
@@ -149,10 +190,13 @@ private static final long serialVersionUID = 0L;
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getTranslationBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, translation_);
+    if (!getTextBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, text_);
     }
-    if (status_ != CnText.TranslateStatus.TRANSLATING.getNumber()) {
+    if (!getTranslationBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, translation_);
+    }
+    if (status_ != CnText.TranslateStatus.READING_TEXT.getNumber()) {
       output.writeEnum(3, status_);
     }
     unknownFields.writeTo(output);
@@ -163,10 +207,13 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getTranslationBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, translation_);
+    if (!getTextBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, text_);
     }
-    if (status_ != CnText.TranslateStatus.TRANSLATING.getNumber()) {
+    if (!getTranslationBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, translation_);
+    }
+    if (status_ != CnText.TranslateStatus.READING_TEXT.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(3, status_);
     }
@@ -186,6 +233,8 @@ private static final long serialVersionUID = 0L;
     CnText.TranslateResponse other = (CnText.TranslateResponse) obj;
 
     boolean result = true;
+    result = result && getText()
+        .equals(other.getText());
     result = result && getTranslation()
         .equals(other.getTranslation());
     result = result && status_ == other.status_;
@@ -200,6 +249,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + TEXT_FIELD_NUMBER;
+    hash = (53 * hash) + getText().hashCode();
     hash = (37 * hash) + TRANSLATION_FIELD_NUMBER;
     hash = (53 * hash) + getTranslation().hashCode();
     hash = (37 * hash) + STATUS_FIELD_NUMBER;
@@ -333,6 +384,8 @@ private static final long serialVersionUID = 0L;
     }
     public Builder clear() {
       super.clear();
+      text_ = "";
+
       translation_ = "";
 
       status_ = 0;
@@ -359,6 +412,7 @@ private static final long serialVersionUID = 0L;
 
     public CnText.TranslateResponse buildPartial() {
       CnText.TranslateResponse result = new CnText.TranslateResponse(this);
+      result.text_ = text_;
       result.translation_ = translation_;
       result.status_ = status_;
       onBuilt();
@@ -402,6 +456,10 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(CnText.TranslateResponse other) {
       if (other == CnText.TranslateResponse.getDefaultInstance()) return this;
+      if (!other.getText().isEmpty()) {
+        text_ = other.text_;
+        onChanged();
+      }
       if (!other.getTranslation().isEmpty()) {
         translation_ = other.translation_;
         onChanged();
@@ -436,9 +494,78 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object text_ = "";
+    /**
+     * <code>string text = 1;</code>
+     */
+    public java.lang.String getText() {
+      java.lang.Object ref = text_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        text_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string text = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTextBytes() {
+      java.lang.Object ref = text_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        text_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string text = 1;</code>
+     */
+    public Builder setText(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      text_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string text = 1;</code>
+     */
+    public Builder clearText() {
+      
+      text_ = getDefaultInstance().getText();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string text = 1;</code>
+     */
+    public Builder setTextBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      text_ = value;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object translation_ = "";
     /**
-     * <code>string translation = 1;</code>
+     * <code>string translation = 2;</code>
      */
     public java.lang.String getTranslation() {
       java.lang.Object ref = translation_;
@@ -453,7 +580,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string translation = 1;</code>
+     * <code>string translation = 2;</code>
      */
     public com.google.protobuf.ByteString
         getTranslationBytes() {
@@ -469,7 +596,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string translation = 1;</code>
+     * <code>string translation = 2;</code>
      */
     public Builder setTranslation(
         java.lang.String value) {
@@ -482,7 +609,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string translation = 1;</code>
+     * <code>string translation = 2;</code>
      */
     public Builder clearTranslation() {
       
@@ -491,7 +618,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string translation = 1;</code>
+     * <code>string translation = 2;</code>
      */
     public Builder setTranslationBytes(
         com.google.protobuf.ByteString value) {

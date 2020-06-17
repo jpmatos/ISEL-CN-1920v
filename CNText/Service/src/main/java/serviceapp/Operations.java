@@ -14,6 +14,7 @@ import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
 import io.grpc.stub.StreamObserver;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
@@ -219,8 +220,6 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
             return;
         }
 
-        //TODO Validate blob/uploadToken
-
         //Load information
         String blobName = translateRequest.getUploadToken();
         String language = translateRequest.getLanguage();
@@ -229,6 +228,9 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
             topicName = "premium-ocr";
         else
             topicName = "free-ocr";
+
+        //TODO Validate blob/uploadToken
+        //TODO Validate language
 
         //Publish to free/premium topic
         TopicName tName=TopicName.ofProjectTopicName(PROJECT_ID, topicName);
@@ -255,9 +257,52 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         }
 
         //Update Status
-        responseObserver.onNext(TranslateResponse.newBuilder().setStatus(TranslateStatus.TRANSLATING).build());
+        responseObserver.onNext(TranslateResponse.newBuilder().setStatus(TranslateStatus.READING_TEXT).build());
 
-        //TODO Set Firestore Listener for updates
+        //Set Firestore Listener
+        DocumentReference docRef = db.collection("TextOfImages").document(blobName);
+        System.out.println(blobName);
+        docRef.addSnapshotListener((snapshot, e) -> {
+            TranslateResponse.Builder response = TranslateResponse.newBuilder();
+
+            if (e != null) {
+                System.err.println("Listen failed: " + e);
+
+                response.setStatus(TranslateStatus.TRANSLATE_ERROR);
+                responseObserver.onNext(response.build());
+                responseObserver.onError(e);
+                return;
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                System.out.println("Current data: " + snapshot.getData());
+
+                String ocrResult = snapshot.getString("ocrResult");
+                if(ocrResult != null){
+                    response.setText(ocrResult);
+                    if(language.equals("")) {
+                        response.setStatus(TranslateStatus.READING_SUCCESS);
+                        responseObserver.onNext(response.build());
+                        responseObserver.onCompleted();
+                        return;
+                    }
+
+                    String translation = snapshot.getString("translationResult");
+                    if(translation != null){
+                        response.setTranslation(translation);
+                        response.setStatus(TranslateStatus.TRANSLATE_SUCCESS);
+                        responseObserver.onNext(response.build());
+                        responseObserver.onCompleted();
+                        return;
+                    }
+
+                    response.setStatus(TranslateStatus.TRANSLATING);
+                    responseObserver.onNext(response.build());
+                }
+            } else {
+                System.out.println("Current data: null");
+            }
+        });
     }
 
     private String getAlphaNumericString(int n)

@@ -9,56 +9,72 @@ package CnText;
 public enum TranslateStatus
     implements com.google.protobuf.ProtocolMessageEnum {
   /**
-   * <code>TRANSLATING = 0;</code>
+   * <code>READING_TEXT = 0;</code>
    */
-  TRANSLATING(0),
+  READING_TEXT(0),
   /**
-   * <code>TRANSLATE_SUCCESS = 1;</code>
+   * <code>READING_SUCCESS = 1;</code>
    */
-  TRANSLATE_SUCCESS(1),
+  READING_SUCCESS(1),
   /**
-   * <code>TRANSLATE_ERROR = 2;</code>
+   * <code>TRANSLATING = 2;</code>
    */
-  TRANSLATE_ERROR(2),
+  TRANSLATING(2),
   /**
-   * <code>TRANSLATE_INVALID_SESSION = 3;</code>
+   * <code>TRANSLATE_SUCCESS = 3;</code>
    */
-  TRANSLATE_INVALID_SESSION(3),
+  TRANSLATE_SUCCESS(3),
   /**
-   * <code>TRANSLATE_UNSUPPORTED_LANGUAGE = 4;</code>
+   * <code>UNSUPPORTED_LANGUAGE = 6;</code>
    */
-  TRANSLATE_UNSUPPORTED_LANGUAGE(4),
+  UNSUPPORTED_LANGUAGE(6),
   /**
-   * <code>TRANSLATE_INVALID_UPLOAD_TOKEN = 5;</code>
+   * <code>TRANSLATE_ERROR = 4;</code>
    */
-  TRANSLATE_INVALID_UPLOAD_TOKEN(5),
+  TRANSLATE_ERROR(4),
+  /**
+   * <code>TRANSLATE_INVALID_SESSION = 5;</code>
+   */
+  TRANSLATE_INVALID_SESSION(5),
+  /**
+   * <code>TRANSLATE_INVALID_UPLOAD_TOKEN = 7;</code>
+   */
+  TRANSLATE_INVALID_UPLOAD_TOKEN(7),
   UNRECOGNIZED(-1),
   ;
 
   /**
-   * <code>TRANSLATING = 0;</code>
+   * <code>READING_TEXT = 0;</code>
    */
-  public static final int TRANSLATING_VALUE = 0;
+  public static final int READING_TEXT_VALUE = 0;
   /**
-   * <code>TRANSLATE_SUCCESS = 1;</code>
+   * <code>READING_SUCCESS = 1;</code>
    */
-  public static final int TRANSLATE_SUCCESS_VALUE = 1;
+  public static final int READING_SUCCESS_VALUE = 1;
   /**
-   * <code>TRANSLATE_ERROR = 2;</code>
+   * <code>TRANSLATING = 2;</code>
    */
-  public static final int TRANSLATE_ERROR_VALUE = 2;
+  public static final int TRANSLATING_VALUE = 2;
   /**
-   * <code>TRANSLATE_INVALID_SESSION = 3;</code>
+   * <code>TRANSLATE_SUCCESS = 3;</code>
    */
-  public static final int TRANSLATE_INVALID_SESSION_VALUE = 3;
+  public static final int TRANSLATE_SUCCESS_VALUE = 3;
   /**
-   * <code>TRANSLATE_UNSUPPORTED_LANGUAGE = 4;</code>
+   * <code>UNSUPPORTED_LANGUAGE = 6;</code>
    */
-  public static final int TRANSLATE_UNSUPPORTED_LANGUAGE_VALUE = 4;
+  public static final int UNSUPPORTED_LANGUAGE_VALUE = 6;
   /**
-   * <code>TRANSLATE_INVALID_UPLOAD_TOKEN = 5;</code>
+   * <code>TRANSLATE_ERROR = 4;</code>
    */
-  public static final int TRANSLATE_INVALID_UPLOAD_TOKEN_VALUE = 5;
+  public static final int TRANSLATE_ERROR_VALUE = 4;
+  /**
+   * <code>TRANSLATE_INVALID_SESSION = 5;</code>
+   */
+  public static final int TRANSLATE_INVALID_SESSION_VALUE = 5;
+  /**
+   * <code>TRANSLATE_INVALID_UPLOAD_TOKEN = 7;</code>
+   */
+  public static final int TRANSLATE_INVALID_UPLOAD_TOKEN_VALUE = 7;
 
 
   public final int getNumber() {
@@ -79,12 +95,14 @@ public enum TranslateStatus
 
   public static TranslateStatus forNumber(int value) {
     switch (value) {
-      case 0: return TRANSLATING;
-      case 1: return TRANSLATE_SUCCESS;
-      case 2: return TRANSLATE_ERROR;
-      case 3: return TRANSLATE_INVALID_SESSION;
-      case 4: return TRANSLATE_UNSUPPORTED_LANGUAGE;
-      case 5: return TRANSLATE_INVALID_UPLOAD_TOKEN;
+      case 0: return READING_TEXT;
+      case 1: return READING_SUCCESS;
+      case 2: return TRANSLATING;
+      case 3: return TRANSLATE_SUCCESS;
+      case 6: return UNSUPPORTED_LANGUAGE;
+      case 4: return TRANSLATE_ERROR;
+      case 5: return TRANSLATE_INVALID_SESSION;
+      case 7: return TRANSLATE_INVALID_UPLOAD_TOKEN;
       default: return null;
     }
   }

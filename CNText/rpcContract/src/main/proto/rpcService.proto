@@ -30,12 +30,14 @@ enum UploadStatus {
 }
 
 enum TranslateStatus {
-    TRANSLATING = 0;
-    TRANSLATE_SUCCESS = 1;
-    TRANSLATE_ERROR = 2;
-    TRANSLATE_INVALID_SESSION = 3;
-    TRANSLATE_UNSUPPORTED_LANGUAGE = 4;
-    TRANSLATE_INVALID_UPLOAD_TOKEN = 5;
+    READING_TEXT = 0;
+    READING_SUCCESS = 1;
+    TRANSLATING = 2;
+    TRANSLATE_SUCCESS = 3;
+    UNSUPPORTED_LANGUAGE = 6;
+    TRANSLATE_ERROR = 4;
+    TRANSLATE_INVALID_SESSION = 5;
+    TRANSLATE_INVALID_UPLOAD_TOKEN = 7;
 }
 
 enum LogoutStatus {
@@ -78,6 +80,7 @@ message TranslateRequest {
 }
 
 message TranslateResponse {
-    string translation = 1;
+    string text = 1;
+    string translation = 2;
     TranslateStatus status = 3;
 }
