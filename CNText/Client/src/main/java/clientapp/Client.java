@@ -1,10 +1,12 @@
 package clientapp;
 
+import CnText.CheckRequest;
 import CnText.LoginStatus;
 import CnText.LogoutStatus;
 import clientapp.interfaces.IOperations;
-import clientapp.interfaces.IUploadRequest;
 import clientapp.interfaces.IView;
+import io.grpc.stub.StreamObserver;
+
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -35,10 +37,10 @@ public class Client {
                         upload(operations, view);
                         break;
                     case 3:
-                        translate(operations, view);
+                        check(operations, view);
                         break;
                     case 4:
-                        view(operations, view);
+                        views(operations, view);
                         break;
                     case 5:
                         logout(operations, view);
@@ -86,16 +88,19 @@ public class Client {
         operations.upload(path, languages);
     }
 
-    private static void translate(IOperations operations, IView view) {
+    private static void check(IOperations operations, IView view) {
         if(!operations.isLogged()){
             view.printNotLoggedIn();
             return;
         }
 
-        IUploadRequest req = view.printUploadSuccessesPicker(operations.getUploadRequests());
-        String language = view.printSelectLanguage();
-
-        operations.translate(req.getUploadToken(), req.getFilename(), language);
+        StreamObserver<CheckRequest> check = operations.check();
+        String uploadToken = " ";
+        while (!uploadToken.equals("")){
+            uploadToken = view.printUploadTokenInput();
+            operations.sendCheckRequest(check, uploadToken);
+        }
+        check.onCompleted();
     }
 
     private static void logout(IOperations operations, IView view) {
@@ -108,7 +113,7 @@ public class Client {
         view.printSuccessfulLogout(status.name());
     }
 
-    private static void view(IOperations operations, IView view) {
+    private static void views(IOperations operations, IView view) {
         if(!operations.isLogged()){
             view.printNotLoggedIn();
             return;
@@ -118,13 +123,13 @@ public class Client {
             int oper = view.printViewMenuSelection();
             switch (oper){
                 case 1:
-                    view.printTranslationSuccesses(operations.getTranslationRequests());
+                    view.printProcessSuccesses(operations.getProcessRequests());
                     break;
                 case 2:
-                    view.printTranslationOngoing(operations.getTranslationRequests());
+                    view.printProcessOngoing(operations.getProcessRequests());
                     break;
                 case 3:
-                    view.printTranslationAllRequests(operations.getTranslationRequests());
+                    view.printProcessAllRequests(operations.getProcessRequests());
                     break;
                 case 4:
                     view.printUploadSuccesses(operations.getUploadRequests());

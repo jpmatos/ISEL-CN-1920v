@@ -3,8 +3,8 @@
 
 package CnText;
 
-public interface TranslateResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:CnText.TranslateResponse)
+public interface ProcessResponseOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:CnText.ProcessResponse)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -28,11 +28,11 @@ public interface TranslateResponseOrBuilder extends
       getTranslationBytes();
 
   /**
-   * <code>.CnText.TranslateStatus status = 3;</code>
+   * <code>.CnText.ProcessStatus status = 3;</code>
    */
   int getStatusValue();
   /**
-   * <code>.CnText.TranslateStatus status = 3;</code>
+   * <code>.CnText.ProcessStatus status = 3;</code>
    */
-  CnText.TranslateStatus getStatus();
+  CnText.ProcessStatus getStatus();
 }

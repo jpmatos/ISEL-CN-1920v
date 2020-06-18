@@ -1,12 +1,12 @@
 package clientapp.interfaces;
 
-import CnText.TranslateStatus;
+import CnText.ProcessStatus;
 
-public interface ITranslationRequest {
+public interface IProcessRequest {
     String getLanguage();
     String getFilename();
     String getTranslation();
     String getUploadToken();
-    TranslateStatus getStatus();
+    ProcessStatus getStatus();
     boolean isCompleted();
 }

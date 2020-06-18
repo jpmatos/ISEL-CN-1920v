@@ -4,9 +4,9 @@
 package CnText;
 
 /**
- * Protobuf enum {@code CnText.TranslateStatus}
+ * Protobuf enum {@code CnText.ProcessStatus}
  */
-public enum TranslateStatus
+public enum ProcessStatus
     implements com.google.protobuf.ProtocolMessageEnum {
   /**
    * <code>READING_TEXT = 0;</code>
@@ -89,11 +89,11 @@ public enum TranslateStatus
    * @deprecated Use {@link #forNumber(int)} instead.
    */
   @java.lang.Deprecated
-  public static TranslateStatus valueOf(int value) {
+  public static ProcessStatus valueOf(int value) {
     return forNumber(value);
   }
 
-  public static TranslateStatus forNumber(int value) {
+  public static ProcessStatus forNumber(int value) {
     switch (value) {
       case 0: return READING_TEXT;
       case 1: return READING_SUCCESS;
@@ -107,15 +107,15 @@ public enum TranslateStatus
     }
   }
 
-  public static com.google.protobuf.Internal.EnumLiteMap<TranslateStatus>
+  public static com.google.protobuf.Internal.EnumLiteMap<ProcessStatus>
       internalGetValueMap() {
     return internalValueMap;
   }
   private static final com.google.protobuf.Internal.EnumLiteMap<
-      TranslateStatus> internalValueMap =
-        new com.google.protobuf.Internal.EnumLiteMap<TranslateStatus>() {
-          public TranslateStatus findValueByNumber(int number) {
-            return TranslateStatus.forNumber(number);
+      ProcessStatus> internalValueMap =
+        new com.google.protobuf.Internal.EnumLiteMap<ProcessStatus>() {
+          public ProcessStatus findValueByNumber(int number) {
+            return ProcessStatus.forNumber(number);
           }
         };
 
@@ -132,9 +132,9 @@ public enum TranslateStatus
     return CnText.RpcService.getDescriptor().getEnumTypes().get(2);
   }
 
-  private static final TranslateStatus[] VALUES = values();
+  private static final ProcessStatus[] VALUES = values();
 
-  public static TranslateStatus valueOf(
+  public static ProcessStatus valueOf(
       com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
     if (desc.getType() != getDescriptor()) {
       throw new java.lang.IllegalArgumentException(
@@ -148,10 +148,10 @@ public enum TranslateStatus
 
   private final int value;
 
-  private TranslateStatus(int value) {
+  private ProcessStatus(int value) {
     this.value = value;
   }
 
-  // @@protoc_insertion_point(enum_scope:CnText.TranslateStatus)
+  // @@protoc_insertion_point(enum_scope:CnText.ProcessStatus)
 }
 

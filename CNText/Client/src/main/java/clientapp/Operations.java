@@ -2,11 +2,12 @@ package clientapp;
 
 import CnText.*;
 import clientapp.interfaces.IOperations;
-//import clientapp.interfaces.ITranslationRequest;
-import clientapp.interfaces.ITranslationRequest;
+//import clientapp.interfaces.IProcessRequest;
+import clientapp.interfaces.IProcessRequest;
 import clientapp.interfaces.IUploadRequest;
-//import clientapp.observers.TranslationRequestObserver;
-import clientapp.observers.TranslationRequestObserver;
+//import clientapp.observers.ProcessRequestObserver;
+import clientapp.observers.CheckRequestObserver;
+import clientapp.observers.ProcessRequestObserver;
 import clientapp.observers.UploadRequestObserver;
 import com.google.protobuf.ByteString;
 import io.grpc.ManagedChannel;
@@ -24,7 +25,7 @@ public class Operations implements IOperations {
     private final CnTextGrpc.CnTextBlockingStub blockingStub;
     private Session session;
     private ArrayList<UploadRequestObserver> uploadRequests = new ArrayList<>();
-    private ArrayList<TranslationRequestObserver> translationRequests = new ArrayList<>();
+    private ArrayList<ProcessRequestObserver> processRequests = new ArrayList<>();
 
     public Operations(String svcIP, int svcPort) {
         channel = ManagedChannelBuilder.forAddress(svcIP, svcPort)
@@ -98,15 +99,16 @@ public class Operations implements IOperations {
     }
 
     @Override
-    public void translate(String uploadToken, String filename, String language) {
-        TranslationRequestObserver trObserver = new TranslationRequestObserver(uploadToken, filename, language);
-        TranslateRequest trRequest = TranslateRequest.newBuilder()
+    public void process(String uploadToken, String filename, String language) {
+        ProcessRequestObserver trObserver = new ProcessRequestObserver(uploadToken, filename, language);
+        ProcessRequest trRequest = ProcessRequest.newBuilder()
                 .setSessionId(session.getSessionId())
                 .setUploadToken(uploadToken)
                 .setLanguage(language)
+                .setPublish(true)
                 .build();
-        noBlockStub.translate(trRequest, trObserver);
-        translationRequests.add(trObserver);
+        noBlockStub.process(trRequest, trObserver);
+        processRequests.add(trObserver);
     }
 
     @Override
@@ -130,8 +132,8 @@ public class Operations implements IOperations {
     }
 
     @Override
-    public ArrayList<ITranslationRequest> getTranslationRequests(){
-        ArrayList<ITranslationRequest> res = new ArrayList<>(translationRequests);
+    public ArrayList<IProcessRequest> getProcessRequests(){
+        ArrayList<IProcessRequest> res = new ArrayList<>(processRequests);
         return res;
     }
 
@@ -140,4 +142,20 @@ public class Operations implements IOperations {
         ArrayList<IUploadRequest> res = new ArrayList<>(uploadRequests);
         return res;
     }
+
+    @Override
+    public StreamObserver<CheckRequest> check() {
+        CheckRequestObserver crObserver = new CheckRequestObserver();
+        return noBlockStub.check(crObserver);
+    }
+
+    @Override
+    public void sendCheckRequest(StreamObserver<CheckRequest> check, String uploadToken) {
+        CheckRequest checkRequest = CheckRequest.newBuilder()
+                .setSessionId(session.getSessionId())
+                .setUploadToken(uploadToken)
+                .build();
+        check.onNext(checkRequest);
+    }
+
 }

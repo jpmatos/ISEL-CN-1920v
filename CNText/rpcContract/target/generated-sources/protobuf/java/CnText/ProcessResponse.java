@@ -4,21 +4,21 @@
 package CnText;
 
 /**
- * Protobuf type {@code CnText.TranslateRequest}
+ * Protobuf type {@code CnText.ProcessResponse}
  */
-public  final class TranslateRequest extends
+public  final class ProcessResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:CnText.TranslateRequest)
-    TranslateRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:CnText.ProcessResponse)
+    ProcessResponseOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use TranslateRequest.newBuilder() to construct.
-  private TranslateRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use ProcessResponse.newBuilder() to construct.
+  private ProcessResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private TranslateRequest() {
-    sessionId_ = "";
-    uploadToken_ = "";
-    language_ = "";
+  private ProcessResponse() {
+    text_ = "";
+    translation_ = "";
+    status_ = 0;
   }
 
   @java.lang.Override
@@ -26,7 +26,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private TranslateRequest(
+  private ProcessResponse(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -55,19 +55,19 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            sessionId_ = s;
+            text_ = s;
             break;
           }
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            uploadToken_ = s;
+            translation_ = s;
             break;
           }
-          case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 24: {
+            int rawValue = input.readEnum();
 
-            language_ = s;
+            status_ = rawValue;
             break;
           }
         }
@@ -84,116 +84,98 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return CnText.RpcService.internal_static_CnText_TranslateRequest_descriptor;
+    return CnText.RpcService.internal_static_CnText_ProcessResponse_descriptor;
   }
 
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return CnText.RpcService.internal_static_CnText_TranslateRequest_fieldAccessorTable
+    return CnText.RpcService.internal_static_CnText_ProcessResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            CnText.TranslateRequest.class, CnText.TranslateRequest.Builder.class);
+            CnText.ProcessResponse.class, CnText.ProcessResponse.Builder.class);
   }
 
-  public static final int SESSIONID_FIELD_NUMBER = 1;
-  private volatile java.lang.Object sessionId_;
+  public static final int TEXT_FIELD_NUMBER = 1;
+  private volatile java.lang.Object text_;
   /**
-   * <code>string sessionId = 1;</code>
+   * <code>string text = 1;</code>
    */
-  public java.lang.String getSessionId() {
-    java.lang.Object ref = sessionId_;
+  public java.lang.String getText() {
+    java.lang.Object ref = text_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      sessionId_ = s;
+      text_ = s;
       return s;
     }
   }
   /**
-   * <code>string sessionId = 1;</code>
+   * <code>string text = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getSessionIdBytes() {
-    java.lang.Object ref = sessionId_;
+      getTextBytes() {
+    java.lang.Object ref = text_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      sessionId_ = b;
+      text_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int UPLOADTOKEN_FIELD_NUMBER = 2;
-  private volatile java.lang.Object uploadToken_;
+  public static final int TRANSLATION_FIELD_NUMBER = 2;
+  private volatile java.lang.Object translation_;
   /**
-   * <code>string uploadToken = 2;</code>
+   * <code>string translation = 2;</code>
    */
-  public java.lang.String getUploadToken() {
-    java.lang.Object ref = uploadToken_;
+  public java.lang.String getTranslation() {
+    java.lang.Object ref = translation_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      uploadToken_ = s;
+      translation_ = s;
       return s;
     }
   }
   /**
-   * <code>string uploadToken = 2;</code>
+   * <code>string translation = 2;</code>
    */
   public com.google.protobuf.ByteString
-      getUploadTokenBytes() {
-    java.lang.Object ref = uploadToken_;
+      getTranslationBytes() {
+    java.lang.Object ref = translation_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      uploadToken_ = b;
+      translation_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int LANGUAGE_FIELD_NUMBER = 3;
-  private volatile java.lang.Object language_;
+  public static final int STATUS_FIELD_NUMBER = 3;
+  private int status_;
   /**
-   * <code>string language = 3;</code>
+   * <code>.CnText.ProcessStatus status = 3;</code>
    */
-  public java.lang.String getLanguage() {
-    java.lang.Object ref = language_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      language_ = s;
-      return s;
-    }
+  public int getStatusValue() {
+    return status_;
   }
   /**
-   * <code>string language = 3;</code>
+   * <code>.CnText.ProcessStatus status = 3;</code>
    */
-  public com.google.protobuf.ByteString
-      getLanguageBytes() {
-    java.lang.Object ref = language_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      language_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public CnText.ProcessStatus getStatus() {
+    CnText.ProcessStatus result = CnText.ProcessStatus.valueOf(status_);
+    return result == null ? CnText.ProcessStatus.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -208,14 +190,14 @@ private static final long serialVersionUID = 0L;
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getSessionIdBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, sessionId_);
+    if (!getTextBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, text_);
     }
-    if (!getUploadTokenBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, uploadToken_);
+    if (!getTranslationBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, translation_);
     }
-    if (!getLanguageBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, language_);
+    if (status_ != CnText.ProcessStatus.READING_TEXT.getNumber()) {
+      output.writeEnum(3, status_);
     }
     unknownFields.writeTo(output);
   }
@@ -225,14 +207,15 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getSessionIdBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, sessionId_);
+    if (!getTextBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, text_);
     }
-    if (!getUploadTokenBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, uploadToken_);
+    if (!getTranslationBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, translation_);
     }
-    if (!getLanguageBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, language_);
+    if (status_ != CnText.ProcessStatus.READING_TEXT.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(3, status_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -244,18 +227,17 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof CnText.TranslateRequest)) {
+    if (!(obj instanceof CnText.ProcessResponse)) {
       return super.equals(obj);
     }
-    CnText.TranslateRequest other = (CnText.TranslateRequest) obj;
+    CnText.ProcessResponse other = (CnText.ProcessResponse) obj;
 
     boolean result = true;
-    result = result && getSessionId()
-        .equals(other.getSessionId());
-    result = result && getUploadToken()
-        .equals(other.getUploadToken());
-    result = result && getLanguage()
-        .equals(other.getLanguage());
+    result = result && getText()
+        .equals(other.getText());
+    result = result && getTranslation()
+        .equals(other.getTranslation());
+    result = result && status_ == other.status_;
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -267,80 +249,80 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + SESSIONID_FIELD_NUMBER;
-    hash = (53 * hash) + getSessionId().hashCode();
-    hash = (37 * hash) + UPLOADTOKEN_FIELD_NUMBER;
-    hash = (53 * hash) + getUploadToken().hashCode();
-    hash = (37 * hash) + LANGUAGE_FIELD_NUMBER;
-    hash = (53 * hash) + getLanguage().hashCode();
+    hash = (37 * hash) + TEXT_FIELD_NUMBER;
+    hash = (53 * hash) + getText().hashCode();
+    hash = (37 * hash) + TRANSLATION_FIELD_NUMBER;
+    hash = (53 * hash) + getTranslation().hashCode();
+    hash = (37 * hash) + STATUS_FIELD_NUMBER;
+    hash = (53 * hash) + status_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static CnText.TranslateRequest parseFrom(
+  public static CnText.ProcessResponse parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static CnText.TranslateRequest parseFrom(
+  public static CnText.ProcessResponse parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static CnText.TranslateRequest parseFrom(
+  public static CnText.ProcessResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static CnText.TranslateRequest parseFrom(
+  public static CnText.ProcessResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static CnText.TranslateRequest parseFrom(byte[] data)
+  public static CnText.ProcessResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static CnText.TranslateRequest parseFrom(
+  public static CnText.ProcessResponse parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static CnText.TranslateRequest parseFrom(java.io.InputStream input)
+  public static CnText.ProcessResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static CnText.TranslateRequest parseFrom(
+  public static CnText.ProcessResponse parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static CnText.TranslateRequest parseDelimitedFrom(java.io.InputStream input)
+  public static CnText.ProcessResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static CnText.TranslateRequest parseDelimitedFrom(
+  public static CnText.ProcessResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static CnText.TranslateRequest parseFrom(
+  public static CnText.ProcessResponse parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static CnText.TranslateRequest parseFrom(
+  public static CnText.ProcessResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -352,7 +334,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(CnText.TranslateRequest prototype) {
+  public static Builder newBuilder(CnText.ProcessResponse prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   public Builder toBuilder() {
@@ -367,25 +349,25 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code CnText.TranslateRequest}
+   * Protobuf type {@code CnText.ProcessResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:CnText.TranslateRequest)
-      CnText.TranslateRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:CnText.ProcessResponse)
+      CnText.ProcessResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return CnText.RpcService.internal_static_CnText_TranslateRequest_descriptor;
+      return CnText.RpcService.internal_static_CnText_ProcessResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return CnText.RpcService.internal_static_CnText_TranslateRequest_fieldAccessorTable
+      return CnText.RpcService.internal_static_CnText_ProcessResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              CnText.TranslateRequest.class, CnText.TranslateRequest.Builder.class);
+              CnText.ProcessResponse.class, CnText.ProcessResponse.Builder.class);
     }
 
-    // Construct using CnText.TranslateRequest.newBuilder()
+    // Construct using CnText.ProcessResponse.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -402,37 +384,37 @@ private static final long serialVersionUID = 0L;
     }
     public Builder clear() {
       super.clear();
-      sessionId_ = "";
+      text_ = "";
 
-      uploadToken_ = "";
+      translation_ = "";
 
-      language_ = "";
+      status_ = 0;
 
       return this;
     }
 
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return CnText.RpcService.internal_static_CnText_TranslateRequest_descriptor;
+      return CnText.RpcService.internal_static_CnText_ProcessResponse_descriptor;
     }
 
-    public CnText.TranslateRequest getDefaultInstanceForType() {
-      return CnText.TranslateRequest.getDefaultInstance();
+    public CnText.ProcessResponse getDefaultInstanceForType() {
+      return CnText.ProcessResponse.getDefaultInstance();
     }
 
-    public CnText.TranslateRequest build() {
-      CnText.TranslateRequest result = buildPartial();
+    public CnText.ProcessResponse build() {
+      CnText.ProcessResponse result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    public CnText.TranslateRequest buildPartial() {
-      CnText.TranslateRequest result = new CnText.TranslateRequest(this);
-      result.sessionId_ = sessionId_;
-      result.uploadToken_ = uploadToken_;
-      result.language_ = language_;
+    public CnText.ProcessResponse buildPartial() {
+      CnText.ProcessResponse result = new CnText.ProcessResponse(this);
+      result.text_ = text_;
+      result.translation_ = translation_;
+      result.status_ = status_;
       onBuilt();
       return result;
     }
@@ -464,27 +446,26 @@ private static final long serialVersionUID = 0L;
       return (Builder) super.addRepeatedField(field, value);
     }
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof CnText.TranslateRequest) {
-        return mergeFrom((CnText.TranslateRequest)other);
+      if (other instanceof CnText.ProcessResponse) {
+        return mergeFrom((CnText.ProcessResponse)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(CnText.TranslateRequest other) {
-      if (other == CnText.TranslateRequest.getDefaultInstance()) return this;
-      if (!other.getSessionId().isEmpty()) {
-        sessionId_ = other.sessionId_;
+    public Builder mergeFrom(CnText.ProcessResponse other) {
+      if (other == CnText.ProcessResponse.getDefaultInstance()) return this;
+      if (!other.getText().isEmpty()) {
+        text_ = other.text_;
         onChanged();
       }
-      if (!other.getUploadToken().isEmpty()) {
-        uploadToken_ = other.uploadToken_;
+      if (!other.getTranslation().isEmpty()) {
+        translation_ = other.translation_;
         onChanged();
       }
-      if (!other.getLanguage().isEmpty()) {
-        language_ = other.language_;
-        onChanged();
+      if (other.status_ != 0) {
+        setStatusValue(other.getStatusValue());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -499,11 +480,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      CnText.TranslateRequest parsedMessage = null;
+      CnText.ProcessResponse parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (CnText.TranslateRequest) e.getUnfinishedMessage();
+        parsedMessage = (CnText.ProcessResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -513,209 +494,184 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object sessionId_ = "";
+    private java.lang.Object text_ = "";
     /**
-     * <code>string sessionId = 1;</code>
+     * <code>string text = 1;</code>
      */
-    public java.lang.String getSessionId() {
-      java.lang.Object ref = sessionId_;
+    public java.lang.String getText() {
+      java.lang.Object ref = text_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        sessionId_ = s;
+        text_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string sessionId = 1;</code>
+     * <code>string text = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getSessionIdBytes() {
-      java.lang.Object ref = sessionId_;
+        getTextBytes() {
+      java.lang.Object ref = text_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        sessionId_ = b;
+        text_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string sessionId = 1;</code>
+     * <code>string text = 1;</code>
      */
-    public Builder setSessionId(
+    public Builder setText(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      sessionId_ = value;
+      text_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string sessionId = 1;</code>
+     * <code>string text = 1;</code>
      */
-    public Builder clearSessionId() {
+    public Builder clearText() {
       
-      sessionId_ = getDefaultInstance().getSessionId();
+      text_ = getDefaultInstance().getText();
       onChanged();
       return this;
     }
     /**
-     * <code>string sessionId = 1;</code>
+     * <code>string text = 1;</code>
      */
-    public Builder setSessionIdBytes(
+    public Builder setTextBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      sessionId_ = value;
+      text_ = value;
       onChanged();
       return this;
     }
 
-    private java.lang.Object uploadToken_ = "";
+    private java.lang.Object translation_ = "";
     /**
-     * <code>string uploadToken = 2;</code>
+     * <code>string translation = 2;</code>
      */
-    public java.lang.String getUploadToken() {
-      java.lang.Object ref = uploadToken_;
+    public java.lang.String getTranslation() {
+      java.lang.Object ref = translation_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        uploadToken_ = s;
+        translation_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string uploadToken = 2;</code>
+     * <code>string translation = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getUploadTokenBytes() {
-      java.lang.Object ref = uploadToken_;
+        getTranslationBytes() {
+      java.lang.Object ref = translation_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        uploadToken_ = b;
+        translation_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string uploadToken = 2;</code>
+     * <code>string translation = 2;</code>
      */
-    public Builder setUploadToken(
+    public Builder setTranslation(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      uploadToken_ = value;
+      translation_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string uploadToken = 2;</code>
+     * <code>string translation = 2;</code>
      */
-    public Builder clearUploadToken() {
+    public Builder clearTranslation() {
       
-      uploadToken_ = getDefaultInstance().getUploadToken();
+      translation_ = getDefaultInstance().getTranslation();
       onChanged();
       return this;
     }
     /**
-     * <code>string uploadToken = 2;</code>
+     * <code>string translation = 2;</code>
      */
-    public Builder setUploadTokenBytes(
+    public Builder setTranslationBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      uploadToken_ = value;
+      translation_ = value;
       onChanged();
       return this;
     }
 
-    private java.lang.Object language_ = "";
+    private int status_ = 0;
     /**
-     * <code>string language = 3;</code>
+     * <code>.CnText.ProcessStatus status = 3;</code>
      */
-    public java.lang.String getLanguage() {
-      java.lang.Object ref = language_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        language_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getStatusValue() {
+      return status_;
     }
     /**
-     * <code>string language = 3;</code>
+     * <code>.CnText.ProcessStatus status = 3;</code>
      */
-    public com.google.protobuf.ByteString
-        getLanguageBytes() {
-      java.lang.Object ref = language_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        language_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string language = 3;</code>
-     */
-    public Builder setLanguage(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      language_ = value;
+    public Builder setStatusValue(int value) {
+      status_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string language = 3;</code>
+     * <code>.CnText.ProcessStatus status = 3;</code>
      */
-    public Builder clearLanguage() {
+    public CnText.ProcessStatus getStatus() {
+      CnText.ProcessStatus result = CnText.ProcessStatus.valueOf(status_);
+      return result == null ? CnText.ProcessStatus.UNRECOGNIZED : result;
+    }
+    /**
+     * <code>.CnText.ProcessStatus status = 3;</code>
+     */
+    public Builder setStatus(CnText.ProcessStatus value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
       
-      language_ = getDefaultInstance().getLanguage();
+      status_ = value.getNumber();
       onChanged();
       return this;
     }
     /**
-     * <code>string language = 3;</code>
+     * <code>.CnText.ProcessStatus status = 3;</code>
      */
-    public Builder setLanguageBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+    public Builder clearStatus() {
       
-      language_ = value;
+      status_ = 0;
       onChanged();
       return this;
     }
@@ -730,39 +686,39 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:CnText.TranslateRequest)
+    // @@protoc_insertion_point(builder_scope:CnText.ProcessResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:CnText.TranslateRequest)
-  private static final CnText.TranslateRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:CnText.ProcessResponse)
+  private static final CnText.ProcessResponse DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new CnText.TranslateRequest();
+    DEFAULT_INSTANCE = new CnText.ProcessResponse();
   }
 
-  public static CnText.TranslateRequest getDefaultInstance() {
+  public static CnText.ProcessResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<TranslateRequest>
-      PARSER = new com.google.protobuf.AbstractParser<TranslateRequest>() {
-    public TranslateRequest parsePartialFrom(
+  private static final com.google.protobuf.Parser<ProcessResponse>
+      PARSER = new com.google.protobuf.AbstractParser<ProcessResponse>() {
+    public ProcessResponse parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new TranslateRequest(input, extensionRegistry);
+      return new ProcessResponse(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<TranslateRequest> parser() {
+  public static com.google.protobuf.Parser<ProcessResponse> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<TranslateRequest> getParserForType() {
+  public com.google.protobuf.Parser<ProcessResponse> getParserForType() {
     return PARSER;
   }
 
-  public CnText.TranslateRequest getDefaultInstanceForType() {
+  public CnText.ProcessResponse getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

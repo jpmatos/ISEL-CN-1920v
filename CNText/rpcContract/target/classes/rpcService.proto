@@ -8,7 +8,8 @@ service CnText {
     rpc start (Login) returns (Session);
     rpc close (Session) returns (CloseResponse);
     rpc upload (stream UploadRequest) returns (stream UploadRequestResponse);
-    rpc translate (TranslateRequest) returns (stream TranslateResponse);
+    rpc process (ProcessRequest) returns (stream ProcessResponse);
+    rpc check(stream CheckRequest) returns (CheckResponse);
 }
 
 enum LoginStatus {
@@ -29,7 +30,7 @@ enum UploadStatus {
     UPLOAD_USER_ERROR = 7;
 }
 
-enum TranslateStatus {
+enum ProcessStatus {
     READING_TEXT = 0;
     READING_SUCCESS = 1;
     TRANSLATING = 2;
@@ -73,14 +74,24 @@ message UploadRequestResponse {
     UploadStatus status = 2;
 }
 
-message TranslateRequest {
+message ProcessRequest {
     string sessionId = 1;
-    string uploadToken = 2;
-    string language = 3;
+    string language = 2;
+    string uploadToken = 3;
+    bool publish = 4;
 }
 
-message TranslateResponse {
+message ProcessResponse {
     string text = 1;
     string translation = 2;
-    TranslateStatus status = 3;
+    ProcessStatus status = 3;
+}
+
+message CheckRequest{
+    string sessionId = 1;
+    string uploadToken = 2;
+}
+
+message CheckResponse{
+    repeated string response = 1;
 }

@@ -123,36 +123,68 @@ public final class CnTextGrpc {
      return getUploadMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<CnText.TranslateRequest,
-      CnText.TranslateResponse> getTranslateMethod;
+  private static volatile io.grpc.MethodDescriptor<CnText.ProcessRequest,
+      CnText.ProcessResponse> getProcessMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "translate",
-      requestType = CnText.TranslateRequest.class,
-      responseType = CnText.TranslateResponse.class,
+      fullMethodName = SERVICE_NAME + '/' + "process",
+      requestType = CnText.ProcessRequest.class,
+      responseType = CnText.ProcessResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<CnText.TranslateRequest,
-      CnText.TranslateResponse> getTranslateMethod() {
-    io.grpc.MethodDescriptor<CnText.TranslateRequest, CnText.TranslateResponse> getTranslateMethod;
-    if ((getTranslateMethod = CnTextGrpc.getTranslateMethod) == null) {
+  public static io.grpc.MethodDescriptor<CnText.ProcessRequest,
+      CnText.ProcessResponse> getProcessMethod() {
+    io.grpc.MethodDescriptor<CnText.ProcessRequest, CnText.ProcessResponse> getProcessMethod;
+    if ((getProcessMethod = CnTextGrpc.getProcessMethod) == null) {
       synchronized (CnTextGrpc.class) {
-        if ((getTranslateMethod = CnTextGrpc.getTranslateMethod) == null) {
-          CnTextGrpc.getTranslateMethod = getTranslateMethod = 
-              io.grpc.MethodDescriptor.<CnText.TranslateRequest, CnText.TranslateResponse>newBuilder()
+        if ((getProcessMethod = CnTextGrpc.getProcessMethod) == null) {
+          CnTextGrpc.getProcessMethod = getProcessMethod = 
+              io.grpc.MethodDescriptor.<CnText.ProcessRequest, CnText.ProcessResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
-                  "CnText.CnText", "translate"))
+                  "CnText.CnText", "process"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  CnText.TranslateRequest.getDefaultInstance()))
+                  CnText.ProcessRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  CnText.TranslateResponse.getDefaultInstance()))
-                  .setSchemaDescriptor(new CnTextMethodDescriptorSupplier("translate"))
+                  CnText.ProcessResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new CnTextMethodDescriptorSupplier("process"))
                   .build();
           }
         }
      }
-     return getTranslateMethod;
+     return getProcessMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<CnText.CheckRequest,
+      CnText.CheckResponse> getCheckMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "check",
+      requestType = CnText.CheckRequest.class,
+      responseType = CnText.CheckResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+  public static io.grpc.MethodDescriptor<CnText.CheckRequest,
+      CnText.CheckResponse> getCheckMethod() {
+    io.grpc.MethodDescriptor<CnText.CheckRequest, CnText.CheckResponse> getCheckMethod;
+    if ((getCheckMethod = CnTextGrpc.getCheckMethod) == null) {
+      synchronized (CnTextGrpc.class) {
+        if ((getCheckMethod = CnTextGrpc.getCheckMethod) == null) {
+          CnTextGrpc.getCheckMethod = getCheckMethod = 
+              io.grpc.MethodDescriptor.<CnText.CheckRequest, CnText.CheckResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setFullMethodName(generateFullMethodName(
+                  "CnText.CnText", "check"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  CnText.CheckRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  CnText.CheckResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new CnTextMethodDescriptorSupplier("check"))
+                  .build();
+          }
+        }
+     }
+     return getCheckMethod;
   }
 
   /**
@@ -205,9 +237,16 @@ public final class CnTextGrpc {
 
     /**
      */
-    public void translate(CnText.TranslateRequest request,
-        io.grpc.stub.StreamObserver<CnText.TranslateResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getTranslateMethod(), responseObserver);
+    public void process(CnText.ProcessRequest request,
+        io.grpc.stub.StreamObserver<CnText.ProcessResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getProcessMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public io.grpc.stub.StreamObserver<CnText.CheckRequest> check(
+        io.grpc.stub.StreamObserver<CnText.CheckResponse> responseObserver) {
+      return asyncUnimplementedStreamingCall(getCheckMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -234,12 +273,19 @@ public final class CnTextGrpc {
                 CnText.UploadRequestResponse>(
                   this, METHODID_UPLOAD)))
           .addMethod(
-            getTranslateMethod(),
+            getProcessMethod(),
             asyncServerStreamingCall(
               new MethodHandlers<
-                CnText.TranslateRequest,
-                CnText.TranslateResponse>(
-                  this, METHODID_TRANSLATE)))
+                CnText.ProcessRequest,
+                CnText.ProcessResponse>(
+                  this, METHODID_PROCESS)))
+          .addMethod(
+            getCheckMethod(),
+            asyncClientStreamingCall(
+              new MethodHandlers<
+                CnText.CheckRequest,
+                CnText.CheckResponse>(
+                  this, METHODID_CHECK)))
           .build();
     }
   }
@@ -288,10 +334,18 @@ public final class CnTextGrpc {
 
     /**
      */
-    public void translate(CnText.TranslateRequest request,
-        io.grpc.stub.StreamObserver<CnText.TranslateResponse> responseObserver) {
+    public void process(CnText.ProcessRequest request,
+        io.grpc.stub.StreamObserver<CnText.ProcessResponse> responseObserver) {
       asyncServerStreamingCall(
-          getChannel().newCall(getTranslateMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getProcessMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public io.grpc.stub.StreamObserver<CnText.CheckRequest> check(
+        io.grpc.stub.StreamObserver<CnText.CheckResponse> responseObserver) {
+      return asyncClientStreamingCall(
+          getChannel().newCall(getCheckMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -329,10 +383,10 @@ public final class CnTextGrpc {
 
     /**
      */
-    public java.util.Iterator<CnText.TranslateResponse> translate(
-        CnText.TranslateRequest request) {
+    public java.util.Iterator<CnText.ProcessResponse> process(
+        CnText.ProcessRequest request) {
       return blockingServerStreamingCall(
-          getChannel(), getTranslateMethod(), getCallOptions(), request);
+          getChannel(), getProcessMethod(), getCallOptions(), request);
     }
   }
 
@@ -373,8 +427,9 @@ public final class CnTextGrpc {
 
   private static final int METHODID_START = 0;
   private static final int METHODID_CLOSE = 1;
-  private static final int METHODID_TRANSLATE = 2;
+  private static final int METHODID_PROCESS = 2;
   private static final int METHODID_UPLOAD = 3;
+  private static final int METHODID_CHECK = 4;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -401,9 +456,9 @@ public final class CnTextGrpc {
           serviceImpl.close((CnText.Session) request,
               (io.grpc.stub.StreamObserver<CnText.CloseResponse>) responseObserver);
           break;
-        case METHODID_TRANSLATE:
-          serviceImpl.translate((CnText.TranslateRequest) request,
-              (io.grpc.stub.StreamObserver<CnText.TranslateResponse>) responseObserver);
+        case METHODID_PROCESS:
+          serviceImpl.process((CnText.ProcessRequest) request,
+              (io.grpc.stub.StreamObserver<CnText.ProcessResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -418,6 +473,9 @@ public final class CnTextGrpc {
         case METHODID_UPLOAD:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.upload(
               (io.grpc.stub.StreamObserver<CnText.UploadRequestResponse>) responseObserver);
+        case METHODID_CHECK:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.check(
+              (io.grpc.stub.StreamObserver<CnText.CheckResponse>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -472,7 +530,8 @@ public final class CnTextGrpc {
               .addMethod(getStartMethod())
               .addMethod(getCloseMethod())
               .addMethod(getUploadMethod())
-              .addMethod(getTranslateMethod())
+              .addMethod(getProcessMethod())
+              .addMethod(getCheckMethod())
               .build();
         }
       }

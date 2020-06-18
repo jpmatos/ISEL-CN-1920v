@@ -3,8 +3,8 @@
 
 package CnText;
 
-public interface TranslateRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:CnText.TranslateRequest)
+public interface CheckRequestOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:CnText.CheckRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -26,14 +26,4 @@ public interface TranslateRequestOrBuilder extends
    */
   com.google.protobuf.ByteString
       getUploadTokenBytes();
-
-  /**
-   * <code>string language = 3;</code>
-   */
-  java.lang.String getLanguage();
-  /**
-   * <code>string language = 3;</code>
-   */
-  com.google.protobuf.ByteString
-      getLanguageBytes();
 }

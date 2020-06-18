@@ -60,6 +60,6 @@ public class UploadRequestObserver implements StreamObserver<UploadRequestRespon
     public void onCompleted() {
         completed = true;
         System.out.println(String.format("[%s] Completed Status - '%s' Token - '%s'", fileName, status, uploadToken));
-        operations.translate(uploadToken, fileName, languages);
+        operations.process(uploadToken, fileName, languages);
     }
 }

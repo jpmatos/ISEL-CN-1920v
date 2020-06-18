@@ -4,13 +4,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public interface IView {
-    void printTranslationSuccesses(ArrayList<ITranslationRequest> requests);
-    void printTranslationOngoing(ArrayList<ITranslationRequest> requests);
-    void printTranslationAllRequests(ArrayList<ITranslationRequest> requests);
+    void printProcessSuccesses(ArrayList<IProcessRequest> requests);
+    void printProcessOngoing(ArrayList<IProcessRequest> requests);
+    void printProcessAllRequests(ArrayList<IProcessRequest> requests);
     void printUploadSuccesses(ArrayList<IUploadRequest> requests);
     void printUploadOngoing(ArrayList<IUploadRequest> requests);
     void printUploadAllRequests(ArrayList<IUploadRequest> requests);
-    IUploadRequest printUploadSuccessesPicker(ArrayList<IUploadRequest> uploadRequests);
+//    IUploadRequest printUploadSuccessesPicker(ArrayList<IUploadRequest> uploadRequests);
     String printSelectLanguage();
     void printNotLoggedIn();
     String printUsernameInput();
@@ -22,4 +22,5 @@ public interface IView {
     int printViewMenuSelection();
     int PrintMainMenuSelection();
     void printInvalidOption();
+    String printUploadTokenInput();
 }

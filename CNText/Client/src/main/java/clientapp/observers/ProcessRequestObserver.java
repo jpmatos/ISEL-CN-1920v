@@ -1,19 +1,20 @@
 package clientapp.observers;
 
-import CnText.TranslateResponse;
-import CnText.TranslateStatus;
-import clientapp.interfaces.ITranslationRequest;
+import CnText.ProcessResponse;
+import CnText.ProcessStatus;
+import clientapp.interfaces.IProcessRequest;
 import io.grpc.stub.StreamObserver;
 
-public class TranslationRequestObserver implements StreamObserver<TranslateResponse>, ITranslationRequest {
+public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, IProcessRequest {
     private final String uploadToken;
     private final String filename;
     private final String language;
     private String translation;
-    private TranslateStatus status;
+    private ProcessStatus status;
     private boolean completed = false;
+    private String text;
 
-    public TranslationRequestObserver(String uploadToken, String filename, String language) {
+    public ProcessRequestObserver(String uploadToken, String filename, String language) {
         this.uploadToken = uploadToken;
         this.filename = filename;
         this.language = language;
@@ -40,7 +41,7 @@ public class TranslationRequestObserver implements StreamObserver<TranslateRespo
     }
 
     @Override
-    public TranslateStatus getStatus() {
+    public ProcessStatus getStatus() {
         return status;
     }
 
@@ -50,14 +51,21 @@ public class TranslationRequestObserver implements StreamObserver<TranslateRespo
     }
 
     @Override
-    public void onNext(TranslateResponse translateResponse) {
-        String translation = translateResponse.getTranslation();
+    public void onNext(ProcessResponse processResponse) {
+        String text = processResponse.getText();
+        if(text != null)
+            this.text = text;
+
+        String translation = processResponse.getTranslation();
         if(translation != null)
             this.translation = translation;
 
-        status = translateResponse.getStatus();
+        status = processResponse.getStatus();
 
-        System.out.println(String.format("[%s][%s] Update - '%s'", filename, uploadToken, status));
+        if(text != null)
+            System.out.println(String.format("[%s][%s] Update - '%s'; Text - %s", filename, uploadToken, status, text));//TODO
+        else
+            System.out.println(String.format("[%s][%s] Update - '%s'", filename, uploadToken, status));
     }
 
     @Override

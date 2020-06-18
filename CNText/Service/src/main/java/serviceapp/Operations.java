@@ -14,7 +14,6 @@ import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
 import io.grpc.stub.StreamObserver;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
@@ -210,13 +209,13 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
     }
 
     @Override
-    public void translate(TranslateRequest translateRequest, StreamObserver<TranslateResponse> responseObserver) {
+    public void process(ProcessRequest translateRequest, StreamObserver<ProcessResponse> responseObserver) {
         System.out.println("Called Translate");
         String sessionID = translateRequest.getSessionId();
 
         //Validate Session
         if(!sessionManager.isValid(sessionID)){
-            responseObserver.onNext(TranslateResponse.newBuilder().setStatus(TranslateStatus.TRANSLATE_INVALID_SESSION).build());
+            responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.TRANSLATE_INVALID_SESSION).build());
             return;
         }
 
@@ -257,18 +256,18 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         }
 
         //Update Status
-        responseObserver.onNext(TranslateResponse.newBuilder().setStatus(TranslateStatus.READING_TEXT).build());
+        responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.READING_TEXT).build());
 
         //Set Firestore Listener
         DocumentReference docRef = db.collection("TextOfImages").document(blobName);
         System.out.println(blobName);
         docRef.addSnapshotListener((snapshot, e) -> {
-            TranslateResponse.Builder response = TranslateResponse.newBuilder();
-
+            ProcessResponse.Builder response = ProcessResponse.newBuilder();
+            
             if (e != null) {
                 System.err.println("Listen failed: " + e);
-
-                response.setStatus(TranslateStatus.TRANSLATE_ERROR);
+                
+                response.setStatus(ProcessStatus.TRANSLATE_ERROR);
                 responseObserver.onNext(response.build());
                 responseObserver.onError(e);
                 return;
@@ -281,28 +280,34 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                 if(ocrResult != null){
                     response.setText(ocrResult);
                     if(language.equals("")) {
-                        response.setStatus(TranslateStatus.READING_SUCCESS);
+                        response.setStatus(ProcessStatus.READING_SUCCESS);
                         responseObserver.onNext(response.build());
                         responseObserver.onCompleted();
                         return;
                     }
-
+                    
                     String translation = snapshot.getString("translationResult");
                     if(translation != null){
                         response.setTranslation(translation);
-                        response.setStatus(TranslateStatus.TRANSLATE_SUCCESS);
+                        response.setStatus(ProcessStatus.TRANSLATE_SUCCESS);
                         responseObserver.onNext(response.build());
                         responseObserver.onCompleted();
                         return;
                     }
-
-                    response.setStatus(TranslateStatus.TRANSLATING);
+                    
+                    response.setStatus(ProcessStatus.TRANSLATING);
                     responseObserver.onNext(response.build());
                 }
             } else {
                 System.out.println("Current data: null");
             }
         });
+    }
+
+    @Override
+    public StreamObserver<CheckRequest> check(StreamObserver<CheckResponse> responseObserver) {
+        //TODO
+        return super.check(responseObserver);
     }
 
     private String getAlphaNumericString(int n)
