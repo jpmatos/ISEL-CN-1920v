@@ -49,19 +49,17 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         //Load User from Firestore
         String usernameReq = request.getUser();
         String passwordReq = request.getPassword();
-        Query query = db.collection(USERS_COLLECTION_NAME).whereEqualTo("username", usernameReq);
-        ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
         //See if the User is valid, matches password, and if it is premium or not
         LoginStatus loginStatus;
         String username = "";
         boolean premium = false;
         try {
-            List<QueryDocumentSnapshot> docs = querySnapshot.get().getDocuments();
-            if(docs.size() == 0)
+            DocumentReference docRef = db.collection(USERS_COLLECTION_NAME).document(usernameReq);
+            DocumentSnapshot doc = docRef.get().get();
+            if(!doc.exists())
                 loginStatus = LoginStatus.LOGIN_UNKNOWN_USER;
             else {
-                DocumentSnapshot doc = docs.get(0);
                 User userFound = doc.toObject(User.class);
                 username = userFound.username;
                 premium = userFound.premium;

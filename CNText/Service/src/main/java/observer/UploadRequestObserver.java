@@ -26,7 +26,7 @@ public class UploadRequestObserver implements StreamObserver<UploadRequest> {
     private final String[] supportedMIMETypes =
             {"image/bmp", "image/jpeg", "image/png", "image/svg+xml", "image/tiff"};
     private final String[] supportedExtensions =
-            {".bmp", ".jpeg", ".jpg", ".png", ".svg", ".tiff", ".tif"};
+            {"bmp", "jpeg", "jpg", "png", "svg", "tiff", "tif"};
 
     public UploadRequestObserver(StreamObserver<UploadRequestResponse> responseObserver, Storage storage, SessionManager sessionManager, String imagesBucketName) {
         this.responseObserver = responseObserver;

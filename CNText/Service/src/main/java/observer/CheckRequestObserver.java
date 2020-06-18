@@ -17,7 +17,7 @@ public class CheckRequestObserver implements StreamObserver<CheckRequest> {
     private final SessionManager sessionManager;
     private final Firestore db;
     private final String firestoreCollectionName;
-    ArrayList<String> infos = new ArrayList<>();
+    private ArrayList<String> infos = new ArrayList<>();
 
     public CheckRequestObserver(StreamObserver<CheckResponse> responseObserver, SessionManager sessionManager, Firestore db, String firestoreCollectionName) {
         this.responseObserver = responseObserver;
