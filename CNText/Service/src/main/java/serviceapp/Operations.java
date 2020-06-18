@@ -17,6 +17,8 @@ import dao.TextOfImage;
 import dao.User;
 import gcloud.compute.VMManagement;
 import io.grpc.stub.StreamObserver;
+import observer.CheckRequestObserver;
+import observer.UploadRequestObserver;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -111,148 +113,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
     public StreamObserver<UploadRequest> upload(StreamObserver<UploadRequestResponse> responseObserver) {
         System.out.println("Called upload");
         responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(UploadStatus.UPLOAD_STARTING).build());
-
-        return new StreamObserver<UploadRequest>() {
-            private String blobName;// = getAlphaNumericString(16);
-            private UploadStatus uploadStatus = UploadStatus.UPLOAD_STARTING;
-            private WriteChannel writer = null;
-            private RestorableState<WriteChannel> capture;
-            private final String[] supportedMIMETypes =
-                    {"image/bmp", "image/jpeg", "image/png", "image/svg+xml", "image/tiff"};
-            private final String[] supportedExtensions =
-                    {".bmp", ".jpeg", ".jpg", ".png", ".svg", ".tiff", ".tif"};
-
-            @Override
-            public void onNext(UploadRequest uploadRequest) {
-
-                if(uploadStatus != UploadStatus.UPLOADING_IMAGE && uploadStatus != UploadStatus.UPLOAD_STARTING)
-                    return;
-
-                //Validate Session
-                String sessionID = uploadRequest.getSessionId();
-                if(!sessionManager.isValid(sessionID)){
-                    uploadStatus = UploadStatus.UPLOAD_INVALID_SESSION;
-                    responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
-                    responseObserver.onError(null);
-                    return;
-                }
-
-                try{
-                    byte[] data = uploadRequest.getImage().toByteArray();
-                    if(capture == null) {
-
-                        String mimeType = uploadRequest.getMime();
-                        String filename = uploadRequest.getFilename();
-                        String extension = "";
-                        int i = filename.lastIndexOf('.');
-                        if (i > 0)
-                            extension = filename.substring(i+1);
-
-                        //Validate MIME and Extension
-                        if(!Arrays.asList(supportedMIMETypes).contains(mimeType)
-                            && !Arrays.asList(supportedExtensions).contains(extension)){
-                            uploadStatus = UploadStatus.UNSUPPORTED_FORMAT;
-                            responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
-                            responseObserver.onError(null);
-                            return;
-                        }
-
-                        //Create blob and open WriteChannel
-                        blobName = buildBlobname(sessionID, sessionManager.getUsername(sessionID), filename);
-                        BlobId blobId = BlobId.of(IMAGES_BUCKET_NAME, blobName);
-                        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(mimeType).build();
-                        writer = storage.writer(blobInfo);
-                    }
-                    else {
-                        writer = capture.restore();
-                    }
-
-                    //Write to Google Cloud and save WriteChannel
-                    writer.write(ByteBuffer.wrap(data, 0, data.length));
-                    capture = writer.capture();
-
-                    //Update Status
-                    uploadStatus = UploadStatus.UPLOADING_IMAGE;
-                    responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                    //Attempt to close write stream
-                    closeWriteStream(writer, capture);
-
-                    //Delete blob
-                    deleteBlob();
-
-                    //Update Status
-                    uploadStatus = UploadStatus.UPLOAD_ERROR;
-                    responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
-                    responseObserver.onError(e);
-                }
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-
-                //Attempt to close write stream
-                closeWriteStream(writer, capture);
-
-                //Delete blob
-                deleteBlob();
-
-                //Update Status
-                uploadStatus = UploadStatus.UPLOAD_USER_ERROR;
-                responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
-                responseObserver.onError(throwable);
-            }
-
-            @Override
-            public void onCompleted() {
-
-                //Attempt to close write stream
-                closeWriteStream(writer, capture);
-
-                if(uploadStatus != UploadStatus.UPLOADING_IMAGE)
-                    return;
-
-                //Update Status and call onComplete()
-                uploadStatus = UploadStatus.UPLOAD_SUCCESS;
-                responseObserver.onNext(UploadRequestResponse.newBuilder()
-                        .setUploadToken(blobName)
-                        .setStatus(uploadStatus)
-                        .build());
-                responseObserver.onCompleted();
-                System.out.println("Blob access URL: " + "https://storage.googleapis.com/" + IMAGES_BUCKET_NAME + "/" + blobName);
-            }
-
-            private void closeWriteStream(WriteChannel writer, RestorableState<WriteChannel> capture) {
-                try {
-                    if(writer != null && writer.isOpen())
-                        writer.close();
-                    if(capture != null) {
-                        writer = capture.restore();
-                        if(writer != null && writer.isOpen())
-                            writer.close();
-                    }
-                } catch (Exception ignored) { }
-            }
-
-            private void deleteBlob() {
-                try {
-                    BlobId blobId = BlobId.of(IMAGES_BUCKET_NAME, blobName);
-                    storage.delete(blobId);
-                } catch (Exception ignored){ }
-            }
-
-
-            private String buildBlobname(String sessionID, String username, String filename) {
-                return sessionID + "-" +
-                        username + "-" +
-                        java.time.Clock.systemUTC().instant().toString()
-                                .replace(".", "-")
-                                .replace(":", "-") + "-" +
-                        filename;
-            }
-        };
+        return new UploadRequestObserver(responseObserver, storage, sessionManager, IMAGES_BUCKET_NAME);
     }
 
     @Override
@@ -361,47 +222,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
 
     @Override
     public StreamObserver<CheckRequest> check(StreamObserver<CheckResponse> responseObserver) {
-        return new StreamObserver<CheckRequest>() {
-            ArrayList<String> infos = new ArrayList<>();
-
-            @Override
-            public void onNext(CheckRequest checkRequest) {
-                String sessionID = checkRequest.getSessionId();
-                String uploadToken = checkRequest.getUploadToken();
-
-                //Validate Session
-                if(!sessionManager.isValid(sessionID)){
-                    infos.add(String.format("[%s] Invalid Session", uploadToken));
-                    return;
-                }
-
-                try {
-                    DocumentReference docRef = db.collection(FIRESTORE_COLLECTION_NAME).document(uploadToken);
-                    DocumentSnapshot doc = docRef.get().get();
-                    TextOfImage textOfImage = doc.toObject(TextOfImage.class);
-                    if (textOfImage != null)
-                        infos.add(String.format("[%s] " + textOfImage.toString(), uploadToken));
-                    else
-                        infos.add(String.format("[%s] Failed to check upload token in DB", uploadToken));
-                } catch (InterruptedException | ExecutionException e) {
-                    infos.add(String.format("[%s] Failed to check upload token in DB", uploadToken));
-                }
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                responseObserver.onCompleted();
-            }
-
-            @Override
-            public void onCompleted() {
-                CheckResponse checkResponse = CheckResponse.newBuilder()
-                        .addAllResponse(infos)
-                        .build();
-                responseObserver.onNext(checkResponse);
-                responseObserver.onCompleted();
-            }
-        };
+        return new CheckRequestObserver(responseObserver, sessionManager, db, FIRESTORE_COLLECTION_NAME);
     }
 
     public List<SessionManager.Session> getActiveSessions() {

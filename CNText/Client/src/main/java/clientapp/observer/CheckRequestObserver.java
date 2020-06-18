@@ -1,4 +1,4 @@
-package clientapp.observers;
+package clientapp.observer;
 
 import CnText.CheckResponse;
 import com.google.protobuf.ByteString;

@@ -1,4 +1,4 @@
-package clientapp.observers;
+package clientapp.observer;
 
 import CnText.UploadRequestResponse;
 import CnText.UploadStatus;
