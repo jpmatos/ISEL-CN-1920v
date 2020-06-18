@@ -2,10 +2,8 @@ package clientapp;
 
 import CnText.*;
 import clientapp.interfaces.IOperations;
-//import clientapp.interfaces.IProcessRequest;
 import clientapp.interfaces.IProcessRequest;
 import clientapp.interfaces.IUploadRequest;
-//import clientapp.observers.ProcessRequestObserver;
 import clientapp.observers.CheckRequestObserver;
 import clientapp.observers.ProcessRequestObserver;
 import clientapp.observers.UploadRequestObserver;
@@ -18,6 +16,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Operations implements IOperations {
     private final ManagedChannel channel;
@@ -26,6 +25,10 @@ public class Operations implements IOperations {
     private Session session;
     private ArrayList<UploadRequestObserver> uploadRequests = new ArrayList<>();
     private ArrayList<ProcessRequestObserver> processRequests = new ArrayList<>();
+    private final String[] supportedMIMETypes =
+            {"image/bmp", "image/jpeg", "image/png", "image/svg+xml", "image/tiff"};
+    private final String[] supportedExtensions =
+            {".bmp", ".jpeg", ".jpg", ".png", ".svg", ".tiff", ".tif"};
 
     public Operations(String svcIP, int svcPort) {
         channel = ManagedChannelBuilder.forAddress(svcIP, svcPort)
@@ -60,11 +63,23 @@ public class Operations implements IOperations {
             return;
         }
 
-        //Get filename and MIME
+        //Get filename, extension and MIME
         String filename = path.getFileName().toString();
         String mimeType = Files.probeContentType(path);
+        String extension = "";
+        int i = path.getFileName().toString().lastIndexOf('.');
+        if (i > 0)
+            extension = path.getFileName().toString().substring(i+1);
 
-        //TODO Verify if valid mime & extension
+        if(!Arrays.asList(supportedMIMETypes).contains(mimeType)){
+            System.out.println("Unsupported MIME type " + mimeType);
+            return;
+        }
+
+        if(!Arrays.asList(supportedExtensions).contains(extension)){
+            System.out.println("Unsupported extension " + extension);
+            return;
+        }
 
         UploadRequestObserver urObserver = new UploadRequestObserver(path.getFileName().toString(), languages, this);
         uploadRequests.add(urObserver);
@@ -125,6 +140,11 @@ public class Operations implements IOperations {
             return null;
         else
             return session.getUser();
+    }
+
+    @Override
+    public String getSessionId() {
+        return session.getSessionId();
     }
 
     @Override

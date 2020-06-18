@@ -23,4 +23,5 @@ public interface IView {
     int PrintMainMenuSelection();
     void printInvalidOption();
     String printUploadTokenInput();
+    void printLoggedAs(String user, String sessionId);
 }

@@ -17,9 +17,9 @@ public enum ProcessStatus
    */
   READING_SUCCESS(1),
   /**
-   * <code>TRANSLATING = 2;</code>
+   * <code>TRANSLATING_TEXT = 2;</code>
    */
-  TRANSLATING(2),
+  TRANSLATING_TEXT(2),
   /**
    * <code>TRANSLATE_SUCCESS = 3;</code>
    */
@@ -29,17 +29,17 @@ public enum ProcessStatus
    */
   UNSUPPORTED_LANGUAGE(6),
   /**
-   * <code>TRANSLATE_ERROR = 4;</code>
+   * <code>PROCESS_ERROR = 4;</code>
    */
-  TRANSLATE_ERROR(4),
+  PROCESS_ERROR(4),
   /**
-   * <code>TRANSLATE_INVALID_SESSION = 5;</code>
+   * <code>PROCESS_INVALID_SESSION = 5;</code>
    */
-  TRANSLATE_INVALID_SESSION(5),
+  PROCESS_INVALID_SESSION(5),
   /**
-   * <code>TRANSLATE_INVALID_UPLOAD_TOKEN = 7;</code>
+   * <code>PROCESS_INVALID_TOKEN = 7;</code>
    */
-  TRANSLATE_INVALID_UPLOAD_TOKEN(7),
+  PROCESS_INVALID_TOKEN(7),
   UNRECOGNIZED(-1),
   ;
 
@@ -52,9 +52,9 @@ public enum ProcessStatus
    */
   public static final int READING_SUCCESS_VALUE = 1;
   /**
-   * <code>TRANSLATING = 2;</code>
+   * <code>TRANSLATING_TEXT = 2;</code>
    */
-  public static final int TRANSLATING_VALUE = 2;
+  public static final int TRANSLATING_TEXT_VALUE = 2;
   /**
    * <code>TRANSLATE_SUCCESS = 3;</code>
    */
@@ -64,17 +64,17 @@ public enum ProcessStatus
    */
   public static final int UNSUPPORTED_LANGUAGE_VALUE = 6;
   /**
-   * <code>TRANSLATE_ERROR = 4;</code>
+   * <code>PROCESS_ERROR = 4;</code>
    */
-  public static final int TRANSLATE_ERROR_VALUE = 4;
+  public static final int PROCESS_ERROR_VALUE = 4;
   /**
-   * <code>TRANSLATE_INVALID_SESSION = 5;</code>
+   * <code>PROCESS_INVALID_SESSION = 5;</code>
    */
-  public static final int TRANSLATE_INVALID_SESSION_VALUE = 5;
+  public static final int PROCESS_INVALID_SESSION_VALUE = 5;
   /**
-   * <code>TRANSLATE_INVALID_UPLOAD_TOKEN = 7;</code>
+   * <code>PROCESS_INVALID_TOKEN = 7;</code>
    */
-  public static final int TRANSLATE_INVALID_UPLOAD_TOKEN_VALUE = 7;
+  public static final int PROCESS_INVALID_TOKEN_VALUE = 7;
 
 
   public final int getNumber() {
@@ -97,12 +97,12 @@ public enum ProcessStatus
     switch (value) {
       case 0: return READING_TEXT;
       case 1: return READING_SUCCESS;
-      case 2: return TRANSLATING;
+      case 2: return TRANSLATING_TEXT;
       case 3: return TRANSLATE_SUCCESS;
       case 6: return UNSUPPORTED_LANGUAGE;
-      case 4: return TRANSLATE_ERROR;
-      case 5: return TRANSLATE_INVALID_SESSION;
-      case 7: return TRANSLATE_INVALID_UPLOAD_TOKEN;
+      case 4: return PROCESS_ERROR;
+      case 5: return PROCESS_INVALID_SESSION;
+      case 7: return PROCESS_INVALID_TOKEN;
       default: return null;
     }
   }

@@ -87,27 +87,26 @@ public final class RpcService {
       "e\030\001 \003(\t*q\n\013LoginStatus\022\021\n\rLOGIN_SUCCESS\020" +
       "\000\022\035\n\031LOGIN_COMMUNICATION_ERROR\020\001\022\026\n\022LOGI" +
       "N_UNKNOWN_USER\020\002\022\030\n\024LOGIN_WRONG_PASSWORD" +
-      "\020\003*\304\001\n\014UploadStatus\022\023\n\017UPLOAD_STARTING\020\000" +
-      "\022\r\n\tUPLOADING\020\001\022\022\n\016UPLOAD_SUCCESS\020\002\022\020\n\014U" +
-      "PLOAD_ERROR\020\003\022\032\n\026UPLOAD_INVALID_SESSION\020" +
-      "\004\022\030\n\024UPLOAD_IMAGE_TOO_BIG\020\005\022\035\n\031UPLOAD_UN" +
-      "SUPPORTED_FORMAT\020\006\022\025\n\021UPLOAD_USER_ERROR\020" +
-      "\007*\320\001\n\rProcessStatus\022\020\n\014READING_TEXT\020\000\022\023\n" +
-      "\017READING_SUCCESS\020\001\022\017\n\013TRANSLATING\020\002\022\025\n\021T" +
-      "RANSLATE_SUCCESS\020\003\022\030\n\024UNSUPPORTED_LANGUA" +
-      "GE\020\006\022\023\n\017TRANSLATE_ERROR\020\004\022\035\n\031TRANSLATE_I" +
-      "NVALID_SESSION\020\005\022\"\n\036TRANSLATE_INVALID_UP" +
-      "LOAD_TOKEN\020\007*^\n\014LogoutStatus\022\022\n\016LOGOUT_S" +
-      "UCCESS\020\000\022\036\n\032LOGOUT_COMMUNICATION_ERROR\020\001" +
-      "\022\032\n\026LOGOUT_INVALID_SESSION\020\0022\234\002\n\006CnText\022" +
-      "\'\n\005start\022\r.CnText.Login\032\017.CnText.Session" +
-      "\022/\n\005close\022\017.CnText.Session\032\025.CnText.Clos" +
-      "eResponse\022B\n\006upload\022\025.CnText.UploadReque" +
-      "st\032\035.CnText.UploadRequestResponse(\0010\001\022<\n" +
-      "\007process\022\026.CnText.ProcessRequest\032\027.CnTex" +
-      "t.ProcessResponse0\001\0226\n\005check\022\024.CnText.Ch" +
-      "eckRequest\032\025.CnText.CheckResponse(\001B\n\n\006C" +
-      "nTextP\001b\006proto3"
+      "\020\003*\274\001\n\014UploadStatus\022\023\n\017UPLOAD_STARTING\020\000" +
+      "\022\023\n\017UPLOADING_IMAGE\020\001\022\022\n\016UPLOAD_SUCCESS\020" +
+      "\002\022\026\n\022UNSUPPORTED_FORMAT\020\003\022\021\n\rIMAGE_TOO_B" +
+      "IG\020\004\022\020\n\014UPLOAD_ERROR\020\005\022\032\n\026UPLOAD_INVALID" +
+      "_SESSION\020\006\022\025\n\021UPLOAD_USER_ERROR\020\007*\310\001\n\rPr" +
+      "ocessStatus\022\020\n\014READING_TEXT\020\000\022\023\n\017READING" +
+      "_SUCCESS\020\001\022\024\n\020TRANSLATING_TEXT\020\002\022\025\n\021TRAN" +
+      "SLATE_SUCCESS\020\003\022\030\n\024UNSUPPORTED_LANGUAGE\020" +
+      "\006\022\021\n\rPROCESS_ERROR\020\004\022\033\n\027PROCESS_INVALID_" +
+      "SESSION\020\005\022\031\n\025PROCESS_INVALID_TOKEN\020\007*^\n\014" +
+      "LogoutStatus\022\022\n\016LOGOUT_SUCCESS\020\000\022\036\n\032LOGO" +
+      "UT_COMMUNICATION_ERROR\020\001\022\032\n\026LOGOUT_INVAL" +
+      "ID_SESSION\020\0022\234\002\n\006CnText\022\'\n\005start\022\r.CnTex" +
+      "t.Login\032\017.CnText.Session\022/\n\005close\022\017.CnTe" +
+      "xt.Session\032\025.CnText.CloseResponse\022B\n\006upl" +
+      "oad\022\025.CnText.UploadRequest\032\035.CnText.Uplo" +
+      "adRequestResponse(\0010\001\022<\n\007process\022\026.CnTex" +
+      "t.ProcessRequest\032\027.CnText.ProcessRespons" +
+      "e0\001\0226\n\005check\022\024.CnText.CheckRequest\032\025.CnT" +
+      "ext.CheckResponse(\001B\n\n\006CnTextP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

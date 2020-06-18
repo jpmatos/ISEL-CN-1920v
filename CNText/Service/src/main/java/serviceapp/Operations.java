@@ -6,6 +6,7 @@ import com.google.cloud.RestorableState;
 import com.google.cloud.WriteChannel;
 import com.google.cloud.firestore.*;
 import com.google.cloud.pubsub.v1.Publisher;
+import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
@@ -14,11 +15,13 @@ import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
 import dao.TextOfImage;
 import dao.User;
+import gcloud.compute.VMManagement;
 import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -76,7 +79,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         if(loginStatus == LoginStatus.LOGIN_SUCCESS) {
             String sessionID = sessionManager.newSession(username, premium);
             sessionBuilder.setSessionId(sessionID);
-            //TODO Call VMManagement
+            VMManagement.updateVMInstances(sessionManager.getFreeSessionsCount(), sessionManager.getPremiumSessionsCount());
         }
         CnText.Session response = sessionBuilder.build();
 
@@ -114,11 +117,15 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
             private UploadStatus uploadStatus = UploadStatus.UPLOAD_STARTING;
             private WriteChannel writer = null;
             private RestorableState<WriteChannel> capture;
+            private final String[] supportedMIMETypes =
+                    {"image/bmp", "image/jpeg", "image/png", "image/svg+xml", "image/tiff"};
+            private final String[] supportedExtensions =
+                    {".bmp", ".jpeg", ".jpg", ".png", ".svg", ".tiff", ".tif"};
 
             @Override
             public void onNext(UploadRequest uploadRequest) {
 
-                if(uploadStatus != UploadStatus.UPLOADING && uploadStatus != UploadStatus.UPLOAD_STARTING)
+                if(uploadStatus != UploadStatus.UPLOADING_IMAGE && uploadStatus != UploadStatus.UPLOAD_STARTING)
                     return;
 
                 //Validate Session
@@ -133,13 +140,27 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                 try{
                     byte[] data = uploadRequest.getImage().toByteArray();
                     if(capture == null) {
-                        //TODO Validate mime/extension
+
+                        String mimeType = uploadRequest.getMime();
+                        String filename = uploadRequest.getFilename();
+                        String extension = "";
+                        int i = filename.lastIndexOf('.');
+                        if (i > 0)
+                            extension = filename.substring(i+1);
+
+                        //Validate MIME and Extension
+                        if(!Arrays.asList(supportedMIMETypes).contains(mimeType)
+                            && !Arrays.asList(supportedExtensions).contains(extension)){
+                            uploadStatus = UploadStatus.UNSUPPORTED_FORMAT;
+                            responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
+                            responseObserver.onError(null);
+                            return;
+                        }
 
                         //Create blob and open WriteChannel
-                        blobName = buildBlobname(sessionID, sessionManager.getUsername(sessionID), uploadRequest.getFilename());
+                        blobName = buildBlobname(sessionID, sessionManager.getUsername(sessionID), filename);
                         BlobId blobId = BlobId.of(IMAGES_BUCKET_NAME, blobName);
-                        String contentType = uploadRequest.getMime();
-                        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(contentType).build();
+                        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(mimeType).build();
                         writer = storage.writer(blobInfo);
                     }
                     else {
@@ -151,7 +172,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                     capture = writer.capture();
 
                     //Update Status
-                    uploadStatus = UploadStatus.UPLOADING;
+                    uploadStatus = UploadStatus.UPLOADING_IMAGE;
                     responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -159,7 +180,8 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                     //Attempt to close write stream
                     closeWriteStream(writer, capture);
 
-                    //TODO Delete partial file upload
+                    //Delete blob
+                    deleteBlob();
 
                     //Update Status
                     uploadStatus = UploadStatus.UPLOAD_ERROR;
@@ -174,7 +196,8 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                 //Attempt to close write stream
                 closeWriteStream(writer, capture);
 
-                //TODO Delete partial file upload
+                //Delete blob
+                deleteBlob();
 
                 //Update Status
                 uploadStatus = UploadStatus.UPLOAD_USER_ERROR;
@@ -188,7 +211,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                 //Attempt to close write stream
                 closeWriteStream(writer, capture);
 
-                if(uploadStatus != UploadStatus.UPLOADING)
+                if(uploadStatus != UploadStatus.UPLOADING_IMAGE)
                     return;
 
                 //Update Status and call onComplete()
@@ -210,7 +233,14 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                         if(writer != null && writer.isOpen())
                             writer.close();
                     }
-                } catch (IOException ignored) { }
+                } catch (Exception ignored) { }
+            }
+
+            private void deleteBlob() {
+                try {
+                    BlobId blobId = BlobId.of(IMAGES_BUCKET_NAME, blobName);
+                    storage.delete(blobId);
+                } catch (Exception ignored){ }
             }
 
 
@@ -226,26 +256,34 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
     }
 
     @Override
-    public void process(ProcessRequest translateRequest, StreamObserver<ProcessResponse> responseObserver) {
+    public void process(ProcessRequest processRequest, StreamObserver<ProcessResponse> responseObserver) {
         System.out.println("Called Translate");
-        String sessionID = translateRequest.getSessionId();
+        String sessionID = processRequest.getSessionId();
 
         //Validate Session
         if(!sessionManager.isValid(sessionID)){
-            responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.TRANSLATE_INVALID_SESSION).build());
+            responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.PROCESS_INVALID_SESSION).build());
             return;
         }
 
         //Load information
-        String blobName = translateRequest.getUploadToken();
-        String language = translateRequest.getLanguage();
+        String blobName = processRequest.getUploadToken();
+        String language = processRequest.getLanguage();
         String topicName;
         if(sessionManager.isPremium(sessionID))
             topicName = "premium-ocr";
         else
             topicName = "free-ocr";
 
-        //TODO Validate blob/uploadToken
+        //Validate if Blob exists
+        BlobId blobId = BlobId.of(IMAGES_BUCKET_NAME, blobName);
+        Blob blob = storage.get(blobId);
+        if(!blob.exists()){
+            responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.PROCESS_INVALID_TOKEN).build());
+            responseObserver.onError(null);
+            return;
+        }
+
         //TODO Validate language
 
         //Publish to free/premium topic
@@ -284,7 +322,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
             if (e != null) {
                 System.err.println("Listen failed: " + e);
                 
-                response.setStatus(ProcessStatus.TRANSLATE_ERROR);
+                response.setStatus(ProcessStatus.PROCESS_ERROR);
                 responseObserver.onNext(response.build());
                 responseObserver.onError(e);
                 return;
@@ -312,7 +350,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                         return;
                     }
                     
-                    response.setStatus(ProcessStatus.TRANSLATING);
+                    response.setStatus(ProcessStatus.TRANSLATING_TEXT);
                     responseObserver.onNext(response.build());
                 }
             } else {
@@ -364,33 +402,6 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                 responseObserver.onCompleted();
             }
         };
-    }
-
-    private String getAlphaNumericString(int n)
-    {
-
-        // chose a Character random from this String
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789"
-                + "abcdefghijklmnopqrstuvxyz";
-
-        // create StringBuffer size of AlphaNumericString
-        StringBuilder sb = new StringBuilder(n);
-
-        for (int i = 0; i < n; i++) {
-
-            // generate a random number between
-            // 0 to AlphaNumericString variable length
-            int index
-                    = (int)(AlphaNumericString.length()
-                    * Math.random());
-
-            // add Character one by one in end of sb
-            sb.append(AlphaNumericString
-                    .charAt(index));
-        }
-
-        return sb.toString();
     }
 
     public List<SessionManager.Session> getActiveSessions() {

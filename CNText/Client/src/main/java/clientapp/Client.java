@@ -13,21 +13,20 @@ import java.nio.file.Path;
 public class Client {
     private static String svcIP = "localhost";
     private static int svcPort = 8000;
-    ///home/jpmatos/Documents/world.tif
 
     public static void main(String[] args) {
         try {
-//            if (args.length == 2) {
-//                svcIP = args[0];
-//                svcPort = Integer.parseInt(args[1]);
-//            }
+            if (args.length == 2) {
+                svcIP = args[0];
+                svcPort = Integer.parseInt(args[1]);
+            }
 
             IOperations operations = new Operations(svcIP, svcPort);
             IView view = new View();
             boolean cont = true;
             while (cont) {
                 if(operations.isLogged())
-                    System.out.println("\nLogged in as '" + operations.getUser() + "'");
+                    view.printLoggedAs(operations.getUser(), operations.getSessionId());
                 int oper = view.PrintMainMenuSelection();
                 switch (oper) {
                     case 1:

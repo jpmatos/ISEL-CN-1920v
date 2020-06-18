@@ -19,4 +19,5 @@ public interface IOperations {
     ArrayList<IUploadRequest> getUploadRequests();
     StreamObserver<CheckRequest> check();
     void sendCheckRequest(StreamObserver<CheckRequest> check, String uploadToken);
+    String getSessionId();
 }

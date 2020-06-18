@@ -13,29 +13,29 @@ public enum UploadStatus
    */
   UPLOAD_STARTING(0),
   /**
-   * <code>UPLOADING = 1;</code>
+   * <code>UPLOADING_IMAGE = 1;</code>
    */
-  UPLOADING(1),
+  UPLOADING_IMAGE(1),
   /**
    * <code>UPLOAD_SUCCESS = 2;</code>
    */
   UPLOAD_SUCCESS(2),
   /**
-   * <code>UPLOAD_ERROR = 3;</code>
+   * <code>UNSUPPORTED_FORMAT = 3;</code>
    */
-  UPLOAD_ERROR(3),
+  UNSUPPORTED_FORMAT(3),
   /**
-   * <code>UPLOAD_INVALID_SESSION = 4;</code>
+   * <code>IMAGE_TOO_BIG = 4;</code>
    */
-  UPLOAD_INVALID_SESSION(4),
+  IMAGE_TOO_BIG(4),
   /**
-   * <code>UPLOAD_IMAGE_TOO_BIG = 5;</code>
+   * <code>UPLOAD_ERROR = 5;</code>
    */
-  UPLOAD_IMAGE_TOO_BIG(5),
+  UPLOAD_ERROR(5),
   /**
-   * <code>UPLOAD_UNSUPPORTED_FORMAT = 6;</code>
+   * <code>UPLOAD_INVALID_SESSION = 6;</code>
    */
-  UPLOAD_UNSUPPORTED_FORMAT(6),
+  UPLOAD_INVALID_SESSION(6),
   /**
    * <code>UPLOAD_USER_ERROR = 7;</code>
    */
@@ -48,29 +48,29 @@ public enum UploadStatus
    */
   public static final int UPLOAD_STARTING_VALUE = 0;
   /**
-   * <code>UPLOADING = 1;</code>
+   * <code>UPLOADING_IMAGE = 1;</code>
    */
-  public static final int UPLOADING_VALUE = 1;
+  public static final int UPLOADING_IMAGE_VALUE = 1;
   /**
    * <code>UPLOAD_SUCCESS = 2;</code>
    */
   public static final int UPLOAD_SUCCESS_VALUE = 2;
   /**
-   * <code>UPLOAD_ERROR = 3;</code>
+   * <code>UNSUPPORTED_FORMAT = 3;</code>
    */
-  public static final int UPLOAD_ERROR_VALUE = 3;
+  public static final int UNSUPPORTED_FORMAT_VALUE = 3;
   /**
-   * <code>UPLOAD_INVALID_SESSION = 4;</code>
+   * <code>IMAGE_TOO_BIG = 4;</code>
    */
-  public static final int UPLOAD_INVALID_SESSION_VALUE = 4;
+  public static final int IMAGE_TOO_BIG_VALUE = 4;
   /**
-   * <code>UPLOAD_IMAGE_TOO_BIG = 5;</code>
+   * <code>UPLOAD_ERROR = 5;</code>
    */
-  public static final int UPLOAD_IMAGE_TOO_BIG_VALUE = 5;
+  public static final int UPLOAD_ERROR_VALUE = 5;
   /**
-   * <code>UPLOAD_UNSUPPORTED_FORMAT = 6;</code>
+   * <code>UPLOAD_INVALID_SESSION = 6;</code>
    */
-  public static final int UPLOAD_UNSUPPORTED_FORMAT_VALUE = 6;
+  public static final int UPLOAD_INVALID_SESSION_VALUE = 6;
   /**
    * <code>UPLOAD_USER_ERROR = 7;</code>
    */
@@ -96,12 +96,12 @@ public enum UploadStatus
   public static UploadStatus forNumber(int value) {
     switch (value) {
       case 0: return UPLOAD_STARTING;
-      case 1: return UPLOADING;
+      case 1: return UPLOADING_IMAGE;
       case 2: return UPLOAD_SUCCESS;
-      case 3: return UPLOAD_ERROR;
-      case 4: return UPLOAD_INVALID_SESSION;
-      case 5: return UPLOAD_IMAGE_TOO_BIG;
-      case 6: return UPLOAD_UNSUPPORTED_FORMAT;
+      case 3: return UNSUPPORTED_FORMAT;
+      case 4: return IMAGE_TOO_BIG;
+      case 5: return UPLOAD_ERROR;
+      case 6: return UPLOAD_INVALID_SESSION;
       case 7: return UPLOAD_USER_ERROR;
       default: return null;
     }

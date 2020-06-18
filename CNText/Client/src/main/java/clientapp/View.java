@@ -180,4 +180,9 @@ public class View implements IView {
     public String printUploadTokenInput() {
         return ScanUtils.getInputString("Upload Token:");
     }
+
+    @Override
+    public void printLoggedAs(String user, String sessionId) {
+        System.out.println(String.format("\nLogged in as '%s' - '%s'", user, sessionId));
+    }
 }

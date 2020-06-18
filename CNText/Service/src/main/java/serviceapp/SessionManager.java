@@ -46,12 +46,15 @@ public class SessionManager {
 
     public boolean isPremium(String sessionId) {
         Optional<Session> optional = activeSessions.stream().filter(item -> item.getID().equals(sessionId)).findFirst();
-        if(optional.isPresent()){
-            return  optional.get().getPremium();
-        }
-        else
-            return false;
-        //TODO Throw some exception
+        return optional.map(Session::getPremium).orElse(false);
+    }
+
+    public int getFreeSessionsCount() {
+        return (int) activeSessions.stream().filter(item -> !item.getPremium()).count();
+    }
+
+    public int getPremiumSessionsCount() {
+        return (int) activeSessions.stream().filter(Session::getPremium).count();
     }
 
     class Session {
