@@ -1,21 +1,28 @@
 package clientapp.observers;
 
 import CnText.CheckResponse;
+import com.google.protobuf.ByteString;
 import io.grpc.stub.StreamObserver;
 
+import java.util.List;
+
 public class CheckRequestObserver implements StreamObserver<CheckResponse> {
+    private List<ByteString> response;
+
     @Override
     public void onNext(CheckResponse checkResponse) {
-        //TODO
+        response = checkResponse.getResponseList().asByteStringList();
     }
 
     @Override
     public void onError(Throwable throwable) {
-
+        System.out.println("Failed to check with Service");
     }
 
     @Override
     public void onCompleted() {
-        //TODO
+        if(response != null)
+            for (ByteString string : response)
+                System.out.println(string.toStringUtf8());
     }
 }

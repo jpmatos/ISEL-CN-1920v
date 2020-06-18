@@ -12,10 +12,13 @@ import com.google.cloud.storage.Storage;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
+import dao.TextOfImage;
+import dao.User;
 import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -23,6 +26,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
     private final String PROJECT_ID = "g01-li61n";
     private final String USERS_COLLECTION_NAME = "Users";
     private final String IMAGES_BUCKET_NAME = "images-cn";
+    private final String FIRESTORE_COLLECTION_NAME = "TextOfImages";
     private SessionManager sessionManager;
     private Firestore db;
     private Storage storage;
@@ -259,7 +263,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.READING_TEXT).build());
 
         //Set Firestore Listener
-        DocumentReference docRef = db.collection("TextOfImages").document(blobName);
+        DocumentReference docRef = db.collection(FIRESTORE_COLLECTION_NAME).document(blobName);
         System.out.println(blobName);
         docRef.addSnapshotListener((snapshot, e) -> {
             ProcessResponse.Builder response = ProcessResponse.newBuilder();
@@ -306,8 +310,47 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
 
     @Override
     public StreamObserver<CheckRequest> check(StreamObserver<CheckResponse> responseObserver) {
-        //TODO
-        return super.check(responseObserver);
+        return new StreamObserver<CheckRequest>() {
+            ArrayList<String> infos = new ArrayList<>();
+
+            @Override
+            public void onNext(CheckRequest checkRequest) {
+                String sessionID = checkRequest.getSessionId();
+                String uploadToken = checkRequest.getUploadToken();
+
+                //Validate Session
+                if(!sessionManager.isValid(sessionID)){
+                    infos.add(String.format("[%s] Invalid Session", uploadToken));
+                    return;
+                }
+
+                try {
+                    DocumentReference docRef = db.collection(FIRESTORE_COLLECTION_NAME).document(uploadToken);
+                    DocumentSnapshot doc = docRef.get().get();
+                    TextOfImage textOfImage = doc.toObject(TextOfImage.class);
+                    if (textOfImage != null)
+                        infos.add(String.format("[%s] " + textOfImage.toString(), uploadToken));
+                    else
+                        infos.add(String.format("[%s] Failed to check upload token in DB", uploadToken));
+                } catch (InterruptedException | ExecutionException e) {
+                    infos.add(String.format("[%s] Failed to check upload token in DB", uploadToken));
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                responseObserver.onCompleted();
+            }
+
+            @Override
+            public void onCompleted() {
+                CheckResponse checkResponse = CheckResponse.newBuilder()
+                        .addAllResponse(infos)
+                        .build();
+                responseObserver.onNext(checkResponse);
+                responseObserver.onCompleted();
+            }
+        };
     }
 
     private String getAlphaNumericString(int n)

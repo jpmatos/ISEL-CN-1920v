@@ -95,9 +95,10 @@ public class Client {
         }
 
         StreamObserver<CheckRequest> check = operations.check();
-        String uploadToken = " ";
-        while (!uploadToken.equals("")){
-            uploadToken = view.printUploadTokenInput();
+        while (true){
+            String uploadToken = view.printUploadTokenInput();
+            if(uploadToken.equals(""))
+                break;
             operations.sendCheckRequest(check, uploadToken);
         }
         check.onCompleted();

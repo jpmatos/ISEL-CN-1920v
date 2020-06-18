@@ -1,4 +1,4 @@
-package serviceapp;
+package dao;
 
 public class User {
     public String username;
