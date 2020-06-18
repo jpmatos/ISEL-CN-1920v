@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SessionManager {
-    static List<Session> activeSessions = Collections.synchronizedList(new ArrayList<>());
+    private List<Session> activeSessions = Collections.synchronizedList(new ArrayList<>());
+    private AtomicInteger sessionId = new AtomicInteger(1000);
 
-    public String newSession(boolean premium) {
-        Session session = new Session(premium);
+    public String newSession(String username, boolean premium) {
+        Session session = new Session(username, premium);
         activeSessions.add(session);
         return session.getID();
     }
@@ -28,6 +30,20 @@ public class SessionManager {
         return activeSessions;
     }
 
+    public boolean isValid(String sessionId) {
+        Optional<Session> optional = activeSessions.stream().filter(item -> item.getID().equals(sessionId)).findFirst();
+        return optional.isPresent();
+    }
+
+    public String getUsername(String sessionId) {
+        Optional<Session> optional = activeSessions.stream().filter(item -> item.getID().equals(sessionId)).findFirst();
+        if(optional.isPresent()){
+            return optional.get().getUsername();
+        }
+        else
+            return "";
+    }
+
     public boolean isPremium(String sessionId) {
         Optional<Session> optional = activeSessions.stream().filter(item -> item.getID().equals(sessionId)).findFirst();
         if(optional.isPresent()){
@@ -38,22 +54,23 @@ public class SessionManager {
         //TODO Throw some exception
     }
 
-    public boolean isValid(String sessionId) {
-        Optional<Session> optional = activeSessions.stream().filter(item -> item.getID().equals(sessionId)).findFirst();
-        return optional.isPresent();
-    }
-
     class Session {
         private String ID;
+        private String username;
         private boolean premium;
 
-        private Session(boolean premium) {
-            this.ID = String.valueOf((int) (Math.random() * 1_000_000));
+        private Session(String username, boolean premium) {
+            this.ID = String.valueOf(sessionId.incrementAndGet());
+            this.username = username;
             this.premium = premium;
         }
 
         String getID() {
             return this.ID;
+        }
+
+        String getUsername() {
+            return this.username;
         }
 
         boolean getPremium(){

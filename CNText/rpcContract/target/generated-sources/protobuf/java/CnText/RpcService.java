@@ -73,41 +73,41 @@ public final class RpcService {
       "\n\tsessionId\030\001 \001(\t\022\014\n\004user\030\002 \001(\t\022#\n\006statu" +
       "s\030\003 \001(\0162\023.CnText.LoginStatus\"5\n\rCloseRes" +
       "ponse\022$\n\006status\030\001 \001(\0162\024.CnText.LogoutSta" +
-      "tus\"R\n\rUploadRequest\022\021\n\tsessionId\030\001 \001(\t\022" +
-      "\r\n\005image\030\002 \001(\014\022\014\n\004mime\030\003 \001(\t\022\021\n\textensio" +
-      "n\030\004 \001(\t\"R\n\025UploadRequestResponse\022\023\n\013uplo" +
-      "adToken\030\001 \001(\t\022$\n\006status\030\002 \001(\0162\024.CnText.U" +
-      "ploadStatus\"[\n\016ProcessRequest\022\021\n\tsession" +
-      "Id\030\001 \001(\t\022\020\n\010language\030\002 \001(\t\022\023\n\013uploadToke" +
-      "n\030\003 \001(\t\022\017\n\007publish\030\004 \001(\010\"[\n\017ProcessRespo" +
-      "nse\022\014\n\004text\030\001 \001(\t\022\023\n\013translation\030\002 \001(\t\022%" +
-      "\n\006status\030\003 \001(\0162\025.CnText.ProcessStatus\"6\n" +
-      "\014CheckRequest\022\021\n\tsessionId\030\001 \001(\t\022\023\n\013uplo" +
-      "adToken\030\002 \001(\t\"!\n\rCheckResponse\022\020\n\010respon" +
-      "se\030\001 \003(\t*q\n\013LoginStatus\022\021\n\rLOGIN_SUCCESS" +
-      "\020\000\022\035\n\031LOGIN_COMMUNICATION_ERROR\020\001\022\026\n\022LOG" +
-      "IN_UNKNOWN_USER\020\002\022\030\n\024LOGIN_WRONG_PASSWOR" +
-      "D\020\003*\304\001\n\014UploadStatus\022\023\n\017UPLOAD_STARTING\020" +
-      "\000\022\r\n\tUPLOADING\020\001\022\022\n\016UPLOAD_SUCCESS\020\002\022\020\n\014" +
-      "UPLOAD_ERROR\020\003\022\032\n\026UPLOAD_INVALID_SESSION" +
-      "\020\004\022\030\n\024UPLOAD_IMAGE_TOO_BIG\020\005\022\035\n\031UPLOAD_U" +
-      "NSUPPORTED_FORMAT\020\006\022\025\n\021UPLOAD_USER_ERROR" +
-      "\020\007*\320\001\n\rProcessStatus\022\020\n\014READING_TEXT\020\000\022\023" +
-      "\n\017READING_SUCCESS\020\001\022\017\n\013TRANSLATING\020\002\022\025\n\021" +
-      "TRANSLATE_SUCCESS\020\003\022\030\n\024UNSUPPORTED_LANGU" +
-      "AGE\020\006\022\023\n\017TRANSLATE_ERROR\020\004\022\035\n\031TRANSLATE_" +
-      "INVALID_SESSION\020\005\022\"\n\036TRANSLATE_INVALID_U" +
-      "PLOAD_TOKEN\020\007*^\n\014LogoutStatus\022\022\n\016LOGOUT_" +
-      "SUCCESS\020\000\022\036\n\032LOGOUT_COMMUNICATION_ERROR\020" +
-      "\001\022\032\n\026LOGOUT_INVALID_SESSION\020\0022\234\002\n\006CnText" +
-      "\022\'\n\005start\022\r.CnText.Login\032\017.CnText.Sessio" +
-      "n\022/\n\005close\022\017.CnText.Session\032\025.CnText.Clo" +
-      "seResponse\022B\n\006upload\022\025.CnText.UploadRequ" +
-      "est\032\035.CnText.UploadRequestResponse(\0010\001\022<" +
-      "\n\007process\022\026.CnText.ProcessRequest\032\027.CnTe" +
-      "xt.ProcessResponse0\001\0226\n\005check\022\024.CnText.C" +
-      "heckRequest\032\025.CnText.CheckResponse(\001B\n\n\006" +
-      "CnTextP\001b\006proto3"
+      "tus\"Q\n\rUploadRequest\022\021\n\tsessionId\030\001 \001(\t\022" +
+      "\r\n\005image\030\002 \001(\014\022\020\n\010filename\030\003 \001(\t\022\014\n\004mime" +
+      "\030\004 \001(\t\"R\n\025UploadRequestResponse\022\023\n\013uploa" +
+      "dToken\030\001 \001(\t\022$\n\006status\030\002 \001(\0162\024.CnText.Up" +
+      "loadStatus\"[\n\016ProcessRequest\022\021\n\tsessionI" +
+      "d\030\001 \001(\t\022\020\n\010language\030\002 \001(\t\022\023\n\013uploadToken" +
+      "\030\003 \001(\t\022\017\n\007publish\030\004 \001(\010\"[\n\017ProcessRespon" +
+      "se\022\014\n\004text\030\001 \001(\t\022\023\n\013translation\030\002 \001(\t\022%\n" +
+      "\006status\030\003 \001(\0162\025.CnText.ProcessStatus\"6\n\014" +
+      "CheckRequest\022\021\n\tsessionId\030\001 \001(\t\022\023\n\013uploa" +
+      "dToken\030\002 \001(\t\"!\n\rCheckResponse\022\020\n\010respons" +
+      "e\030\001 \003(\t*q\n\013LoginStatus\022\021\n\rLOGIN_SUCCESS\020" +
+      "\000\022\035\n\031LOGIN_COMMUNICATION_ERROR\020\001\022\026\n\022LOGI" +
+      "N_UNKNOWN_USER\020\002\022\030\n\024LOGIN_WRONG_PASSWORD" +
+      "\020\003*\304\001\n\014UploadStatus\022\023\n\017UPLOAD_STARTING\020\000" +
+      "\022\r\n\tUPLOADING\020\001\022\022\n\016UPLOAD_SUCCESS\020\002\022\020\n\014U" +
+      "PLOAD_ERROR\020\003\022\032\n\026UPLOAD_INVALID_SESSION\020" +
+      "\004\022\030\n\024UPLOAD_IMAGE_TOO_BIG\020\005\022\035\n\031UPLOAD_UN" +
+      "SUPPORTED_FORMAT\020\006\022\025\n\021UPLOAD_USER_ERROR\020" +
+      "\007*\320\001\n\rProcessStatus\022\020\n\014READING_TEXT\020\000\022\023\n" +
+      "\017READING_SUCCESS\020\001\022\017\n\013TRANSLATING\020\002\022\025\n\021T" +
+      "RANSLATE_SUCCESS\020\003\022\030\n\024UNSUPPORTED_LANGUA" +
+      "GE\020\006\022\023\n\017TRANSLATE_ERROR\020\004\022\035\n\031TRANSLATE_I" +
+      "NVALID_SESSION\020\005\022\"\n\036TRANSLATE_INVALID_UP" +
+      "LOAD_TOKEN\020\007*^\n\014LogoutStatus\022\022\n\016LOGOUT_S" +
+      "UCCESS\020\000\022\036\n\032LOGOUT_COMMUNICATION_ERROR\020\001" +
+      "\022\032\n\026LOGOUT_INVALID_SESSION\020\0022\234\002\n\006CnText\022" +
+      "\'\n\005start\022\r.CnText.Login\032\017.CnText.Session" +
+      "\022/\n\005close\022\017.CnText.Session\032\025.CnText.Clos" +
+      "eResponse\022B\n\006upload\022\025.CnText.UploadReque" +
+      "st\032\035.CnText.UploadRequestResponse(\0010\001\022<\n" +
+      "\007process\022\026.CnText.ProcessRequest\032\027.CnTex" +
+      "t.ProcessResponse0\001\0226\n\005check\022\024.CnText.Ch" +
+      "eckRequest\032\025.CnText.CheckResponse(\001B\n\n\006C" +
+      "nTextP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -144,7 +144,7 @@ public final class RpcService {
     internal_static_CnText_UploadRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CnText_UploadRequest_descriptor,
-        new java.lang.String[] { "SessionId", "Image", "Mime", "Extension", });
+        new java.lang.String[] { "SessionId", "Image", "Filename", "Mime", });
     internal_static_CnText_UploadRequestResponse_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_CnText_UploadRequestResponse_fieldAccessorTable = new

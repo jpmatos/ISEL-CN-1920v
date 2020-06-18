@@ -62,7 +62,7 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
 
         status = processResponse.getStatus();
 
-        if(text != null)
+        if(text != null && !text.equals(""))
             System.out.println(String.format("[%s][%s] Update - '%s'; Text - %s", filename, uploadToken, status, text));//TODO
         else
             System.out.println(String.format("[%s][%s] Update - '%s'", filename, uploadToken, status));

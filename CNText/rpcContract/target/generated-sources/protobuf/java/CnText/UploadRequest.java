@@ -18,8 +18,8 @@ private static final long serialVersionUID = 0L;
   private UploadRequest() {
     sessionId_ = "";
     image_ = com.google.protobuf.ByteString.EMPTY;
+    filename_ = "";
     mime_ = "";
-    extension_ = "";
   }
 
   @java.lang.Override
@@ -67,13 +67,13 @@ private static final long serialVersionUID = 0L;
           case 26: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            mime_ = s;
+            filename_ = s;
             break;
           }
           case 34: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            extension_ = s;
+            mime_ = s;
             break;
           }
         }
@@ -143,10 +143,44 @@ private static final long serialVersionUID = 0L;
     return image_;
   }
 
-  public static final int MIME_FIELD_NUMBER = 3;
+  public static final int FILENAME_FIELD_NUMBER = 3;
+  private volatile java.lang.Object filename_;
+  /**
+   * <code>string filename = 3;</code>
+   */
+  public java.lang.String getFilename() {
+    java.lang.Object ref = filename_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      filename_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string filename = 3;</code>
+   */
+  public com.google.protobuf.ByteString
+      getFilenameBytes() {
+    java.lang.Object ref = filename_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      filename_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int MIME_FIELD_NUMBER = 4;
   private volatile java.lang.Object mime_;
   /**
-   * <code>string mime = 3;</code>
+   * <code>string mime = 4;</code>
    */
   public java.lang.String getMime() {
     java.lang.Object ref = mime_;
@@ -161,7 +195,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string mime = 3;</code>
+   * <code>string mime = 4;</code>
    */
   public com.google.protobuf.ByteString
       getMimeBytes() {
@@ -171,40 +205,6 @@ private static final long serialVersionUID = 0L;
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
       mime_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
-  public static final int EXTENSION_FIELD_NUMBER = 4;
-  private volatile java.lang.Object extension_;
-  /**
-   * <code>string extension = 4;</code>
-   */
-  public java.lang.String getExtension() {
-    java.lang.Object ref = extension_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      extension_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string extension = 4;</code>
-   */
-  public com.google.protobuf.ByteString
-      getExtensionBytes() {
-    java.lang.Object ref = extension_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      extension_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -229,11 +229,11 @@ private static final long serialVersionUID = 0L;
     if (!image_.isEmpty()) {
       output.writeBytes(2, image_);
     }
-    if (!getMimeBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, mime_);
+    if (!getFilenameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, filename_);
     }
-    if (!getExtensionBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, extension_);
+    if (!getMimeBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, mime_);
     }
     unknownFields.writeTo(output);
   }
@@ -250,11 +250,11 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeBytesSize(2, image_);
     }
-    if (!getMimeBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, mime_);
+    if (!getFilenameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, filename_);
     }
-    if (!getExtensionBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, extension_);
+    if (!getMimeBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, mime_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -276,10 +276,10 @@ private static final long serialVersionUID = 0L;
         .equals(other.getSessionId());
     result = result && getImage()
         .equals(other.getImage());
+    result = result && getFilename()
+        .equals(other.getFilename());
     result = result && getMime()
         .equals(other.getMime());
-    result = result && getExtension()
-        .equals(other.getExtension());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -295,10 +295,10 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getSessionId().hashCode();
     hash = (37 * hash) + IMAGE_FIELD_NUMBER;
     hash = (53 * hash) + getImage().hashCode();
+    hash = (37 * hash) + FILENAME_FIELD_NUMBER;
+    hash = (53 * hash) + getFilename().hashCode();
     hash = (37 * hash) + MIME_FIELD_NUMBER;
     hash = (53 * hash) + getMime().hashCode();
-    hash = (37 * hash) + EXTENSION_FIELD_NUMBER;
-    hash = (53 * hash) + getExtension().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -432,9 +432,9 @@ private static final long serialVersionUID = 0L;
 
       image_ = com.google.protobuf.ByteString.EMPTY;
 
-      mime_ = "";
+      filename_ = "";
 
-      extension_ = "";
+      mime_ = "";
 
       return this;
     }
@@ -460,8 +460,8 @@ private static final long serialVersionUID = 0L;
       CnText.UploadRequest result = new CnText.UploadRequest(this);
       result.sessionId_ = sessionId_;
       result.image_ = image_;
+      result.filename_ = filename_;
       result.mime_ = mime_;
-      result.extension_ = extension_;
       onBuilt();
       return result;
     }
@@ -510,12 +510,12 @@ private static final long serialVersionUID = 0L;
       if (other.getImage() != com.google.protobuf.ByteString.EMPTY) {
         setImage(other.getImage());
       }
-      if (!other.getMime().isEmpty()) {
-        mime_ = other.mime_;
+      if (!other.getFilename().isEmpty()) {
+        filename_ = other.filename_;
         onChanged();
       }
-      if (!other.getExtension().isEmpty()) {
-        extension_ = other.extension_;
+      if (!other.getMime().isEmpty()) {
+        mime_ = other.mime_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -643,9 +643,78 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object filename_ = "";
+    /**
+     * <code>string filename = 3;</code>
+     */
+    public java.lang.String getFilename() {
+      java.lang.Object ref = filename_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        filename_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string filename = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFilenameBytes() {
+      java.lang.Object ref = filename_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        filename_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string filename = 3;</code>
+     */
+    public Builder setFilename(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      filename_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string filename = 3;</code>
+     */
+    public Builder clearFilename() {
+      
+      filename_ = getDefaultInstance().getFilename();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string filename = 3;</code>
+     */
+    public Builder setFilenameBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      filename_ = value;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object mime_ = "";
     /**
-     * <code>string mime = 3;</code>
+     * <code>string mime = 4;</code>
      */
     public java.lang.String getMime() {
       java.lang.Object ref = mime_;
@@ -660,7 +729,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string mime = 3;</code>
+     * <code>string mime = 4;</code>
      */
     public com.google.protobuf.ByteString
         getMimeBytes() {
@@ -676,7 +745,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string mime = 3;</code>
+     * <code>string mime = 4;</code>
      */
     public Builder setMime(
         java.lang.String value) {
@@ -689,7 +758,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string mime = 3;</code>
+     * <code>string mime = 4;</code>
      */
     public Builder clearMime() {
       
@@ -698,7 +767,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>string mime = 3;</code>
+     * <code>string mime = 4;</code>
      */
     public Builder setMimeBytes(
         com.google.protobuf.ByteString value) {
@@ -708,75 +777,6 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       mime_ = value;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object extension_ = "";
-    /**
-     * <code>string extension = 4;</code>
-     */
-    public java.lang.String getExtension() {
-      java.lang.Object ref = extension_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        extension_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string extension = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getExtensionBytes() {
-      java.lang.Object ref = extension_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        extension_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string extension = 4;</code>
-     */
-    public Builder setExtension(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      extension_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string extension = 4;</code>
-     */
-    public Builder clearExtension() {
-      
-      extension_ = getDefaultInstance().getExtension();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string extension = 4;</code>
-     */
-    public Builder setExtensionBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      extension_ = value;
       onChanged();
       return this;
     }

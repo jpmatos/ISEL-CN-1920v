@@ -60,13 +60,9 @@ public class Operations implements IOperations {
             return;
         }
 
-        //Get file MIME and Extension
+        //Get filename and MIME
+        String filename = path.getFileName().toString();
         String mimeType = Files.probeContentType(path);
-        String extension = "";
-        int i = path.getFileName().toString().lastIndexOf('.');
-        if (i > 0) {
-            extension = path.getFileName().toString().substring(i+1);
-        }
 
         //TODO Verify if valid mime & extension
 
@@ -86,7 +82,7 @@ public class Operations implements IOperations {
                         .setSessionId(session.getSessionId())
                         .setImage(byteString)
                         .setMime(mimeType)
-                        .setExtension(extension)
+                        .setFilename(filename)
                         .build();
                 requestObserver.onNext(req);
             }

@@ -23,22 +23,22 @@ public interface UploadRequestOrBuilder extends
   com.google.protobuf.ByteString getImage();
 
   /**
-   * <code>string mime = 3;</code>
+   * <code>string filename = 3;</code>
+   */
+  java.lang.String getFilename();
+  /**
+   * <code>string filename = 3;</code>
+   */
+  com.google.protobuf.ByteString
+      getFilenameBytes();
+
+  /**
+   * <code>string mime = 4;</code>
    */
   java.lang.String getMime();
   /**
-   * <code>string mime = 3;</code>
+   * <code>string mime = 4;</code>
    */
   com.google.protobuf.ByteString
       getMimeBytes();
-
-  /**
-   * <code>string extension = 4;</code>
-   */
-  java.lang.String getExtension();
-  /**
-   * <code>string extension = 4;</code>
-   */
-  com.google.protobuf.ByteString
-      getExtensionBytes();
 }

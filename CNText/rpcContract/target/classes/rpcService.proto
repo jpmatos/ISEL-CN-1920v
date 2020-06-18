@@ -65,8 +65,8 @@ message CloseResponse {
 message UploadRequest {
     string sessionId = 1;
     bytes image = 2;
-    string mime = 3;
-    string extension = 4;
+    string filename = 3;
+    string mime = 4;
 }
 
 message UploadRequestResponse {

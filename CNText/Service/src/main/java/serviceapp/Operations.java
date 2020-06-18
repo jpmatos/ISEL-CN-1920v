@@ -42,13 +42,14 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         System.out.println("Login called");
 
         //Load User from Firestore
-        String username = request.getUser();
-        String password = request.getPassword();
-        Query query = db.collection(USERS_COLLECTION_NAME).whereEqualTo("username", username);
+        String usernameReq = request.getUser();
+        String passwordReq = request.getPassword();
+        Query query = db.collection(USERS_COLLECTION_NAME).whereEqualTo("username", usernameReq);
         ApiFuture<QuerySnapshot> querySnapshot = query.get();
 
         //See if the User is valid, matches password, and if it is premium or not
         LoginStatus loginStatus;
+        String username = "";
         boolean premium = false;
         try {
             List<QueryDocumentSnapshot> docs = querySnapshot.get().getDocuments();
@@ -57,8 +58,9 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
             else {
                 DocumentSnapshot doc = docs.get(0);
                 User userFound = doc.toObject(User.class);
+                username = userFound.username;
                 premium = userFound.premium;
-                if (userFound.password.equals(password))
+                if (userFound.password.equals(passwordReq))
                     loginStatus = LoginStatus.LOGIN_SUCCESS;
                 else
                     loginStatus = LoginStatus.LOGIN_WRONG_PASSWORD;
@@ -70,9 +72,9 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         }
 
         //Build response
-        CnText.Session.Builder sessionBuilder = CnText.Session.newBuilder().setStatus(loginStatus).setUser(username);
+        CnText.Session.Builder sessionBuilder = CnText.Session.newBuilder().setStatus(loginStatus).setUser(usernameReq);
         if(loginStatus == LoginStatus.LOGIN_SUCCESS) {
-            String sessionID = sessionManager.newSession(premium);
+            String sessionID = sessionManager.newSession(username, premium);
             sessionBuilder.setSessionId(sessionID);
             //TODO Call VMManagement
         }
@@ -108,7 +110,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(UploadStatus.UPLOAD_STARTING).build());
 
         return new StreamObserver<UploadRequest>() {
-            private String blobName = getAlphaNumericString(16);
+            private String blobName;// = getAlphaNumericString(16);
             private UploadStatus uploadStatus = UploadStatus.UPLOAD_STARTING;
             private WriteChannel writer = null;
             private RestorableState<WriteChannel> capture;
@@ -120,7 +122,8 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                     return;
 
                 //Validate Session
-                if(!sessionManager.isValid(uploadRequest.getSessionId())){
+                String sessionID = uploadRequest.getSessionId();
+                if(!sessionManager.isValid(sessionID)){
                     uploadStatus = UploadStatus.UPLOAD_INVALID_SESSION;
                     responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
                     responseObserver.onError(null);
@@ -133,7 +136,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                         //TODO Validate mime/extension
 
                         //Create blob and open WriteChannel
-                        blobName += "." + uploadRequest.getExtension();
+                        blobName = buildBlobname(sessionID, sessionManager.getUsername(sessionID), uploadRequest.getFilename());
                         BlobId blobId = BlobId.of(IMAGES_BUCKET_NAME, blobName);
                         String contentType = uploadRequest.getMime();
                         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(contentType).build();
@@ -208,6 +211,16 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                             writer.close();
                     }
                 } catch (IOException ignored) { }
+            }
+
+
+            private String buildBlobname(String sessionID, String username, String filename) {
+                return sessionID + "-" +
+                        username + "-" +
+                        java.time.Clock.systemUTC().instant().toString()
+                                .replace(".", "-")
+                                .replace(":", "-") + "-" +
+                        filename;
             }
         };
     }
