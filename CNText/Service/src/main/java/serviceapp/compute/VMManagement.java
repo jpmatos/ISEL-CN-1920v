@@ -1,4 +1,4 @@
-package gcloud.compute;
+package serviceapp.compute;
 
 public class VMManagement {
 

@@ -1,4 +1,4 @@
-package serviceapp;
+package serviceapp.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,13 +13,18 @@ public class SessionManager {
     public String newSession(String username, boolean premium) {
         Session session = new Session(username, premium);
         activeSessions.add(session);
+
+        Logger.log(String.format("User '%s' logged in with session '%s'. Premium: %b.", session.getUsername(), session.getID(), session.getPremium()));
         return session.getID();
     }
 
     public boolean closeSession(String sessionID) {
         Optional<Session> optional = activeSessions.stream().filter(item -> item.getID().equals(sessionID)).findFirst();
         if(optional.isPresent()){
-            activeSessions.remove(optional.get());
+            Session session = optional.get();
+            activeSessions.remove(session);
+
+            Logger.log(String.format("User '%s' logged out with session '%s'.", session.getUsername(), session.getID()));
             return true;
         }
         else
@@ -57,7 +62,7 @@ public class SessionManager {
         return (int) activeSessions.stream().filter(Session::getPremium).count();
     }
 
-    class Session {
+    public class Session {
         private String ID;
         private String username;
         private boolean premium;
@@ -68,7 +73,7 @@ public class SessionManager {
             this.premium = premium;
         }
 
-        String getID() {
+        public String getID() {
             return this.ID;
         }
 
@@ -76,7 +81,7 @@ public class SessionManager {
             return this.username;
         }
 
-        boolean getPremium(){
+        public boolean getPremium(){
             return this.premium;
         }
     }

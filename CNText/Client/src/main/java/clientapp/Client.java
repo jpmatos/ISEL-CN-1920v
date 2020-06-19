@@ -9,6 +9,7 @@ import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Client {
     private static String svcIP = "localhost";
@@ -23,9 +24,10 @@ public class Client {
 
             IOperations operations = new Operations(svcIP, svcPort);
             IView view = new View();
+            view.printWelcomeMessage();
             boolean cont = true;
             while (cont) {
-                if(operations.isLogged())
+                if (operations.isLogged())
                     view.printLoggedAs(operations.getUser(), operations.getSessionId());
                 int oper = view.PrintMainMenuSelection();
                 switch (oper) {
@@ -52,7 +54,7 @@ public class Client {
                 }
             }
 
-            if(operations.isLogged())
+            if (operations.isLogged())
                 logout(operations, view);
 
             System.exit(0);
@@ -62,41 +64,48 @@ public class Client {
     }
 
     private static void login(IOperations operations, IView view) {
-        if(operations.isLogged()){
+        if (operations.isLogged()) {
             view.printNotLoggedIn();
             return;
         }
 
         String username = view.printUsernameInput();
+        if (username.equals(""))
+            return;
+
         String password = view.printPasswordInput();
         LoginStatus res = operations.login(username, password);
-        if(res == LoginStatus.LOGIN_SUCCESS)
+        if (res == LoginStatus.LOGIN_SUCCESS)
             view.printSuccessfulLogin(operations.getUser());
         else
             view.printFailedLogin(res.name());
     }
 
     private static void upload(IOperations operations, IView view) throws IOException {
-        if(!operations.isLogged()){
+        if (!operations.isLogged()) {
             view.printNotLoggedIn();
             return;
         }
 
-        Path path = view.printPathInput();
+        String pathStr = view.printPathInput();
+        if (pathStr.equals(""))
+            return;
+        Path path = Paths.get(pathStr);
+
         String languages = view.printSelectLanguage();
         operations.upload(path, languages);
     }
 
     private static void check(IOperations operations, IView view) {
-        if(!operations.isLogged()){
+        if (!operations.isLogged()) {
             view.printNotLoggedIn();
             return;
         }
 
         StreamObserver<CheckRequest> check = operations.check();
-        while (true){
+        while (true) {
             String uploadToken = view.printUploadTokenInput();
-            if(uploadToken.equals(""))
+            if (uploadToken.equals(""))
                 break;
             operations.sendCheckRequest(check, uploadToken);
         }
@@ -104,7 +113,7 @@ public class Client {
     }
 
     private static void logout(IOperations operations, IView view) {
-        if(!operations.isLogged()){
+        if (!operations.isLogged()) {
             view.printNotLoggedIn();
             return;
         }
@@ -114,14 +123,14 @@ public class Client {
     }
 
     private static void views(IOperations operations, IView view) {
-        if(!operations.isLogged()){
+        if (!operations.isLogged()) {
             view.printNotLoggedIn();
             return;
         }
         boolean cont = true;
-        while(cont){
+        while (cont) {
             int oper = view.printViewMenuSelection();
-            switch (oper){
+            switch (oper) {
                 case 1:
                     view.printProcessSuccesses(operations.getProcessRequests());
                     break;

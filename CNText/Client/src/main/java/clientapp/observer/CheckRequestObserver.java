@@ -21,7 +21,7 @@ public class CheckRequestObserver implements StreamObserver<CheckResponse> {
 
     @Override
     public void onCompleted() {
-        if(response != null)
+        if (response != null)
             for (ByteString string : response)
                 System.out.println(string.toStringUtf8());
     }

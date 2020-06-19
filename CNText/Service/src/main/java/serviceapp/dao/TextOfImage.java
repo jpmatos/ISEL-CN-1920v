@@ -1,4 +1,4 @@
-package dao;
+package serviceapp.dao;
 
 public class TextOfImage {
     public String language;
