@@ -26,9 +26,10 @@ public class Operations implements IOperations {
     private ArrayList<UploadRequestObserver> uploadRequests = new ArrayList<>();
     private ArrayList<ProcessRequestObserver> processRequests = new ArrayList<>();
     private final String[] supportedMIMETypes =
-            {"image/bmp", "image/jpeg", "image/png", "image/svg+xml", "image/tiff"};
+            {"image/jpeg", "image/png", "image/gif", "image/bmp", "image/webp", "image/x-dcraw",
+                    "image/vnd.microsoft.icon", "application/pdf", "image/tiff"};
     private final String[] supportedExtensions =
-            {".bmp", ".jpeg", ".jpg", ".png", ".svg", ".tiff", ".tif"};
+            {"jpg", "jpeg", "png", "gif", "bmp", "webp", "raw", "ico", "pdf", "tif", "tiff"};
 
     public Operations(String svcIP, int svcPort) {
         channel = ManagedChannelBuilder.forAddress(svcIP, svcPort)
@@ -47,8 +48,7 @@ public class Operations implements IOperations {
                 this.session = res;
 
             return res.getStatus();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return LoginStatus.LOGIN_COMMUNICATION_ERROR;
         }
     }
@@ -69,14 +69,14 @@ public class Operations implements IOperations {
         String extension = "";
         int i = path.getFileName().toString().lastIndexOf('.');
         if (i > 0)
-            extension = path.getFileName().toString().substring(i+1);
+            extension = path.getFileName().toString().substring(i + 1);
 
-        if(!Arrays.asList(supportedMIMETypes).contains(mimeType)){
+        if (!Arrays.asList(supportedMIMETypes).contains(mimeType)) {
             System.out.println("Unsupported MIME type " + mimeType);
             return;
         }
 
-        if(!Arrays.asList(supportedExtensions).contains(extension)){
+        if (!Arrays.asList(supportedExtensions).contains(extension)) {
             System.out.println("Unsupported extension " + extension);
             return;
         }
@@ -136,7 +136,7 @@ public class Operations implements IOperations {
 
     @Override
     public String getUser() {
-        if(session == null)
+        if (session == null)
             return null;
         else
             return session.getUser();
@@ -148,7 +148,7 @@ public class Operations implements IOperations {
     }
 
     @Override
-    public ArrayList<IProcessRequest> getProcessRequests(){
+    public ArrayList<IProcessRequest> getProcessRequests() {
         ArrayList<IProcessRequest> res = new ArrayList<>(processRequests);
         return res;
     }

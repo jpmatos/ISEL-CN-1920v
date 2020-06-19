@@ -2,32 +2,27 @@ package serviceapp;
 
 import CnText.*;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.RestorableState;
-import com.google.cloud.WriteChannel;
 import com.google.cloud.firestore.*;
 import com.google.cloud.pubsub.v1.Publisher;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
-import dao.TextOfImage;
-import dao.User;
-import gcloud.compute.VMManagement;
+import serviceapp.dao.User;
+import serviceapp.compute.VMManagement;
 import io.grpc.stub.StreamObserver;
-import observer.CheckRequestObserver;
-import observer.UploadRequestObserver;
+import serviceapp.observer.CheckRequestObserver;
+import serviceapp.observer.UploadRequestObserver;
+import serviceapp.util.Logger;
+import serviceapp.util.SessionManager;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class Operations extends CnTextGrpc.CnTextImplBase  {
+public class Operations extends CnTextGrpc.CnTextImplBase {
     private final String PROJECT_ID = "g01-li61n";
     private final String USERS_COLLECTION_NAME = "Users";
     private final String IMAGES_BUCKET_NAME = "images-cn";
@@ -44,7 +39,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
 
     @Override
     public void start(Login request, StreamObserver<CnText.Session> responseObserver) {
-        System.out.println("Login called");
+        Logger.log("Login called.");
 
         //Load User from Firestore
         String usernameReq = request.getUser();
@@ -57,9 +52,10 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         try {
             DocumentReference docRef = db.collection(USERS_COLLECTION_NAME).document(usernameReq);
             DocumentSnapshot doc = docRef.get().get();
-            if(!doc.exists())
+            if (!doc.exists()) {
+                Logger.log(String.format("Unknown user '%s'.", usernameReq));
                 loginStatus = LoginStatus.LOGIN_UNKNOWN_USER;
-            else {
+            } else {
                 User userFound = doc.toObject(User.class);
                 username = userFound.username;
                 premium = userFound.premium;
@@ -70,15 +66,16 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
             }
 
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
             loginStatus = LoginStatus.LOGIN_COMMUNICATION_ERROR;
         }
 
         //Build response
         CnText.Session.Builder sessionBuilder = CnText.Session.newBuilder().setStatus(loginStatus).setUser(usernameReq);
-        if(loginStatus == LoginStatus.LOGIN_SUCCESS) {
+        if (loginStatus == LoginStatus.LOGIN_SUCCESS) {
             String sessionID = sessionManager.newSession(username, premium);
             sessionBuilder.setSessionId(sessionID);
+
+            //Call VMManagement
             VMManagement.updateVMInstances(sessionManager.getFreeSessionsCount(), sessionManager.getPremiumSessionsCount());
         }
         CnText.Session response = sessionBuilder.build();
@@ -90,17 +87,18 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
 
     @Override
     public void close(CnText.Session request, StreamObserver<CloseResponse> responseObserver) {
-        System.out.println("Logout Called");
+        String sessionID = request.getSessionId();
+        Logger.log(String.format("Logout called with session '%s'.", sessionID));
 
         //Attempt to clear user from SessionManager
-        String sessionID = request.getSessionId();
         LogoutStatus logoutStatus;
-        if(sessionManager.closeSession(sessionID))
+        if (sessionManager.closeSession(sessionID))
             logoutStatus = LogoutStatus.LOGOUT_SUCCESS;
         else
             logoutStatus = LogoutStatus.LOGOUT_INVALID_SESSION;
 
-        //TODO Call VMManagement
+        //Call VMManagement
+        VMManagement.updateVMInstances(sessionManager.getFreeSessionsCount(), sessionManager.getPremiumSessionsCount());
 
         //Send response and call onComplete()
         responseObserver.onNext(CloseResponse.newBuilder().setStatus(logoutStatus).build());
@@ -109,18 +107,19 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
 
     @Override
     public StreamObserver<UploadRequest> upload(StreamObserver<UploadRequestResponse> responseObserver) {
-        System.out.println("Called upload");
+        Logger.log("Upload called.");
         responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(UploadStatus.UPLOAD_STARTING).build());
         return new UploadRequestObserver(responseObserver, storage, sessionManager, IMAGES_BUCKET_NAME);
     }
 
     @Override
     public void process(ProcessRequest processRequest, StreamObserver<ProcessResponse> responseObserver) {
-        System.out.println("Called Translate");
         String sessionID = processRequest.getSessionId();
+        Logger.log(String.format("Process called with session '%s'.", sessionID));
 
         //Validate Session
-        if(!sessionManager.isValid(sessionID)){
+        if (!sessionManager.isValid(sessionID)) {
+            Logger.log(String.format("Invalid session '%s'.", sessionID));
             responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.PROCESS_INVALID_SESSION).build());
             return;
         }
@@ -129,7 +128,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         String blobName = processRequest.getUploadToken();
         String language = processRequest.getLanguage();
         String topicName;
-        if(sessionManager.isPremium(sessionID))
+        if (sessionManager.isPremium(sessionID))
             topicName = "premium-ocr";
         else
             topicName = "free-ocr";
@@ -137,21 +136,20 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         //Validate if Blob exists
         BlobId blobId = BlobId.of(IMAGES_BUCKET_NAME, blobName);
         Blob blob = storage.get(blobId);
-        if(!blob.exists()){
+        if (!blob.exists()) {
+            Logger.log(String.format("Blob '%s' does not exist.", blobId.getName()));
             responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.PROCESS_INVALID_TOKEN).build());
             responseObserver.onError(null);
             return;
         }
 
-        //TODO Validate language
+        Logger.log(String.format("Publishing blob '%s' on topic '%s'...", blobName, topicName));
 
         //Publish to free/premium topic
-        TopicName tName=TopicName.ofProjectTopicName(PROJECT_ID, topicName);
+        TopicName tName = TopicName.ofProjectTopicName(PROJECT_ID, topicName);
         try {
             Publisher publisher = Publisher.newBuilder(tName).build();
-
             ByteString msgData = ByteString.copyFromUtf8("placeholder-message");
-            System.out.println(blobName + " " + language + " " + sessionID + " " + PROJECT_ID + " " + topicName);
             PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
                     .setData(msgData)
                     .putAttributes("blobName", blobName)
@@ -159,12 +157,11 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
                     .putAttributes("sessionID", sessionID)
                     .build();
             ApiFuture<String> future = publisher.publish(pubsubMessage);
-            String msgID = future.get();
+            future.get();
             publisher.shutdown();
-
-            System.out.println("Message Published with ID=" + msgID);
+            Logger.log(String.format("Successfully published blob '%s' on topic '%s'.", blobName, topicName));
         } catch (IOException | ExecutionException | InterruptedException e) {
-            e.printStackTrace();
+            Logger.log(String.format("Failed to publish blob '%s' on topic '%s'.", blobName, topicName));
             responseObserver.onError(e);
             return;
         }
@@ -173,57 +170,55 @@ public class Operations extends CnTextGrpc.CnTextImplBase  {
         responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.READING_TEXT).build());
 
         //Set Firestore Listener
+        Logger.log(String.format("Set Firestore listener for collection '%s' on document '%s'.", FIRESTORE_COLLECTION_NAME, blobName));
         DocumentReference docRef = db.collection(FIRESTORE_COLLECTION_NAME).document(blobName);
-        System.out.println(blobName);
         docRef.addSnapshotListener((snapshot, e) -> {
             ProcessResponse.Builder response = ProcessResponse.newBuilder();
-            
             if (e != null) {
-                System.err.println("Listen failed: " + e);
-                
+                Logger.log(String.format("Listen failed for collection '%s' on document '%s'.", FIRESTORE_COLLECTION_NAME, blobName));
                 response.setStatus(ProcessStatus.PROCESS_ERROR);
                 responseObserver.onNext(response.build());
                 responseObserver.onError(e);
                 return;
             }
-
             if (snapshot != null && snapshot.exists()) {
-                System.out.println("Current data: " + snapshot.getData());
-
                 String ocrResult = snapshot.getString("ocrResult");
-                if(ocrResult != null){
+                if (ocrResult != null) {
                     response.setText(ocrResult);
-                    if(language.equals("")) {
+                    if (language.equals("")) {
+                        Logger.log(String.format("Update for collection '%s' on document '%s'. OcrResult: '%s'",
+                                FIRESTORE_COLLECTION_NAME, blobName, ocrResult));
+                        Logger.log(String.format("Finished listening for collection '%s' on document '%s'.", FIRESTORE_COLLECTION_NAME, blobName));
+
                         response.setStatus(ProcessStatus.READING_SUCCESS);
                         responseObserver.onNext(response.build());
                         responseObserver.onCompleted();
                         return;
                     }
-                    
                     String translation = snapshot.getString("translationResult");
-                    if(translation != null){
+                    if (translation != null) {
+                        Logger.log(String.format("Update for collection '%s' on document '%s'. Translation: '%s'",
+                                FIRESTORE_COLLECTION_NAME, blobName, translation));
+                        Logger.log(String.format("Finished listening for collection '%s' on document '%s'.", FIRESTORE_COLLECTION_NAME, blobName));
+
                         response.setTranslation(translation);
                         response.setStatus(ProcessStatus.TRANSLATE_SUCCESS);
                         responseObserver.onNext(response.build());
                         responseObserver.onCompleted();
                         return;
                     }
-                    
+                    Logger.log(String.format("Update for collection '%s' on document '%s'. OcrResult: '%s'",
+                            FIRESTORE_COLLECTION_NAME, blobName, ocrResult));
                     response.setStatus(ProcessStatus.TRANSLATING_TEXT);
                     responseObserver.onNext(response.build());
                 }
-            } else {
-                System.out.println("Current data: null");
             }
         });
     }
 
     @Override
     public StreamObserver<CheckRequest> check(StreamObserver<CheckResponse> responseObserver) {
+        Logger.log("Check called.");
         return new CheckRequestObserver(responseObserver, sessionManager, db, FIRESTORE_COLLECTION_NAME);
-    }
-
-    public List<SessionManager.Session> getActiveSessions() {
-        return sessionManager.getActiveSessions();
     }
 }

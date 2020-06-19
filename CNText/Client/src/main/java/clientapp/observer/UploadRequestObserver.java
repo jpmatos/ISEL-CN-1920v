@@ -21,7 +21,7 @@ public class UploadRequestObserver implements StreamObserver<UploadRequestRespon
     }
 
     @Override
-    public String getUploadToken(){
+    public String getUploadToken() {
         return uploadToken;
     }
 
@@ -43,7 +43,7 @@ public class UploadRequestObserver implements StreamObserver<UploadRequestRespon
     @Override
     public void onNext(UploadRequestResponse uploadRequestResponse) {
         String token = uploadRequestResponse.getUploadToken();
-        if(token != null && !token.equals(""))
+        if (token != null && !token.equals(""))
             uploadToken = token;
         status = uploadRequestResponse.getStatus();
 

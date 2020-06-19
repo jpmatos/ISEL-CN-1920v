@@ -51,18 +51,23 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
     }
 
     @Override
+    public String getText() {
+        return text;
+    }
+
+    @Override
     public void onNext(ProcessResponse processResponse) {
         String text = processResponse.getText();
-        if(text != null)
+        if (text != null)
             this.text = text;
 
         String translation = processResponse.getTranslation();
-        if(translation != null)
+        if (translation != null)
             this.translation = translation;
 
         status = processResponse.getStatus();
 
-        if(text != null && !text.equals(""))
+        if (text != null && !text.equals(""))
             System.out.println(String.format("[%s][%s] Update - '%s'; Text - %s", filename, uploadToken, status, text));//TODO
         else
             System.out.println(String.format("[%s][%s] Update - '%s'", filename, uploadToken, status));

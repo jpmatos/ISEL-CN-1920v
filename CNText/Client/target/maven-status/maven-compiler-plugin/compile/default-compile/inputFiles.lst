@@ -1,0 +1,11 @@
+/home/jpmatos/Documents/CN/ISEL-CN-1920v/CNText/Client/src/main/java/clientapp/Client.java
+/home/jpmatos/Documents/CN/ISEL-CN-1920v/CNText/Client/src/main/java/clientapp/interfaces/IView.java
+/home/jpmatos/Documents/CN/ISEL-CN-1920v/CNText/Client/src/main/java/clientapp/interfaces/IOperations.java
+/home/jpmatos/Documents/CN/ISEL-CN-1920v/CNText/Client/src/main/java/clientapp/Operations.java
+/home/jpmatos/Documents/CN/ISEL-CN-1920v/CNText/Client/src/main/java/clientapp/interfaces/IUploadRequest.java
+/home/jpmatos/Documents/CN/ISEL-CN-1920v/CNText/Client/src/main/java/clientapp/interfaces/IProcessRequest.java
+/home/jpmatos/Documents/CN/ISEL-CN-1920v/CNText/Client/src/main/java/clientapp/observer/UploadRequestObserver.java
+/home/jpmatos/Documents/CN/ISEL-CN-1920v/CNText/Client/src/main/java/clientapp/utils/ScanUtils.java
+/home/jpmatos/Documents/CN/ISEL-CN-1920v/CNText/Client/src/main/java/clientapp/View.java
+/home/jpmatos/Documents/CN/ISEL-CN-1920v/CNText/Client/src/main/java/clientapp/observer/CheckRequestObserver.java
+/home/jpmatos/Documents/CN/ISEL-CN-1920v/CNText/Client/src/main/java/clientapp/observer/ProcessRequestObserver.java
