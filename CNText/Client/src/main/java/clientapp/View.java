@@ -170,6 +170,16 @@ public class View implements IView {
                 "Check the supported image formats here: https://cloud.google.com/vision/docs/supported-files");
     }
 
+    @Override
+    public String printIPInput(String svcIP) {
+        return ScanUtils.getInputString("Svc IP:", svcIP);
+    }
+
+    @Override
+    public int printPort(int svcPort) {
+        return ScanUtils.getInputInt("Svc port:", svcPort);
+    }
+
     private static boolean isNumeric(String str) {
         NumberFormat formatter = NumberFormat.getInstance();
         ParsePosition pos = new ParsePosition(0);

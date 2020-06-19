@@ -43,4 +43,8 @@ public interface IView {
     void printLoggedAs(String user, String sessionId);
 
     void printWelcomeMessage();
+
+    String printIPInput(String svcIP);
+
+    int printPort(int svcPort);
 }

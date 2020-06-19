@@ -17,13 +17,16 @@ public class Client {
 
     public static void main(String[] args) {
         try {
+            IView view = new View();
             if (args.length == 2) {
                 svcIP = args[0];
                 svcPort = Integer.parseInt(args[1]);
+            } else {
+                svcIP = view.printIPInput(svcIP);
+                svcPort = view.printPort(svcPort);
             }
 
             IOperations operations = new Operations(svcIP, svcPort);
-            IView view = new View();
             view.printWelcomeMessage();
             boolean cont = true;
             while (cont) {

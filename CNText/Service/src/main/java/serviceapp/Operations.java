@@ -143,8 +143,6 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
             return;
         }
 
-        //TODO Validate language (?)
-
         Logger.log(String.format("Publishing blob '%s' on topic '%s'...", blobName, topicName));
 
         //Publish to free/premium topic
