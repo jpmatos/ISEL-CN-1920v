@@ -26,19 +26,25 @@ public class Output {
         WARNING
     }
 
+    /**
+     * Output to Console and Logger
+     * @param msg
+     */
     public static void log(String msg) {
         log(OutputType.INFO, msg);
     }
 
+
+    /**
+     * Output to Console and Logger
+     * @param type
+     * @param msg
+     */
     public static void log(OutputType type, String msg) {
         try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-            long threadId = Thread.currentThread().getId();
+            String message = processMsg(type, msg);
 
-            //Output to console
-            String hostname = InetAddress.getLocalHost().getHostName();
-            String message = "[" + hostname + "]" + "[" + dtf.format(now) + "]" + "[Thread " + threadId + "]" + "[" + type + "] " + msg;
+            //Output to Console
             System.out.println(message);
 
             //Output to Topic Logger
@@ -48,4 +54,40 @@ public class Output {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Output only to Console
+     * @param msg
+     */
+    public static void console(String msg){
+        console(OutputType.INFO, msg);
+    }
+
+    /**
+     * Output only to Console
+     * @param type
+     * @param msg
+     */
+    public static void console(OutputType type, String msg){
+        try {
+            String message = processMsg(type, msg);
+
+            //Output to Console
+            System.out.println(message);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String processMsg(OutputType type, String msg) throws UnknownHostException {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        long threadId = Thread.currentThread().getId();
+
+        //Output to console
+        String hostname = InetAddress.getLocalHost().getHostName();
+        return "[" + hostname + "]" + "[" + dtf.format(now) + "]" + "[Thread " + threadId + "]" + "[" + type + "] " + msg;
+    }
+
+
 }
