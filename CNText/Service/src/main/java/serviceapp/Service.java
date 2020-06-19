@@ -6,14 +6,14 @@ import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import io.grpc.ServerBuilder;
-import serviceapp.util.Logger;
+
+import static utils.Output.log;
 
 public class Service{
     private static int svcPort=8000;
 
     public static void main(String[] args) {
-        Logger.init();
-        Logger.log("Starting Service...");
+        log("Starting Service...");
 
         try {
             GoogleCredentials credentials = GoogleCredentials.getApplicationDefault();
@@ -23,7 +23,7 @@ public class Service{
             StorageOptions storageOptions = StorageOptions.getDefaultInstance();
             String projectID = storageOptions.getProjectId();
 
-            Logger.log("Current Project ID:" + projectID);
+            log("Current Project ID:" + projectID);
             Operations operations = new Operations(db, storage);
             io.grpc.Server svc = ServerBuilder
                     .forPort(svcPort)
@@ -31,15 +31,15 @@ public class Service{
                     .build();
 
             svc.start();
-            Logger.log(String.format("Service started. Now Listening on port '%d'...", svcPort));
+            log(String.format("Service started. Now Listening on port '%d'...", svcPort));
 
             svc.awaitTermination();
 
             svc.shutdown();
-            Logger.log("Service successfully shut down.");
+            log("Service successfully shut down.");
         }
         catch (Exception ex) {
-            Logger.log("Service Exception. Shutting down...");
+            log("Service Exception. Shutting down...");
             ex.printStackTrace();
         }
     }

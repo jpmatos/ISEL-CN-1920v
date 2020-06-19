@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static utils.Output.log;
+
 public class SessionManager {
     private List<Session> activeSessions = Collections.synchronizedList(new ArrayList<>());
     private AtomicInteger sessionId = new AtomicInteger(1000);
@@ -14,7 +16,7 @@ public class SessionManager {
         Session session = new Session(username, premium);
         activeSessions.add(session);
 
-        Logger.log(String.format("User '%s' logged in with session '%s'. Premium: %b.", session.getUsername(), session.getID(), session.getPremium()));
+        log(String.format("User '%s' logged in with session '%s'. Premium: %b.", session.getUsername(), session.getID(), session.getPremium()));
         return session.getID();
     }
 
@@ -24,7 +26,7 @@ public class SessionManager {
             Session session = optional.get();
             activeSessions.remove(session);
 
-            Logger.log(String.format("User '%s' logged out with session '%s'.", session.getUsername(), session.getID()));
+            log(String.format("User '%s' logged out with session '%s'.", session.getUsername(), session.getID()));
             return true;
         }
         else

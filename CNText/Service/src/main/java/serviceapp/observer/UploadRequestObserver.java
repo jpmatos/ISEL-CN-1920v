@@ -9,11 +9,12 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import io.grpc.stub.StreamObserver;
-import serviceapp.util.Logger;
 import serviceapp.util.SessionManager;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
+
+import static utils.Output.log;
 
 public class UploadRequestObserver implements StreamObserver<UploadRequest> {
     private final StreamObserver<UploadRequestResponse> responseObserver;
@@ -45,9 +46,9 @@ public class UploadRequestObserver implements StreamObserver<UploadRequest> {
 
         //Validate Session
         String sessionID = uploadRequest.getSessionId();
-        Logger.log(String.format("Upload onNext() called with session '%s'.", sessionID));
+        log(String.format("Upload onNext() called with session '%s'.", sessionID));
         if(!sessionManager.isValid(sessionID)){
-            Logger.log(String.format("Invalid session '%s'.", sessionID));
+            log(String.format("Invalid session '%s'.", sessionID));
 
             uploadStatus = UploadStatus.UPLOAD_INVALID_SESSION;
             responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
@@ -70,7 +71,7 @@ public class UploadRequestObserver implements StreamObserver<UploadRequest> {
                 //Validate MIME and Extension
                 if(!Arrays.asList(supportedMIMETypes).contains(mimeType)
                         && !Arrays.asList(supportedExtensions).contains(extension)){
-                    Logger.log(String.format("Invalid image from session '%s'.", sessionID));
+                    log(String.format("Invalid image from session '%s'.", sessionID));
 
                     uploadStatus = UploadStatus.UNSUPPORTED_FORMAT;
                     responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
@@ -96,7 +97,7 @@ public class UploadRequestObserver implements StreamObserver<UploadRequest> {
             uploadStatus = UploadStatus.UPLOADING_IMAGE;
             responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
         } catch (Exception e) {
-            Logger.log(String.format("Exception writing chunk from session '%s'.", sessionID));
+            log(String.format("Exception writing chunk from session '%s'.", sessionID));
 
             //Attempt to close write stream
             closeWriteStream(writer, capture);
@@ -113,7 +114,7 @@ public class UploadRequestObserver implements StreamObserver<UploadRequest> {
 
     @Override
     public void onError(Throwable throwable) {
-        Logger.log("Upload client error.");
+        log("Upload client error.");
 
         //Attempt to close write stream
         closeWriteStream(writer, capture);
@@ -145,7 +146,7 @@ public class UploadRequestObserver implements StreamObserver<UploadRequest> {
                 .build());
         responseObserver.onCompleted();
 
-        Logger.log(String.format("Upload Complete. Blob access URL: https://storage.googleapis.com/%s/%s", imagesBucketName, blobName));
+        log(String.format("Upload Complete. Blob access URL: https://storage.googleapis.com/%s/%s", imagesBucketName, blobName));
     }
 
     private void closeWriteStream(WriteChannel writer, RestorableState<WriteChannel> capture) {
