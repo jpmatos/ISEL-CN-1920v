@@ -15,6 +15,9 @@ public class Service{
 
     public static void main(String[] args) {
         log("Starting Service...");
+        int pollingTime = 60;
+        if(args.length > 0)
+            pollingTime = Integer.parseInt(args[0]);
 
         try {
             GoogleCredentials credentials = GoogleCredentials.getApplicationDefault();
@@ -25,7 +28,7 @@ public class Service{
             String projectID = storageOptions.getProjectId();
 
             log("Current Project ID:" + projectID);
-            Operations operations = new Operations(db, storage);
+            Operations operations = new Operations(db, storage, pollingTime);
             io.grpc.Server svc = ServerBuilder
                     .forPort(svcPort)
                     .addService(operations)
