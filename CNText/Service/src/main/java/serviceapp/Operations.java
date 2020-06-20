@@ -28,7 +28,7 @@ import static utils.Output.log;
 public class Operations extends CnTextGrpc.CnTextImplBase {
     public static final String PROJECT_ID = "g01-li61n";
     private final String USERS_COLLECTION_NAME = "Users";
-    private final String IMAGES_BUCKET_NAME = "images-cn";
+    private final String IMAGES_BUCKET_NAME = "image-store-cng01";
     private final String FIRESTORE_COLLECTION_NAME = "TextOfImages";
     private SessionManager sessionManager;
     private Firestore db;
@@ -179,7 +179,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
                 return;
             }
             if (snapshot != null && snapshot.exists()) {
-                String ocrResult = snapshot.getString("ocrResult");
+                String ocrResult = snapshot.getString("text");
                 if (ocrResult != null) {
                     response.setText(ocrResult);
                     if (language.equals("")) {

@@ -68,20 +68,27 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
         status = processResponse.getStatus();
 
         if (text != null && !text.equals(""))
-            System.out.println(String.format("[%s][%s] Update - '%s'; Text - %s", filename, uploadToken, status, text));//TODO
+            System.out.println(String.format("[%s][%s] Update - '%s'; Text - %s.",
+                    filename, uploadToken, status, text));
         else
-            System.out.println(String.format("[%s][%s] Update - '%s'", filename, uploadToken, status));
+            System.out.println(String.format("[%s][%s] Update - '%s'.",
+                    filename, uploadToken, status));
     }
 
     @Override
     public void onError(Throwable throwable) {
         completed = true;
-        System.out.println(String.format("[%s][%s] Failed Status - '%s'", filename, uploadToken, status));
+        System.out.println(String.format("[%s][%s] Failed Status - '%s.'", filename, uploadToken, status));
     }
 
     @Override
     public void onCompleted() {
         completed = true;
-        System.out.println(String.format("[%s][%s] Completed Status - '%s'", filename, uploadToken, status));
+        if (translation != null)
+        System.out.println(String.format("[%s][%s] Completed Status - '%s'. Translation: '%s'.",
+                filename, uploadToken, status, translation));
+            else
+        System.out.println(String.format("[%s][%s] Completed Status - '%s'.",
+                filename, uploadToken, status));
     }
 }
