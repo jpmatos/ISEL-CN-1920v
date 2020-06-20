@@ -1,5 +1,6 @@
 package clientapp;
 
+import clientapp.interfaces.IOperations;
 import clientapp.interfaces.IProcessRequest;
 import clientapp.interfaces.IUploadRequest;
 import clientapp.interfaces.IView;
@@ -130,9 +131,11 @@ public class View implements IView {
     }
 
     @Override
-    public int PrintMainMenuSelection() {
+    public int printMainMenuSelection(IOperations operations) {
         String oper = "";
-        while (oper.equals(""))
+        while (oper.equals("")) {
+            if (operations.isLogged())
+                System.out.println(String.format("\nLogged in as '%s' - Session: '%s'", operations.getUser(), operations.getSessionId()));
             oper = ScanUtils.getInputString(
                     "------------------\n" +
                             "Pick an option:\n" +
@@ -142,6 +145,7 @@ public class View implements IView {
                             "[4] - Consult session's requests\n" +
                             "[5] - Logout\n" +
                             "[0] - Quit");
+        }
         if (isNumeric(oper))
             return Integer.parseInt(oper);
         else
@@ -156,11 +160,6 @@ public class View implements IView {
     @Override
     public String printUploadTokenInput() {
         return ScanUtils.getInputString("Upload Token:");
-    }
-
-    @Override
-    public void printLoggedAs(String user, String sessionId) {
-        System.out.println(String.format("\nLogged in as '%s' - Session: '%s'", user, sessionId));
     }
 
     @Override
