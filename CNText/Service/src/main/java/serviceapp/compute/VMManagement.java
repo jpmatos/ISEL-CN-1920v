@@ -44,16 +44,25 @@ public class VMManagement {
         this.instances = compute.instances();
     }
 
-    public void updateVMInstancesAsync(int freeUsers, int premiumUsers) {
-        new Thread(() -> updateVMInstances(freeUsers, premiumUsers))
-                .start();
+    public void start(){
+        new Thread(()-> {
+            try {
+                while (true) {
+                    int free = sessionManager.getFreeSessionsCount();
+                    int premium = sessionManager.getPremiumSessionsCount();
+
+                    updateVMInstances(free, premium);
+                    Thread.sleep(60_000);
+                }
+            }catch (InterruptedException ex){
+                log(ERROR, ex.getMessage());
+                ex.printStackTrace();
+            }
+
+        }).start();
     }
 
-    public static void start(){
-        //TODO
-    }
-
-    public void updateVMInstances(int freeUsers, int premiumUsers) {
+    private void updateVMInstances(int freeUsers, int premiumUsers) {
         log("Update Instances: Free = " + freeUsers + " Premium = " + premiumUsers);
         if (freeUsers > 0) {
             startVM(FREE_OCR_VM);
@@ -70,8 +79,7 @@ public class VMManagement {
     public static void main(String... args){
         console("teste");
         VMManagement management = new VMManagement(null);
-
-        management.updateVMInstancesAsync(0, 0);
+        management.updateVMInstances(0, 0);
 
         while (true) {
             try {
