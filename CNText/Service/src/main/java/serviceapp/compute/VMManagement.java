@@ -76,6 +76,7 @@ public class VMManagement {
 
         resizeInstanceGroup(PREMIUM_OCR_IG, premiumUsers);
         resizeInstanceGroup(PREMIUM_TRANSLATE_IG, premiumUsers);
+        log("VM's Updated!");
     }
 
     public static void main(String... args){
@@ -100,12 +101,12 @@ public class VMManagement {
      */
     private void stopVM(String instance) {
         try {
-            log("Stoping VM " + instance + " ...");
+            console("Stoping VM " + instance + " ...");
             Operation operation = instances
                     .stop(PROJECT_ID, ZONE, instance)
                     .execute();
             waitOperation(operation);
-            log("VM " + instance + ": " + getStatus(instance));
+            console("VM " + instance + ": " + getStatus(instance));
         } catch (IOException ex) {
             log(ERROR, ex.getMessage());
             ex.printStackTrace();
@@ -114,12 +115,12 @@ public class VMManagement {
 
     private void startVM(String instance) {
         try {
-            log("Starting VM " + instance + " ...");
+            console("Starting VM " + instance + " ...");
             Operation operation = instances
                     .start(PROJECT_ID, ZONE, instance)
                     .execute();
             waitOperation(operation);
-            log("VM " + instance + ": " + getStatus(instance));
+            console("VM " + instance + ": " + getStatus(instance));
         } catch (IOException ex) {
             log(ERROR, ex.getMessage());
             ex.printStackTrace();
@@ -128,12 +129,12 @@ public class VMManagement {
 
     private void resizeInstanceGroup(String ig, int newSize) {
         try {
-            log("Resizing Instance Group " + ig + " ...");
+            console("Resizing Instance Group " + ig + " ...");
             Operation operation = compute.instanceGroupManagers()
                     .resize(PROJECT_ID, ZONE, ig, newSize)
                     .execute();
             waitOperation(operation);
-            log("Instance Group " + ig + " resized to: " + newSize);
+            console("Instance Group " + ig + " resized to: " + newSize);
         } catch (IOException ex) {
             log(ERROR, ex.getMessage());
             ex.printStackTrace();
