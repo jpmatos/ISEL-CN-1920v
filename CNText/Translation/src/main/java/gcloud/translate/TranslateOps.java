@@ -10,19 +10,18 @@ import static utils.Output.log;
 public class TranslateOps implements ITranslateOps {
 
     @Override
-    public String getTextTranslated(String texToTranslate,String locale, String language) {
+    public String getTextTranslated(String texToTranslate, String locale, String language) {
 
         try {
-            return translateText(texToTranslate,locale, language);
+            return translateText(texToTranslate, locale, language);
         } catch (Exception e) {
-            e.printStackTrace();
-            log(ERROR,"Error in translation, please check if the translation language and the original language are the same");
+            log(ERROR, e.getMessage());
+            return e.getMessage();
         }
-
-        return null;
     }
+
     // Translating text, is not possible translate text in the same language
-    public static String translateText(String text,String locale, String targetLanguage) {
+    public static String translateText(String text, String locale, String targetLanguage) {
 
         // Instantiates a client
         Translate translate = TranslateOptions.getDefaultInstance().getService();

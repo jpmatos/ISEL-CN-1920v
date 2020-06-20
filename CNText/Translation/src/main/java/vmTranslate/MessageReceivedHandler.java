@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static utils.Output.OutputType.ERROR;
+import static utils.Output.OutputType.WARNING;
+import static utils.Output.console;
 import static utils.Output.log;
 
 public class MessageReceivedHandler implements MessageReceiver {
@@ -29,6 +31,7 @@ public class MessageReceivedHandler implements MessageReceiver {
             this.firestoreOps = new FirestoreOps();
         } catch (IOException e) {
             e.printStackTrace();
+            log(ERROR, "The Type of user isn't define");
         }
     }
 
@@ -47,7 +50,6 @@ public class MessageReceivedHandler implements MessageReceiver {
         //Firestore ID
         String id = translateRequest.getId();
 
-
         log("[Request received] " + id + " | " + translateRequest.toString());
 
         ackReplyConsumer.ack();
@@ -57,8 +59,7 @@ public class MessageReceivedHandler implements MessageReceiver {
             String translatedText = translateOps.getTextTranslated(msg.getData().toStringUtf8(), translateRequest.getLocale(), translateRequest.getLanguage());
 
             log("Save translated text to Firestore");
-
-            if (!firestoreOps.storeTranslatedTextResult(id, translatedText, translateRequest.getLanguage(),translateRequest.getLocale(),msg.getData().toStringUtf8())) {
+            if (!firestoreOps.storeTranslatedTextResult(id, translatedText, translateRequest.getLanguage(), translateRequest.getLocale(), msg.getData().toStringUtf8())) {
                 log(ERROR, "Cannot save translated text result to Firestore");
             }
 
