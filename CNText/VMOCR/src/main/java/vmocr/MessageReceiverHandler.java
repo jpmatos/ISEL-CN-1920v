@@ -24,7 +24,6 @@ import static utils.Output.log;
 
 
 public class MessageReceiverHandler implements MessageReceiver {
-//    private final IVisionOps visionOps = new VisionOpsDummy(); //TODO delete
     private final IVisionOps visionOps = new VisionOps();
     private final IStorageOps storageOps = new StorageOps();
     private IFirestoreOps firestoreOps;
@@ -76,7 +75,7 @@ public class MessageReceiverHandler implements MessageReceiver {
 
             log("Done");
         } catch (IOException | ExecutionException | InterruptedException e) {
-//            ackReplyConsumer.nack(); //TODO
+            log(ERROR, e.getMessage());
             e.printStackTrace();
         }
 

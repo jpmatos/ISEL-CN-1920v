@@ -1,7 +1,6 @@
 package vmocr;
 
 import gcloud.pubsub.ReadSubscription;
-import utils.Output;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;

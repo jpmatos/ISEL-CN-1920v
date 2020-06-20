@@ -27,7 +27,6 @@
             <version>1.108.0</version>
         </dependency>
         <dependency>
-            <!-- TODO delete-->
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-vision</artifactId>
             <version>1.99.3</version>

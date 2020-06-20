@@ -8,14 +8,12 @@ import dao.OCRResult;
 import dao.TextOfImage;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static utils.Output.log;
 
 public class FirestoreOps implements IFirestoreOps {
     private final String COLLECTION = "TextOfImages";
-    private final Firestore db;
     private final CollectionReference colRef;
 
     public FirestoreOps() throws IOException {
@@ -23,8 +21,9 @@ public class FirestoreOps implements IFirestoreOps {
         FirestoreOptions options = FirestoreOptions.newBuilder()
                 .setCredentials(credentials)
                 .build();
-        this.db = options.getService();
-        this.colRef = db.collection(COLLECTION);
+        this.colRef = options
+                .getService()
+                .collection(COLLECTION);
     }
 
 
@@ -46,11 +45,5 @@ public class FirestoreOps implements IFirestoreOps {
             e.printStackTrace();
         }
         return false;
-    }
-
-    @Override
-    public List<String> readTextFromId(String id) {
-        //TODO
-        return null;
     }
 }
