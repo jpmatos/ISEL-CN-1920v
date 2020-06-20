@@ -29,7 +29,7 @@ gcloud compute instance-templates create translate-premium-template `
  --machine-type=f1-micro `
  --service-account=all-services@g01-li61n.iam.gserviceaccount.com `
  --image=image-with-translate `
- --metadata-from-file=startup-script=startup.sh `
+ --metadata-from-file=startup-script=startupTranslate.sh `
 --scopes=bigquery,cloud-platform,cloud-source-repos,cloud-source-repos-ro,compute-ro,compute-rw,datastore,logging-write,monitoring,monitoring-write,pubsub,service-control,service-management,sql-admin,storage-full,storage-ro,storage-rw,taskqueue,trace,userinfo-email
 
 
