@@ -153,12 +153,12 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
         TopicName tName = TopicName.ofProjectTopicName(PROJECT_ID, topicName);
         try {
             Publisher publisher = Publisher.newBuilder(tName).build();
-            ByteString msgData = ByteString.copyFromUtf8("placeholder-message");
+            ByteString msgData = ByteString.copyFromUtf8("placeholder-message"); //TODO why?
             PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
                     .setData(msgData)
                     .putAttributes("blobName", blobName)
                     .putAttributes("language", language)
-                    .putAttributes("sessionID", sessionID)
+                    .putAttributes("sessionID", sessionID)//TODO no need
                     .build();
             ApiFuture<String> future = publisher.publish(pubsubMessage);
             future.get();
