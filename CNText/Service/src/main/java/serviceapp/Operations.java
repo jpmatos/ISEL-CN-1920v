@@ -21,6 +21,7 @@ import serviceapp.util.SessionManager;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+import static utils.Output.OutputType.ERROR;
 
 import static utils.Output.log;
 
@@ -56,7 +57,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
             DocumentReference docRef = db.collection(USERS_COLLECTION_NAME).document(usernameReq);
             DocumentSnapshot doc = docRef.get().get();
             if (!doc.exists()) {
-                log(String.format("Unknown user '%s'.", usernameReq));
+                log(ERROR, String.format("Unknown user '%s'.", usernameReq));
                 loginStatus = LoginStatus.LOGIN_UNKNOWN_USER;
             } else {
                 User userFound = doc.toObject(User.class);
@@ -64,8 +65,10 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
                 premium = userFound.premium;
                 if (userFound.password.equals(passwordReq))
                     loginStatus = LoginStatus.LOGIN_SUCCESS;
-                else
+                else {
+                    log(ERROR, "Wrong password.");
                     loginStatus = LoginStatus.LOGIN_WRONG_PASSWORD;
+                }
             }
 
         } catch (InterruptedException | ExecutionException e) {
@@ -116,7 +119,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
 
         //Validate Session
         if (!sessionManager.isValid(sessionID)) {
-            log(String.format("Invalid session '%s'.", sessionID));
+            log(ERROR, String.format("Invalid session '%s'.", sessionID));
             responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.PROCESS_INVALID_SESSION).build());
             return;
         }
@@ -134,7 +137,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
         BlobId blobId = BlobId.of(IMAGES_BUCKET_NAME, blobName);
         Blob blob = storage.get(blobId);
         if (!blob.exists()) {
-            log(String.format("Blob '%s' does not exist.", blobId.getName()));
+            log(ERROR, String.format("Blob '%s' does not exist.", blobId.getName()));
             responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.PROCESS_INVALID_TOKEN).build());
             responseObserver.onError(null);
             return;
@@ -158,7 +161,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
             publisher.shutdown();
             log(String.format("Successfully published blob '%s' on topic '%s'.", blobName, topicName));
         } catch (IOException | ExecutionException | InterruptedException e) {
-            log(String.format("Failed to publish blob '%s' on topic '%s'.", blobName, topicName));
+            log(ERROR, String.format("Failed to publish blob '%s' on topic '%s'.", blobName, topicName));
             responseObserver.onError(e);
             return;
         }
@@ -172,7 +175,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
         docRef.addSnapshotListener((snapshot, e) -> {
             ProcessResponse.Builder response = ProcessResponse.newBuilder();
             if (e != null) {
-                log(String.format("Listen failed for collection '%s' on document '%s'.", FIRESTORE_COLLECTION_NAME, blobName));
+                log(ERROR, String.format("Listen failed for collection '%s' on document '%s'.", FIRESTORE_COLLECTION_NAME, blobName));
                 response.setStatus(ProcessStatus.PROCESS_ERROR);
                 responseObserver.onNext(response.build());
                 responseObserver.onError(e);
