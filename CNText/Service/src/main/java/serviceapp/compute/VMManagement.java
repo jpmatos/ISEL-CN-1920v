@@ -28,8 +28,8 @@ public class VMManagement {
     private static final String PREMIUM_OCR_IG = "ocr-premium-final-project";
 
     //Translate Instances
-    private static final String FREE_TRANSLATE_VM = "todo"; //TODO
-    private static final String PREMIUM_TRANSLATE_IG = "todo"; //TODO
+    private static final String FREE_TRANSLATE_VM = "translate-free-final-project";
+    private static final String PREMIUM_TRANSLATE_IG = "translate-premium-final-project";
 
     private static final String ZONE = "europe-north1-a";
 
@@ -68,14 +68,14 @@ public class VMManagement {
         log("Update Instances: Free = " + freeUsers + " Premium = " + premiumUsers);
         if (freeUsers > 0) {
             startVM(FREE_OCR_VM);
-//            startVM(FREE_TRANSLATE_VM);
+            startVM(FREE_TRANSLATE_VM);
         } else {
             stopVM(FREE_OCR_VM);
-//            stopVM(FREE_TRANSLATE_VM);
+            stopVM(FREE_TRANSLATE_VM);
         }
 
         resizeInstanceGroup(PREMIUM_OCR_IG, premiumUsers);
-//        resizeInstanceGroup(PREMIUM_TRANSLATE_IG, premiumUsers);
+        resizeInstanceGroup(PREMIUM_TRANSLATE_IG, premiumUsers);
     }
 
     public static void main(String... args){
