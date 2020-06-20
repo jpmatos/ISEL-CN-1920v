@@ -30,9 +30,7 @@ public class Client {
             view.printWelcomeMessage();
             boolean cont = true;
             while (cont) {
-                if (operations.isLogged())
-                    view.printLoggedAs(operations.getUser(), operations.getSessionId());
-                int oper = view.PrintMainMenuSelection();
+                int oper = view.printMainMenuSelection(operations);
                 switch (oper) {
                     case 1:
                         login(operations, view);

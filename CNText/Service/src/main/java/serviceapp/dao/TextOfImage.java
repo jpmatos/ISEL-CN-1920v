@@ -2,7 +2,7 @@ package serviceapp.dao;
 
 public class TextOfImage {
     public String language;
-    public String ocrResult;
+    public String text;
     public String translationResult;
 
     public TextOfImage() {
@@ -12,7 +12,7 @@ public class TextOfImage {
     public String toString() {
         return "{" +
                 "language='" + language + '\'' +
-                ", ocrResult='" + ocrResult + '\'' +
+                ", text='" + text + '\'' +
                 ", translationResult='" + translationResult + '\'' +
                 '}';
     }

@@ -1,6 +1,5 @@
 package clientapp.interfaces;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 public interface IView {
@@ -34,13 +33,11 @@ public interface IView {
 
     int printViewMenuSelection();
 
-    int PrintMainMenuSelection();
+    int printMainMenuSelection(IOperations operations);
 
     void printInvalidOption();
 
     String printUploadTokenInput();
-
-    void printLoggedAs(String user, String sessionId);
 
     void printWelcomeMessage();
 

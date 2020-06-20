@@ -85,10 +85,10 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
     public void onCompleted() {
         completed = true;
         if (translation != null)
-        System.out.println(String.format("[%s][%s] Completed Status - '%s'. Translation: '%s'.",
-                filename, uploadToken, status, translation));
-            else
-        System.out.println(String.format("[%s][%s] Completed Status - '%s'.",
-                filename, uploadToken, status));
+            System.out.println(String.format("[%s][%s] Completed Status - '%s'. Translation: '%s'.",
+                    filename, uploadToken, status, translation));
+        else
+            System.out.println(String.format("[%s][%s] Completed Status - '%s'.",
+                    filename, uploadToken, status));
     }
 }
