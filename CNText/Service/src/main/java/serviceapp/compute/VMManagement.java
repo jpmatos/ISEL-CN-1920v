@@ -37,11 +37,13 @@ public class VMManagement {
     private final Compute compute;
     private final Compute.Instances instances;
     private final SessionManager sessionManager;
+    private final int pollingTime;
 
-    public VMManagement(SessionManager sessionManager) {
+    public VMManagement(SessionManager sessionManager, int pollingTime) {
         this.sessionManager = sessionManager;
         this.compute = getComputeService();
         this.instances = compute.instances();
+        this.pollingTime = pollingTime;
     }
 
     public void start(){
@@ -52,7 +54,7 @@ public class VMManagement {
                     int premium = sessionManager.getPremiumSessionsCount();
 
                     updateVMInstances(free, premium);
-                    Thread.sleep(60_000);
+                    Thread.sleep(pollingTime * 1_000);
                 }
             }catch (InterruptedException ex){
                 log(ERROR, ex.getMessage());
@@ -78,7 +80,7 @@ public class VMManagement {
 
     public static void main(String... args){
         console("teste");
-        VMManagement management = new VMManagement(null);
+        VMManagement management = new VMManagement(null, 30);
         management.updateVMInstances(0, 0);
 
         while (true) {

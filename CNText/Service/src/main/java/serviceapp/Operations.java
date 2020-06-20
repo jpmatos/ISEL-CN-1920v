@@ -34,11 +34,11 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
     private Firestore db;
     private Storage storage;
 
-    public Operations(Firestore db, Storage storage) {
+    public Operations(Firestore db, Storage storage, int pollingTime) {
         this.sessionManager = new SessionManager();
         this.db = db;
         this.storage = storage;
-        new VMManagement(sessionManager).start();
+        new VMManagement(sessionManager, pollingTime).start();
     }
 
     @Override
