@@ -18,16 +18,15 @@ import java.util.List;
 
 import static serviceapp.Operations.PROJECT_ID;
 import static utils.Output.OutputType.ERROR;
-import static utils.Output.OutputType.WARNING;
 import static utils.Output.console;
 import static utils.Output.log;
 
 public class VMManagement {
     private static final String FREE_OCR_VM = "ocr-free-final-project";
-    private static final String FREE_OCR_IG = "ocr-premium-final-project\n";
+    private static final String PREMIUM_OCR_IG = "ocr-premium-final-project";
 
-    private static final String PREMIUM_TRANSLATE_VM = ""; //TODO
-    private static final String PREMIUM_TRANSLATE_IG = ""; //TODO
+    private static final String FREE_TRANSLATE_VM = "todo"; //TODO
+    private static final String PREMIUM_TRANSLATE_IG = "todo"; //TODO
 
     private static final String ZONE = "europe-north1-a";
 
@@ -40,104 +39,85 @@ public class VMManagement {
         this.instances = compute.instances();
     }
 
-    public static boolean updateVMInstances(int freeUsers, int premiumUsers) {
+    public void updateVMInstancesAsync(int freeUsers, int premiumUsers) {
+        new Thread(() -> updateVMInstances(freeUsers, premiumUsers))
+                .start();
+    }
+
+    public void updateVMInstances(int freeUsers, int premiumUsers) {
+        console("Update Instances: Free = " + freeUsers + " Premium = " + premiumUsers);
         if (freeUsers > 0) {
-            //TODO Start VM if stoped
+            startVM(FREE_OCR_VM);
+//            startVM(FREE_TRANSLATE_VM);
         } else {
-            //TODO stop free VM
+            stopVM(FREE_OCR_VM);
+//            stopVM(FREE_TRANSLATE_VM);
         }
 
-        //TODO update Premium VM's
-        return false;
+        resizeInstanceGroup(PREMIUM_OCR_IG, premiumUsers);
+//        resizeInstanceGroup(PREMIUM_TRANSLATE_IG, premiumUsers);
     }
 
     public static void main(String... args) throws IOException {
         console("teste");
-
         VMManagement management = new VMManagement();
 
-        new Thread(() -> {
-            if (!management.startStop(true)) {
-                console(WARNING, "Operations pending. Cannot Proceed");
-            }
-        }).start();
-
-        new Thread(() -> {
-            if (!management.startStop(false)) {
-                console(WARNING, "Operations pending. Cannot Proceed");
-            }
-        }).start();
-
-        new Thread(() -> {
-            if (!management.startStop(true)) {
-                console(WARNING, "Operations pending. Cannot Proceed");
-            }
-        }).start();
-
+        management.updateVMInstancesAsync(3, 2);
 
         while (true) {
             try {
+                console("Do other stuff");
                 Thread.sleep(10_000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
     }
 
-    private boolean startStop(boolean start) {
-        log("Start VM: " + start);
-        synchronized (lock) {
-            try {
-                long ops = compute.
-                        zoneOperations()
-                        .list(PROJECT_ID, ZONE)
-                        .execute()
-                        .getItems()
-                        .stream()
-                        .filter(op -> !op.getStatus().equals("DONE"))
-                        .count();
-
-                if (ops > 0) {
-//                    console(ops.size() + "");
-                    return false;
-                }
-
-                if (start) {
-                    startVM(FREE_OCR_VM);
-                } else {
-                    stopVM(FREE_OCR_VM);
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                return false;
-            }
-            return true;
+    /**
+     * https://cloud.google.com/compute/docs/reference/rest/v1/instances/stop
+     */
+    private void stopVM(String instance) {
+        try {
+            console("Stoping VM " + instance + " ...");
+            Operation operation = instances
+                    .stop(PROJECT_ID, ZONE, instance)
+                    .execute();
+            waitOperation(operation);
+            console("VM " + instance + ": " + getStatus(instance));
+        } catch (IOException ex) {
+            log(ERROR, ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
-
-    /**
-     * https://cloud.google.com/compute/docs/reference/rest/v1/instances/start
-     */
-    private void stopVM(String instance) throws IOException {
-        console("Stoping VM...");
-        Operation operation = instances
-                .stop(PROJECT_ID, ZONE, instance)
-                .execute();
-//            triggerConclusion(operation, "STOP_VM");
-//        operation.setName("stopvm");
-        waitOperation(operation);
-        console("VM status: " + getStatus(instance));
+    private void startVM(String instance) {
+        try {
+            console("Starting VM " + instance + " ...");
+            Operation operation = instances
+                    .start(PROJECT_ID, ZONE, instance)
+                    .execute();
+            waitOperation(operation);
+            console("VM " + instance + ": " + getStatus(instance));
+        } catch (IOException ex) {
+            log(ERROR, ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
-    private void startVM(String instance) throws IOException {
-        console("Starting VM...");
-        Operation operation = instances.start(PROJECT_ID, ZONE, instance)
-                .execute();
-//            triggerConclusion(operation, "START_VM");
-//        operation.setName("startvm");
-        waitOperation(operation);
-        console("VM status: " + getStatus(instance));
+    private void resizeInstanceGroup(String ig, int newSize) {
+        try {
+            console("Resizing Instance Group " + ig + " ...");
+            Operation operation = compute.instanceGroupManagers()
+                    .resize(PROJECT_ID, ZONE, ig, newSize)
+                    .execute();
+            waitOperation(operation);
+            console("Instance Group " + ig + " resized to: " + newSize);
+        } catch (IOException ex) {
+            log(ERROR, ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
     private String getStatus(String instance) throws IOException {
@@ -146,32 +126,12 @@ public class VMManagement {
                 .getStatus();
     }
 
-    private void triggerConclusion(final Operation op, String opType) {
-        new Thread(() -> {
-            try {
-                Operation operation = op;
-                while (!operation.getStatus().equals("DONE")) {
-                    console(opType + " " + operation.getStatus());
-                    Thread.sleep(1_000);
-                    operation = compute.zoneOperations()
-                            .get(PROJECT_ID, ZONE, operation.getName())
-                            .execute();
-                }
-                console("<<< " + opType + " " + operation.getStatus());
-            } catch (InterruptedException | IOException ex) {
-                ex.printStackTrace();
-            }
-
-        }).start();
-    }
-
     private void waitOperation(Operation op) {
         try {
             while (!op.getStatus().equals("DONE")) {
                 Thread.sleep(1_000);
                 Compute.ZoneOperations.Get get = compute.zoneOperations().get(PROJECT_ID, ZONE, op.getName());
                 op = get.execute();
-                console(op.getStatus());
             }
         } catch (InterruptedException | IOException ex) {
             log(ERROR, ex.getMessage());
