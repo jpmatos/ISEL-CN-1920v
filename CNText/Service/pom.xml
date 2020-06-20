@@ -40,7 +40,7 @@
         </dependency>
         <!-- Dependência explícita -->
         <dependency>
-            <groupId>meic.cd</groupId> <!-- TODO change this name -->
+            <groupId>rpcContract.g01</groupId>
             <artifactId>rpcContract</artifactId>
             <version>1.0</version>
             <scope>system</scope>
