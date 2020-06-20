@@ -32,13 +32,12 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
     private SessionManager sessionManager;
     private Firestore db;
     private Storage storage;
-    private final VMManagement vmManagement;
 
     public Operations(Firestore db, Storage storage) {
         this.sessionManager = new SessionManager();
         this.db = db;
         this.storage = storage;
-        this.vmManagement = new VMManagement();
+        new VMManagement(sessionManager).start();
     }
 
     @Override
@@ -78,9 +77,6 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
         if (loginStatus == LoginStatus.LOGIN_SUCCESS) {
             String sessionID = sessionManager.newSession(username, premium);
             sessionBuilder.setSessionId(sessionID);
-
-            //Call VMManagement
-            vmManagement.updateVMInstancesAsync(sessionManager.getFreeSessionsCount(), sessionManager.getPremiumSessionsCount());
         }
         CnText.Session response = sessionBuilder.build();
 
@@ -100,9 +96,6 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
             logoutStatus = LogoutStatus.LOGOUT_SUCCESS;
         else
             logoutStatus = LogoutStatus.LOGOUT_INVALID_SESSION;
-
-        //Call VMManagement
-        vmManagement.updateVMInstancesAsync(sessionManager.getFreeSessionsCount(), sessionManager.getPremiumSessionsCount());
 
         //Send response and call onComplete()
         responseObserver.onNext(CloseResponse.newBuilder().setStatus(logoutStatus).build());

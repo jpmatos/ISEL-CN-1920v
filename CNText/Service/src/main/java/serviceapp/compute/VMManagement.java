@@ -10,6 +10,7 @@ import com.google.api.services.compute.ComputeScopes;
 import com.google.api.services.compute.model.Operation;
 import com.google.auth.http.HttpCredentialsAdapter;
 import com.google.auth.oauth2.GoogleCredentials;
+import serviceapp.util.SessionManager;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -35,8 +36,10 @@ public class VMManagement {
     private final Object lock = new Object();
     private final Compute compute;
     private final Compute.Instances instances;
+    private final SessionManager sessionManager;
 
-    public VMManagement() {
+    public VMManagement(SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
         this.compute = getComputeService();
         this.instances = compute.instances();
     }
@@ -44,6 +47,10 @@ public class VMManagement {
     public void updateVMInstancesAsync(int freeUsers, int premiumUsers) {
         new Thread(() -> updateVMInstances(freeUsers, premiumUsers))
                 .start();
+    }
+
+    public static void start(){
+        //TODO
     }
 
     public void updateVMInstances(int freeUsers, int premiumUsers) {
@@ -62,7 +69,7 @@ public class VMManagement {
 
     public static void main(String... args){
         console("teste");
-        VMManagement management = new VMManagement();
+        VMManagement management = new VMManagement(null);
 
         management.updateVMInstancesAsync(0, 0);
 
