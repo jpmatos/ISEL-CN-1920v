@@ -7,6 +7,7 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import io.grpc.ServerBuilder;
 
+import static utils.Output.OutputType.ERROR;
 import static utils.Output.log;
 
 public class Service{
@@ -39,7 +40,7 @@ public class Service{
             log("Service successfully shut down.");
         }
         catch (Exception ex) {
-            log("Service Exception. Shutting down...");
+            log(ERROR, "Service Exception. Shutting down...");
             ex.printStackTrace();
         }
     }

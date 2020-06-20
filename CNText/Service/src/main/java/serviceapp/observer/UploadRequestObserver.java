@@ -14,6 +14,7 @@ import serviceapp.util.SessionManager;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
+import static utils.Output.OutputType.ERROR;
 import static utils.Output.log;
 
 public class UploadRequestObserver implements StreamObserver<UploadRequest> {
@@ -97,7 +98,7 @@ public class UploadRequestObserver implements StreamObserver<UploadRequest> {
             uploadStatus = UploadStatus.UPLOADING_IMAGE;
             responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
         } catch (Exception e) {
-            log(String.format("Exception writing chunk from session '%s'.", sessionID));
+            log(ERROR, String.format("Exception writing chunk from session '%s'.", sessionID));
 
             //Attempt to close write stream
             closeWriteStream(writer, capture);
@@ -114,7 +115,7 @@ public class UploadRequestObserver implements StreamObserver<UploadRequest> {
 
     @Override
     public void onError(Throwable throwable) {
-        log("Upload client error.");
+        log(ERROR, "Upload client error.");
 
         //Attempt to close write stream
         closeWriteStream(writer, capture);

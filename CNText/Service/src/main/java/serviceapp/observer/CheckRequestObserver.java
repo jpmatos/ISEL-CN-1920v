@@ -11,6 +11,7 @@ import serviceapp.util.SessionManager;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+import static utils.Output.OutputType.ERROR;
 
 import static utils.Output.log;
 
@@ -35,7 +36,7 @@ public class CheckRequestObserver implements StreamObserver<CheckRequest> {
 
         //Validate Session
         if(!sessionManager.isValid(sessionID)){
-            log(String.format("Invalid session '%s'.", sessionID));
+            log(ERROR, String.format("Invalid session '%s'.", sessionID));
             infos.add(String.format("[%s] Invalid Session", uploadToken));
             return;
         }
@@ -50,11 +51,11 @@ public class CheckRequestObserver implements StreamObserver<CheckRequest> {
                 infos.add(String.format("[%s] " + textOfImage.toString(), uploadToken));
             }
             else {
-                log(String.format("Failed to check for upload token '%s'.", uploadToken));
+                log(ERROR, String.format("Failed to check for upload token '%s'.", uploadToken));
                 infos.add(String.format("[%s] Failed to check upload token in DB", uploadToken));
             }
         } catch (InterruptedException | ExecutionException e) {{
-            log(String.format("Failed to check for upload token '%s'.", uploadToken));
+            log(ERROR, String.format("Failed to check for upload token '%s'.", uploadToken));
             infos.add(String.format("[%s] Failed to check upload token in DB", uploadToken));
             }
         }
@@ -62,7 +63,7 @@ public class CheckRequestObserver implements StreamObserver<CheckRequest> {
 
     @Override
     public void onError(Throwable throwable) {
-        log("Check client error");
+        log(ERROR, "Check client error");
         responseObserver.onCompleted();
     }
 
