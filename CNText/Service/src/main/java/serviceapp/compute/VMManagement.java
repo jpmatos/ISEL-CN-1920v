@@ -87,6 +87,7 @@ public class VMManagement {
                 Thread.sleep(10_000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                log(ERROR, e.getMessage());
             }
         }
 
