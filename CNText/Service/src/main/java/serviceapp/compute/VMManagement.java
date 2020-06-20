@@ -45,7 +45,7 @@ public class VMManagement {
     }
 
     public void updateVMInstances(int freeUsers, int premiumUsers) {
-        console("Update Instances: Free = " + freeUsers + " Premium = " + premiumUsers);
+        log("Update Instances: Free = " + freeUsers + " Premium = " + premiumUsers);
         if (freeUsers > 0) {
             startVM(FREE_OCR_VM);
 //            startVM(FREE_TRANSLATE_VM);
@@ -80,12 +80,12 @@ public class VMManagement {
      */
     private void stopVM(String instance) {
         try {
-            console("Stoping VM " + instance + " ...");
+            log("Stoping VM " + instance + " ...");
             Operation operation = instances
                     .stop(PROJECT_ID, ZONE, instance)
                     .execute();
             waitOperation(operation);
-            console("VM " + instance + ": " + getStatus(instance));
+            log("VM " + instance + ": " + getStatus(instance));
         } catch (IOException ex) {
             log(ERROR, ex.getMessage());
             ex.printStackTrace();
@@ -94,12 +94,12 @@ public class VMManagement {
 
     private void startVM(String instance) {
         try {
-            console("Starting VM " + instance + " ...");
+            log("Starting VM " + instance + " ...");
             Operation operation = instances
                     .start(PROJECT_ID, ZONE, instance)
                     .execute();
             waitOperation(operation);
-            console("VM " + instance + ": " + getStatus(instance));
+            log("VM " + instance + ": " + getStatus(instance));
         } catch (IOException ex) {
             log(ERROR, ex.getMessage());
             ex.printStackTrace();
@@ -108,12 +108,12 @@ public class VMManagement {
 
     private void resizeInstanceGroup(String ig, int newSize) {
         try {
-            console("Resizing Instance Group " + ig + " ...");
+            log("Resizing Instance Group " + ig + " ...");
             Operation operation = compute.instanceGroupManagers()
                     .resize(PROJECT_ID, ZONE, ig, newSize)
                     .execute();
             waitOperation(operation);
-            console("Instance Group " + ig + " resized to: " + newSize);
+            log("Instance Group " + ig + " resized to: " + newSize);
         } catch (IOException ex) {
             log(ERROR, ex.getMessage());
             ex.printStackTrace();
