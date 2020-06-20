@@ -22,9 +22,11 @@ import static utils.Output.console;
 import static utils.Output.log;
 
 public class VMManagement {
+    //OCR Instances
     private static final String FREE_OCR_VM = "ocr-free-final-project";
     private static final String PREMIUM_OCR_IG = "ocr-premium-final-project";
 
+    //Translate Instances
     private static final String FREE_TRANSLATE_VM = "todo"; //TODO
     private static final String PREMIUM_TRANSLATE_IG = "todo"; //TODO
 
@@ -58,11 +60,11 @@ public class VMManagement {
 //        resizeInstanceGroup(PREMIUM_TRANSLATE_IG, premiumUsers);
     }
 
-    public static void main(String... args) throws IOException {
+    public static void main(String... args){
         console("teste");
         VMManagement management = new VMManagement();
 
-        management.updateVMInstancesAsync(3, 2);
+        management.updateVMInstancesAsync(0, 0);
 
         while (true) {
             try {
