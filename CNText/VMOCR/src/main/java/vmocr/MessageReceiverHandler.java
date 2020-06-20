@@ -42,12 +42,11 @@ public class MessageReceiverHandler implements MessageReceiver {
     public void receiveMessage(PubsubMessage msg, AckReplyConsumer ackReplyConsumer) {
         Map<String, String> attributesMap = msg.getAttributesMap();
         OCRRequest ocrRequest = new OCRRequest(
-                attributesMap.get("sessionID"),
                 attributesMap.get("blobName"),
                 attributesMap.get("language")
         );
 
-        String id = msg.getMessageId();
+        String id = ocrRequest.getBlobName();
 
         log("[Request received] " + id + " | " + ocrRequest.toString());
 
