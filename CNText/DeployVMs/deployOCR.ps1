@@ -4,11 +4,11 @@ clear
 
 <# Delete Image #>
 Write-Output "**** DELETE IMAGE ****"
-gcloud compute images delete image-with-worker --quiet
+gcloud compute images delete image-with-ocr --quiet
 
 <# Create image #>
 Write-Output "`n**** CREATE IMAGE ****"
-gcloud compute images create image-with-worker `
+gcloud compute images create image-with-ocr `
  --source-disk=ocr-free-final-project `
  --source-disk-zone=europe-north1-a
 
@@ -28,8 +28,8 @@ Write-Output "`n**** CREATE INSTANCE TEMPLATE ****"
 gcloud compute instance-templates create ocr-premium-template `
  --machine-type=f1-micro `
  --service-account=all-services@g01-li61n.iam.gserviceaccount.com `
- --image=image-with-worker `
- --metadata-from-file=startup-script=startup.sh `
+ --image=image-with-ocr `
+ --metadata-from-file=startup-script=startupOCR.sh `
 --scopes=bigquery,cloud-platform,cloud-source-repos,cloud-source-repos-ro,compute-ro,compute-rw,datastore,logging-write,monitoring,monitoring-write,pubsub,service-control,service-management,sql-admin,storage-full,storage-ro,storage-rw,taskqueue,trace,userinfo-email
 
 
