@@ -39,7 +39,6 @@ public class Simulate {
             log("Publishing Demo message...");
             String msgID = publishTopic.publishMessage(
                     new OCRRequest(
-                            "1234",
                             blobName,
                             "EN"
                     ));

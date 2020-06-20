@@ -32,12 +32,6 @@ public class PublishTopic implements AutoCloseable {
         this.publisher = Publisher.newBuilder(tName).build();
     }
 
-    /**
-     * @param translateRequest
-     * @return msgID
-     * @throws ExecutionException
-     * @throws InterruptedException
-     */
     public String publishMessage(TranslateRequest translateRequest) throws ExecutionException, InterruptedException {
         ByteString msgData = ByteString.copyFromUtf8(translateRequest.getOcrResult().getResult());
         PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
@@ -51,15 +45,8 @@ public class PublishTopic implements AutoCloseable {
         return future.get();
     }
 
-    /**
-     * @param ocrRequest
-     * @return msgID
-     * @throws ExecutionException
-     * @throws InterruptedException
-     */
     public String publishMessage(OCRRequest ocrRequest) throws ExecutionException, InterruptedException {
         PubsubMessage pubsubMessage = PubsubMessage.newBuilder()
-                .putAttributes("sessionID", ocrRequest.getSessionID())
                 .putAttributes("blobName", ocrRequest.getBlobName())
                 .putAttributes("language", ocrRequest.getLanguage())
                 .build();
