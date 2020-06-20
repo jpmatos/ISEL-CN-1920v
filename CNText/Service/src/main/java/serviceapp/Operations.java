@@ -77,7 +77,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
             String sessionID = sessionManager.newSession(username, premium);
             sessionBuilder.setSessionId(sessionID);
 
-            //Call VMManagement
+            //Call VMManagement // TODO use a thead to execute this code, and retries
             VMManagement.updateVMInstances(sessionManager.getFreeSessionsCount(), sessionManager.getPremiumSessionsCount());
         }
         CnText.Session response = sessionBuilder.build();
@@ -99,7 +99,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
         else
             logoutStatus = LogoutStatus.LOGOUT_INVALID_SESSION;
 
-        //Call VMManagement
+        //Call VMManagement //TODO make a thread runs this code
         VMManagement.updateVMInstances(sessionManager.getFreeSessionsCount(), sessionManager.getPremiumSessionsCount());
 
         //Send response and call onComplete()

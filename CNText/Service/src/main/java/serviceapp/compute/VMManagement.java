@@ -18,6 +18,7 @@ import java.util.List;
 
 import static serviceapp.Operations.PROJECT_ID;
 import static utils.Output.OutputType.ERROR;
+import static utils.Output.OutputType.WARNING;
 import static utils.Output.console;
 import static utils.Output.log;
 
@@ -39,7 +40,7 @@ public class VMManagement {
         this.instances = compute.instances();
     }
 
-    public static void updateVMInstances(int freeUsers, int premiumUsers) {
+    public static boolean updateVMInstances(int freeUsers, int premiumUsers) {
         if (freeUsers > 0) {
             //TODO Start VM if stoped
         } else {
@@ -47,6 +48,7 @@ public class VMManagement {
         }
 
         //TODO update Premium VM's
+        return false;
     }
 
     public static void main(String... args) throws IOException {
@@ -54,9 +56,23 @@ public class VMManagement {
 
         VMManagement management = new VMManagement();
 
-        new Thread(() -> management.startStop(true)).start();
-        new Thread(() -> management.startStop(false)).start();
-        new Thread(() -> management.startStop(true)).start();
+        new Thread(() -> {
+            if (!management.startStop(true)) {
+                console(WARNING, "Operations pending. Cannot Proceed");
+            }
+        }).start();
+
+        new Thread(() -> {
+            if (!management.startStop(false)) {
+                console(WARNING, "Operations pending. Cannot Proceed");
+            }
+        }).start();
+
+        new Thread(() -> {
+            if (!management.startStop(true)) {
+                console(WARNING, "Operations pending. Cannot Proceed");
+            }
+        }).start();
 
 
         while (true) {
@@ -68,10 +84,24 @@ public class VMManagement {
         }
     }
 
-    private void startStop(boolean start) {
+    private boolean startStop(boolean start) {
         log("Start VM: " + start);
         synchronized (lock) {
             try {
+                long ops = compute.
+                        zoneOperations()
+                        .list(PROJECT_ID, ZONE)
+                        .execute()
+                        .getItems()
+                        .stream()
+                        .filter(op -> !op.getStatus().equals("DONE"))
+                        .count();
+
+                if (ops > 0) {
+//                    console(ops.size() + "");
+                    return false;
+                }
+
                 if (start) {
                     startVM(FREE_OCR_VM);
                 } else {
@@ -79,7 +109,9 @@ public class VMManagement {
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
+                return false;
             }
+            return true;
         }
     }
 
@@ -89,9 +121,11 @@ public class VMManagement {
      */
     private void stopVM(String instance) throws IOException {
         console("Stoping VM...");
-        Operation operation = instances.stop(PROJECT_ID, ZONE, instance)
+        Operation operation = instances
+                .stop(PROJECT_ID, ZONE, instance)
                 .execute();
 //            triggerConclusion(operation, "STOP_VM");
+//        operation.setName("stopvm");
         waitOperation(operation);
         console("VM status: " + getStatus(instance));
     }
@@ -101,6 +135,7 @@ public class VMManagement {
         Operation operation = instances.start(PROJECT_ID, ZONE, instance)
                 .execute();
 //            triggerConclusion(operation, "START_VM");
+//        operation.setName("startvm");
         waitOperation(operation);
         console("VM status: " + getStatus(instance));
     }
