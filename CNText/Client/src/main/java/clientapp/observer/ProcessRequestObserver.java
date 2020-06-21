@@ -13,6 +13,7 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
     private ProcessStatus status;
     private boolean completed = false;
     private String text;
+    private String error;
 
     public ProcessRequestObserver(String uploadToken, String filename, String language) {
         this.uploadToken = uploadToken;
@@ -56,7 +57,18 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
     }
 
     @Override
+    public String getError() {
+        return error;
+    }
+
+    @Override
     public void onNext(ProcessResponse processResponse) {
+        String error = processResponse.getError();
+        if(error != null && !error.isEmpty()) {
+            this.error = error;
+            return;
+        }
+
         String text = processResponse.getText();
         if (text != null)
             this.text = text;
@@ -67,7 +79,7 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
 
         status = processResponse.getStatus();
 
-        if (text != null && !text.equals(""))
+        if (text != null && !text.isEmpty())
             System.out.println(String.format("[%s][%s] Update - '%s'; Text - %s.",
                     filename, uploadToken, status, text));
         else
@@ -78,7 +90,12 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
     @Override
     public void onError(Throwable throwable) {
         completed = true;
-        System.out.println(String.format("[%s][%s] Failed Status - '%s.'", filename, uploadToken, status));
+        if(error != null)
+            System.out.println(String.format("[%s][%s] Failed Status - '%s.' Error: '%s'.",
+                    filename, uploadToken, status, error));
+        else
+            System.out.println(String.format("[%s][%s] Failed Status - '%s.'",
+                    filename, uploadToken, status));
     }
 
     @Override

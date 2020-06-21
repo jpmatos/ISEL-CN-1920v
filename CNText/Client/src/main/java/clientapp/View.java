@@ -39,8 +39,12 @@ public class View implements IView {
     @Override
     public void printProcessAllRequests(ArrayList<IProcessRequest> requests) {
         for (IProcessRequest req : requests) {
-            System.out.println(String.format("[%s] File: '%s'. Status: '%s'.",
-                    req.getUploadToken(), req.getFilename(), req.getStatus()));
+            if(req.getError() != null)
+                System.out.println(String.format("[%s] File: '%s'. Status: '%s'. Error: '%s'",
+                        req.getUploadToken(), req.getFilename(), req.getStatus(), req.getError()));
+            else
+                System.out.println(String.format("[%s] File: '%s'. Status: '%s'.",
+                        req.getUploadToken(), req.getFilename(), req.getStatus()));
         }
     }
 

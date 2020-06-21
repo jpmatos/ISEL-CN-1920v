@@ -139,7 +139,7 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
         if (!blob.exists()) {
             log(ERROR, String.format("Blob '%s' does not exist.", blobId.getName()));
             responseObserver.onNext(ProcessResponse.newBuilder().setStatus(ProcessStatus.PROCESS_INVALID_TOKEN).build());
-            responseObserver.onError(null);
+            responseObserver.onError(new Exception(String.format("Blob '%s' does not exist.", blobId.getName())));
             return;
         }
 
@@ -174,11 +174,23 @@ public class Operations extends CnTextGrpc.CnTextImplBase {
             if (e != null) {
                 log(ERROR, String.format("Listen failed for collection '%s' on document '%s'.", FIRESTORE_COLLECTION_NAME, blobName));
                 response.setStatus(ProcessStatus.PROCESS_ERROR);
+                response.setError(e.getMessage());
                 responseObserver.onNext(response.build());
                 responseObserver.onError(e);
                 return;
             }
             if (snapshot != null && snapshot.exists()) {
+                String error = snapshot.getString("error");
+                if(error != null){
+                    log(ERROR, String.format("Error on collection '%s' on document '%s'. Error: '%s'.",
+                            FIRESTORE_COLLECTION_NAME, blobName, error));
+                    response.setStatus(ProcessStatus.PROCESS_ERROR);
+                    response.setError(error);
+                    responseObserver.onNext(response.build());
+                    responseObserver.onError(new Exception(error));
+                    return;
+                }
+
                 String ocrResult = snapshot.getString("text");
                 if (ocrResult != null) {
                     response.setText(ocrResult);

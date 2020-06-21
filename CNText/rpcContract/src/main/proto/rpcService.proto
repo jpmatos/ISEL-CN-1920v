@@ -84,7 +84,8 @@ message ProcessRequest {
 message ProcessResponse {
     string text = 1;
     string translation = 2;
-    ProcessStatus status = 3;
+    string error = 3;
+    ProcessStatus status = 4;
 }
 
 message CheckRequest{

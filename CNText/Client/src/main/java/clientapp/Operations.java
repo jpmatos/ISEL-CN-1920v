@@ -126,6 +126,8 @@ public class Operations implements IOperations {
     public LogoutStatus logout() {
         CloseResponse closeResponse = blockingStub.close(session);
         session = null;
+        uploadRequests = new ArrayList<>();
+        processRequests = new ArrayList<>();
         return closeResponse.getStatus();
     }
 
