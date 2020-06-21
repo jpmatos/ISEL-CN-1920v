@@ -18,57 +18,71 @@ public class View implements IView {
     @Override
     public void printProcessSuccesses(ArrayList<IProcessRequest> requests) {
         for (IProcessRequest req : requests) {
-            if (req.isCompleted() && req.getStatus() == READING_SUCCESS)
+            if (req.isCompleted() && req.getStatus() == READING_SUCCESS) {
+                System.out.println("------------------");
                 System.out.println(String.format("[%s] File: '%s'. Text: '%s'.",
                         req.getUploadToken(), req.getFilename(), req.getText()));
-            if (req.isCompleted() && req.getStatus() == TRANSLATE_SUCCESS)
+            }
+            if (req.isCompleted() && req.getStatus() == TRANSLATE_SUCCESS) {
+                System.out.println("------------------");
                 System.out.println(String.format("[%s] File: '%s'. Text: '%s'. To Language: '%s'. Translation: '%s'.",
                         req.getUploadToken(), req.getFilename(), req.getText(), req.getTranslation(), req.getTranslation()));
+            }
         }
     }
 
     @Override
     public void printProcessOngoing(ArrayList<IProcessRequest> requests) {
         for (IProcessRequest req : requests) {
-            if (!req.isCompleted())
+            if (!req.isCompleted()) {
+                System.out.println("------------------");
                 System.out.println(String.format("[%s] File: '%s'. Status: '%s'.",
                         req.getUploadToken(), req.getFilename(), req.getStatus()));
+            }
         }
     }
 
     @Override
     public void printProcessAllRequests(ArrayList<IProcessRequest> requests) {
         for (IProcessRequest req : requests) {
-            if(req.getError() != null)
+            if(req.getError() != null) {
+                System.out.println("------------------");
                 System.out.println(String.format("[%s] File: '%s'. Status: '%s'. Error: '%s'",
                         req.getUploadToken(), req.getFilename(), req.getStatus(), req.getError()));
-            else
+            } else {
+                System.out.println("------------------");
                 System.out.println(String.format("[%s] File: '%s'. Status: '%s'.",
                         req.getUploadToken(), req.getFilename(), req.getStatus()));
+            }
         }
     }
 
     @Override
     public void printUploadSuccesses(ArrayList<IUploadRequest> requests) {
         for (IUploadRequest req : requests) {
-            if (req.isCompleted() && req.getStatus() == UPLOAD_SUCCESS)
+            if (req.isCompleted() && req.getStatus() == UPLOAD_SUCCESS) {
+                System.out.println("------------------");
                 System.out.println(String.format("[%s] File: '%s'.",
                         req.getUploadToken(), req.getFilename()));
+            }
         }
     }
 
     @Override
     public void printUploadOngoing(ArrayList<IUploadRequest> requests) {
         for (IUploadRequest req : requests) {
-            if (!req.isCompleted())
+            if (!req.isCompleted()) {
+                System.out.println("------------------");
                 System.out.println(String.format("[%s] File: '%s'. Status: '%s'.",
                         req.getUploadToken(), req.getFilename(), req.getStatus()));
+            }
         }
     }
 
     @Override
     public void printUploadAllRequests(ArrayList<IUploadRequest> requests) {
         for (IUploadRequest req : requests) {
+            System.out.println("------------------");
             System.out.println(String.format("[%s] File: '%s'. Status: '%s'.",
                     req.getUploadToken(), req.getFilename(), req.getStatus()));
         }
