@@ -46,9 +46,13 @@ public class VMManagement {
         this.pollingTime = pollingTime;
     }
 
-    public void start(){
-        new Thread(()-> {
+    public void start() {
+        new Thread(() -> {
             try {
+                //Wait 2x the polling time for the first time
+                Thread.sleep(pollingTime * 2 * 1_000);
+
+                //Update VMs by polling
                 while (true) {
                     int free = sessionManager.getFreeSessionsCount();
                     int premium = sessionManager.getPremiumSessionsCount();
@@ -56,7 +60,7 @@ public class VMManagement {
                     updateVMInstances(free, premium);
                     Thread.sleep(pollingTime * 1_000);
                 }
-            }catch (InterruptedException ex){
+            } catch (InterruptedException ex) {
                 log(ERROR, ex.getMessage());
                 ex.printStackTrace();
             }
@@ -79,7 +83,7 @@ public class VMManagement {
         log("VM's Updated!");
     }
 
-    public static void main(String... args){
+    public static void main(String... args) {
         console("teste");
         VMManagement management = new VMManagement(null, 30);
         management.updateVMInstances(0, 0);
