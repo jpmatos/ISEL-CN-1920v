@@ -71,12 +71,12 @@ public class Operations implements IOperations {
         if (i > 0)
             extension = path.getFileName().toString().substring(i + 1);
 
-        if (!Arrays.asList(supportedMIMETypes).contains(mimeType)) {
+        if (!Arrays.asList(supportedMIMETypes).contains(mimeType.toLowerCase())) {
             System.out.println("Unsupported MIME type " + mimeType);
             return;
         }
 
-        if (!Arrays.asList(supportedExtensions).contains(extension)) {
+        if (!Arrays.asList(supportedExtensions).contains(extension.toLowerCase())) {
             System.out.println("Unsupported extension " + extension);
             return;
         }

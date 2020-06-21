@@ -70,8 +70,8 @@ public class UploadRequestObserver implements StreamObserver<UploadRequest> {
                     extension = filename.substring(i+1);
 
                 //Validate MIME and Extension
-                if(!Arrays.asList(supportedMIMETypes).contains(mimeType)
-                        && !Arrays.asList(supportedExtensions).contains(extension)){
+                if(!Arrays.asList(supportedMIMETypes).contains(mimeType.toLowerCase())
+                        && !Arrays.asList(supportedExtensions).contains(extension.toLowerCase())){
                     log(String.format("Invalid image from session '%s'.", sessionID));
 
                     uploadStatus = UploadStatus.UNSUPPORTED_FORMAT;
