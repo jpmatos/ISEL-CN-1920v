@@ -8,6 +8,7 @@ import static utils.Output.OutputType.ERROR;
 import static utils.Output.log;
 
 public class TranslateOps implements ITranslateOps {
+    public String errorMessage=null;
 
     @Override
     public String getTextTranslated(String texToTranslate, String locale, String language) {
@@ -15,8 +16,10 @@ public class TranslateOps implements ITranslateOps {
         try {
             return translateText(texToTranslate, locale, language);
         } catch (Exception e) {
-            log(ERROR, e.getMessage());
-            return e.getMessage();
+            errorMessage=e.getMessage();
+            log(ERROR, errorMessage);
+
+            return null;
         }
     }
 
@@ -33,4 +36,8 @@ public class TranslateOps implements ITranslateOps {
 
         return translation.getTranslatedText();
     }
+    public String getError(){
+        return errorMessage;
+    }
+
 }

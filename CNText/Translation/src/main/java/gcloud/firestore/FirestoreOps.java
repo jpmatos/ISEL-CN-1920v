@@ -27,7 +27,7 @@ public class FirestoreOps implements IFirestoreOps {
 
 
     @Override
-    public boolean storeTranslatedTextResult(String id, String translateResult, String language, String locale, String originalText) {
+    public boolean storeTranslatedTextResult(String id, String translateResult, String language, String locale, String originalText, String error) {
 
         TranslatedText translatedText = new TranslatedText();
         translatedText.id = id;
@@ -35,6 +35,7 @@ public class FirestoreOps implements IFirestoreOps {
         translatedText.locale = locale;
         translatedText.text = originalText;
         translatedText.language = language;
+        translatedText.error=error;
 
         DocumentReference docRef = colRef.document(id);
 

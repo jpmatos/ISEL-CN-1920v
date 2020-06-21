@@ -50,6 +50,7 @@ public class MessageReceivedHandler implements MessageReceiver {
         //Firestore ID
         String id = translateRequest.getId();
 
+
         log("[Request received] " + id + " | " + translateRequest.toString());
 
         ackReplyConsumer.ack();
@@ -57,16 +58,16 @@ public class MessageReceivedHandler implements MessageReceiver {
 
             log("Get text translation from translation API ");
             String translatedText = translateOps.getTextTranslated(msg.getData().toStringUtf8(), translateRequest.getLocale(), translateRequest.getLanguage());
+            String errorTranslateMessage = translateOps.getError();
 
             log("Save translated text to Firestore");
-            if (!firestoreOps.storeTranslatedTextResult(id, translatedText, translateRequest.getLanguage(), translateRequest.getLocale(), msg.getData().toStringUtf8())) {
+            if (!firestoreOps.storeTranslatedTextResult(id, translatedText, translateRequest.getLanguage(), translateRequest.getLocale(), msg.getData().toStringUtf8(), errorTranslateMessage)) {
                 log(ERROR, "Cannot save translated text result to Firestore");
             }
+                log("Done");
+            } catch(ExecutionException | InterruptedException e){
+                e.printStackTrace();
+            }
 
-            log("Done");
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
         }
-
     }
-}
