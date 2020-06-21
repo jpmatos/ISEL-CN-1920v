@@ -119,6 +119,7 @@ modules.xml
 # Package Files #
 *.jar
 !CNText/lib/*
+!CNText/release/*
 *.war
 *.nar
 *.ear
