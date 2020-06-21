@@ -28,12 +28,13 @@ public class FirestoreOps implements IFirestoreOps {
 
 
     @Override
-    public boolean storeOCRResult(String id, OCRResult ocrResult, String language) {
+    public boolean storeOCRResult(String id, OCRResult ocrResult, String language, String error) {
         TextOfImage textOfImage = new TextOfImage();
         textOfImage.id = id;
         textOfImage.language = language;
         textOfImage.locale = ocrResult.getLocale();
         textOfImage.text = ocrResult.getResult();
+        textOfImage.error = error;
 
         DocumentReference docRef = colRef.document(id);
         ApiFuture<WriteResult> future = docRef.set(textOfImage);

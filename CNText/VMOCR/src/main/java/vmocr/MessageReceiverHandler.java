@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static utils.Output.OutputType.ERROR;
+import static utils.Output.OutputType.WARNING;
 import static utils.Output.log;
 
 
@@ -47,6 +48,7 @@ public class MessageReceiverHandler implements MessageReceiver {
         );
 
         String id = ocrRequest.getBlobName();
+        String error = null;
 
         log("[Request received] " + id + " | " + ocrRequest.toString());
 
@@ -59,7 +61,7 @@ public class MessageReceiverHandler implements MessageReceiver {
             OCRResult ocrResult = visionOps.getTextFromImage(blobBytes);
 
             log("Save OCR result to Firestore");
-            if (!firestoreOps.storeOCRResult(id, ocrResult, ocrRequest.getLanguage())) {
+            if (!firestoreOps.storeOCRResult(id, ocrResult, ocrRequest.getLanguage(), error)) {
                 log(ERROR, "Cannot save OCR result to Firestore");
             }
 
@@ -68,14 +70,22 @@ public class MessageReceiverHandler implements MessageReceiver {
                 log(ERROR, "Cannot delete blob from Cloud Store: " + ocrRequest.getBlobName());
             }
 
-            log("Send translate request");
-            String translateReqId = publishToTranslate.publishMessage(new TranslateRequest(id, ocrResult, ocrRequest.getLanguage()));
-            log("Translate Request: " + translateReqId);
+            if(ocrRequest.getLanguage().isEmpty()) {
+                log(WARNING, "No language provided.");
+            }else{
+                log("Send translate request");
+                String translateReqId = publishToTranslate.publishMessage(new TranslateRequest(id, ocrResult, ocrRequest.getLanguage()));
+                log("Translate Request: " + translateReqId);
+            }
 
             log("Done");
         } catch (IOException | ExecutionException | InterruptedException e) {
             log(ERROR, e.getMessage());
-            e.printStackTrace();
+
+            //In case of error, write that information on firestore, to notify client
+            OCRResult resultError = new OCRResult(e.getMessage(), "Err");
+            error = e.getMessage();
+            firestoreOps.storeOCRResult(id, resultError, "Err", error);
         }
 
     }

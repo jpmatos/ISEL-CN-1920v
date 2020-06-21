@@ -6,4 +6,5 @@ public class TextOfImage {
     public String text;
     public String translationResult;
     public String language;
+    public String error;
 }
