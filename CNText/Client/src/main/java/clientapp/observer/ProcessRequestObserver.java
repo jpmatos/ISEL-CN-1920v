@@ -64,6 +64,8 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
     @Override
     public void onNext(ProcessResponse processResponse) {
         String error = processResponse.getError();
+        status = processResponse.getStatus();
+
         if(error != null && !error.isEmpty()) {
             this.error = error;
             return;
@@ -76,8 +78,6 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
         String translation = processResponse.getTranslation();
         if (translation != null)
             this.translation = translation;
-
-        status = processResponse.getStatus();
 
         if (text != null && !text.isEmpty())
             System.out.println(String.format("[%s][%s] Update - '%s'; Text - %s.",
