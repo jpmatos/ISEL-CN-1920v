@@ -57,6 +57,11 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
     }
 
     @Override
+    public String getError() {
+        return error;
+    }
+
+    @Override
     public void onNext(ProcessResponse processResponse) {
         String error = processResponse.getError();
         if(error != null) {

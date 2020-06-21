@@ -16,4 +16,6 @@ public interface IProcessRequest {
     boolean isCompleted();
 
     String getText();
+
+    String getError();
 }
