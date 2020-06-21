@@ -197,6 +197,11 @@ public class View implements IView {
         return ScanUtils.getInputInt("Svc port:", svcPort);
     }
 
+    @Override
+    public void printAlreadyLoggedIn() {
+        System.out.println("Already logged in!");
+    }
+
     private static boolean isNumeric(String str) {
         NumberFormat formatter = NumberFormat.getInstance();
         ParsePosition pos = new ParsePosition(0);

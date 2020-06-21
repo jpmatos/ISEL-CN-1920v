@@ -66,7 +66,7 @@ public class Client {
 
     private static void login(IOperations operations, IView view) {
         if (operations.isLogged()) {
-            view.printNotLoggedIn();
+            view.printAlreadyLoggedIn();
             return;
         }
 

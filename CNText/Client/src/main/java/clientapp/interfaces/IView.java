@@ -44,4 +44,6 @@ public interface IView {
     String printIPInput(String svcIP);
 
     int printPort(int svcPort);
+
+    void printAlreadyLoggedIn();
 }
