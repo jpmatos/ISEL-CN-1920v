@@ -101,7 +101,7 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
     @Override
     public void onCompleted() {
         completed = true;
-        if (translation != null)
+        if (translation != null && !translation.isEmpty())
             System.out.println(String.format("[%s][%s] Completed Status - '%s'. Translation: '%s'.",
                     filename, uploadToken, status, translation));
         else
