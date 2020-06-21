@@ -53,7 +53,7 @@ public class UploadRequestObserver implements StreamObserver<UploadRequest> {
 
             uploadStatus = UploadStatus.UPLOAD_INVALID_SESSION;
             responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
-            responseObserver.onError(null);
+            responseObserver.onError(new Exception(String.format("Invalid session '%s'.", sessionID)));
             return;
         }
 
@@ -76,7 +76,7 @@ public class UploadRequestObserver implements StreamObserver<UploadRequest> {
 
                     uploadStatus = UploadStatus.UNSUPPORTED_FORMAT;
                     responseObserver.onNext(UploadRequestResponse.newBuilder().setStatus(uploadStatus).build());
-                    responseObserver.onError(null);
+                    responseObserver.onError(new Exception(String.format("Invalid image from session '%s'.", sessionID)));
                     return;
                 }
 

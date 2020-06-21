@@ -64,7 +64,7 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
     @Override
     public void onNext(ProcessResponse processResponse) {
         String error = processResponse.getError();
-        if(error != null) {
+        if(error != null && !error.isEmpty()) {
             this.error = error;
             return;
         }
@@ -79,7 +79,7 @@ public class ProcessRequestObserver implements StreamObserver<ProcessResponse>, 
 
         status = processResponse.getStatus();
 
-        if (text != null && !text.equals(""))
+        if (text != null && !text.isEmpty())
             System.out.println(String.format("[%s][%s] Update - '%s'; Text - %s.",
                     filename, uploadToken, status, text));
         else
