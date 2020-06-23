@@ -116,7 +116,6 @@ public class Operations implements IOperations {
                 .setSessionId(session.getSessionId())
                 .setUploadToken(uploadToken)
                 .setLanguage(language)
-                .setPublish(true)
                 .build();
         noBlockStub.process(trRequest, trObserver);
         processRequests.add(trObserver);
